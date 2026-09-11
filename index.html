@@ -1,3178 +1,1290 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Pengajuan Surat Mahasiswa | FIKOM UPDM (B)</title>
-
-  <meta
-    name="description"
-    content="Sistem Pengajuan Surat Mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama)"
-  >
-
-  <style>
-    :root {
-      --primary: #075e54;
-      --primary-dark: #064e46;
-      --secondary: #128c7e;
-      --accent: #25d366;
-      --bg: #f4f7f6;
-      --card: #ffffff;
-      --text: #17201e;
-      --muted: #6b7774;
-      --border: #dce5e2;
-      --danger: #d93025;
-      --warning: #f9ab00;
-      --success: #188038;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-      --radius: 18px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app {
-      min-height: 100vh;
-    }
-
-    /* ================= HEADER ================= */
-
-    .topbar {
-      background:
-        linear-gradient(
-          135deg,
-          var(--primary-dark),
-          var(--primary)
-        );
-      color: #fff;
-      padding: 22px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 18px rgba(0,0,0,.15);
-    }
-
-    .topbar-inner {
-      max-width: 1180px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand img {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      background: #fff;
-      border-radius: 14px;
-      padding: 5px;
-    }
-
-    .brand-title {
-      font-size: 18px;
-      font-weight: 800;
-      margin: 0;
-    }
-
-    .brand-subtitle {
-      font-size: 13px;
-      opacity: .88;
-      margin-top: 3px;
-    }
-
-    .status-pill {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(255,255,255,.12);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .status-dot {
-      width: 9px;
-      height: 9px;
-      background: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 0 4px rgba(37,211,102,.15);
-    }
-
-    /* ================= MAIN ================= */
-
-    .container {
-      width: min(1180px, calc(100% - 30px));
-      margin: 30px auto 60px;
-    }
-
-    .hero {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: var(--shadow);
-      margin-bottom: 22px;
-    }
-
-    .hero h1 {
-      margin: 0 0 8px;
-      font-size: clamp(24px, 4vw, 34px);
-    }
-
-    .hero p {
-      color: var(--muted);
-      margin: 0;
-      max-width: 850px;
-    }
-
-    /* ================= TYPE CARDS ================= */
-
-    .type-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-top: 25px;
-    }
-
-    .type-card {
-      border: 2px solid var(--border);
-      background: #fff;
-      border-radius: 16px;
-      padding: 18px;
-      transition: .2s ease;
-      text-align: left;
-      min-height: 140px;
-    }
-
-    .type-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--secondary);
-    }
-
-    .type-card.active {
-      border-color: var(--primary);
-      background: #eef8f6;
-      box-shadow: 0 5px 15px rgba(7,94,84,.10);
-    }
-
-    .type-icon {
-      font-size: 30px;
-      margin-bottom: 8px;
-    }
-
-    .type-title {
-      font-weight: 800;
-      font-size: 16px;
-    }
-
-    .type-desc {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    /* ================= FORM ================= */
-
-    .form-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin-top: 22px;
-      overflow: hidden;
-    }
-
-    .form-header {
-      padding: 22px 25px;
-      border-bottom: 1px solid var(--border);
-      background: #fbfdfc;
-    }
-
-    .form-header h2 {
-      margin: 0;
-      font-size: 20px;
-    }
-
-    .form-header p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .form-body {
-      padding: 25px;
-    }
-
-    .section {
-      margin-bottom: 30px;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      padding-bottom: 9px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-number {
-      width: 27px;
-      height: 27px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 17px;
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .full {
-      grid-column: 1 / -1;
-    }
-
-    .field {
-      min-width: 0;
-    }
-
-    label {
-      display: block;
-      font-weight: 700;
-      font-size: 13px;
-      margin-bottom: 7px;
-    }
-
-    .required {
-      color: var(--danger);
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      padding: 11px 13px;
-      outline: none;
-      background: #fff;
-      color: var(--text);
-      transition: .18s ease;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--secondary);
-      box-shadow: 0 0 0 3px rgba(18,140,126,.10);
-    }
-
-    input.invalid,
-    select.invalid,
-    textarea.invalid {
-      border-color: var(--danger);
-      background: #fff8f7;
-    }
-
-    textarea {
-      min-height: 115px;
-      resize: vertical;
-    }
-
-    .help {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 5px;
-    }
-
-    .error-text {
-      color: var(--danger);
-      font-size: 11px;
-      margin-top: 5px;
-      display: none;
-    }
-
-    .error-text.show {
-      display: block;
-    }
-
-    /* ================= CONDITIONAL ================= */
-
-    .conditional {
-      display: none;
-    }
-
-    .conditional.show {
-      display: block;
-    }
-
-    /* ================= AGREEMENT ================= */
-
-    .agreement {
-      background: #f5faf8;
-      border: 1px solid #d9ebe6;
-      padding: 15px;
-      border-radius: 12px;
-      font-size: 12px;
-      color: #42514d;
-    }
-
-    .check-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .check-row input {
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-      flex: 0 0 auto;
-    }
-
-    /* ================= BUTTON ================= */
-
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      flex-wrap: wrap;
-      border-top: 1px solid var(--border);
-      padding-top: 22px;
-    }
-
-    .btn {
-      border: 0;
-      border-radius: 11px;
-      padding: 12px 18px;
-      font-weight: 800;
-      transition: .2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #edf2f0;
-      color: #34403d;
-    }
-
-    .btn-danger {
-      background: #fff0ee;
-      color: var(--danger);
-    }
-
-    .btn:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* ================= RESULT ================= */
-
-    .result {
-      display: none;
-      margin-top: 22px;
-      background: #fff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px;
-      text-align: center;
-    }
-
-    .result.show {
-      display: block;
-    }
-
-    .result-icon {
-      font-size: 55px;
-      margin-bottom: 10px;
-    }
-
-    .result h2 {
-      margin: 0 0 8px;
-    }
-
-    .result p {
-      color: var(--muted);
-    }
-
-    .ticket {
-      max-width: 650px;
-      margin: 20px auto;
-      background: #f5faf8;
-      border: 1px dashed var(--secondary);
-      border-radius: 14px;
-      padding: 18px;
-      text-align: left;
-    }
-
-    .ticket-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 7px 0;
-      border-bottom: 1px solid #dce9e5;
-      font-size: 13px;
-    }
-
-    .ticket-row:last-child {
-      border-bottom: 0;
-    }
-
-    .ticket-label {
-      color: var(--muted);
-    }
-
-    .ticket-value {
-      font-weight: 800;
-      text-align: right;
-    }
-
-    /* ================= LOADING ================= */
-
-    .loading {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: rgba(0,0,0,.55);
-      display: none;
-      place-items: center;
-      padding: 20px;
-    }
-
-    .loading.show {
-      display: grid;
-    }
-
-    .loading-box {
-      background: #fff;
-      border-radius: 18px;
-      padding: 28px;
-      min-width: 280px;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,.25);
-    }
-
-    .spinner {
-      width: 45px;
-      height: 45px;
-      border: 4px solid #dce8e5;
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin: 0 auto 15px;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* ================= TOAST ================= */
-
-    .toast {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 10000;
-      min-width: 280px;
-      max-width: 420px;
-      padding: 14px 16px;
-      background: #202725;
-      color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.2);
-      transform: translateY(130%);
-      transition: .25s ease;
-      font-size: 13px;
-    }
-
-    .toast.show {
-      transform: translateY(0);
-    }
-
-    .toast.success {
-      background: var(--success);
-    }
-
-    .toast.error {
-      background: var(--danger);
-    }
-
-    .toast.warning {
-      background: #9a6700;
-    }
-
-    /* ================= FOOTER ================= */
-
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-      padding: 25px 15px 45px;
-    }
-
-    /* ================= RESPONSIVE ================= */
-
-    @media (max-width: 900px) {
-      .type-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .grid,
-      .grid-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .full {
-        grid-column: auto;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .topbar-inner {
-        align-items: flex-start;
-      }
-
-      .status-pill {
-        display: none;
-      }
-
-      .brand img {
-        width: 48px;
-        height: 48px;
-      }
-
-      .brand-title {
-        font-size: 14px;
-      }
-
-      .brand-subtitle {
-        font-size: 11px;
-      }
-
-      .container {
-        width: min(100% - 18px, 1180px);
-        margin-top: 15px;
-      }
-
-      .hero,
-      .form-body {
-        padding: 18px;
-      }
-
-      .form-header {
-        padding: 18px;
-      }
-
-      .type-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .actions .btn {
-        width: 100%;
-      }
-
-      .ticket-row {
-        flex-direction: column;
-        gap: 2px;
-      }
-
-      .ticket-value {
-        text-align: left;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIKOM UPDM (B) — Sistem Surat Mahasiswa</title>
+<meta name="description" content="Sistem Pengajuan & Persetujuan Surat Mahasiswa FIKOM UPDM (B)">
+<style>
+:root{
+  --primary:#075e54; --primary-dark:#054a41; --secondary:#128c7e;
+  --accent:#25d366; --bg:#f4f7f6; --card:#fff; --text:#17201e;
+  --muted:#6b7774; --border:#dce5e2; --danger:#d93025;
+  --warning:#f9ab00; --success:#188038; --info:#1a73e8;
+  --shadow:0 10px 30px rgba(0,0,0,.08); --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.5}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:var(--primary)}
+
+/* HEADER */
+.topbar{background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  color:#fff;padding:14px 20px;position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 18px rgba(0,0,0,.15)}
+.topbar-inner{max-width:1180px;margin:auto;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+.brand img{width:48px;height:48px;object-fit:contain;background:#fff;
+  border-radius:12px;padding:4px}
+.brand-title{font-size:15px;font-weight:800;margin:0;letter-spacing:.3px}
+.brand-subtitle{font-size:11px;opacity:.85;margin-top:2px}
+.nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.nav button{background:rgba(255,255,255,.1);color:#fff;border:0;
+  padding:8px 14px;border-radius:10px;font-weight:700;font-size:12px;
+  transition:.15s}
+.nav button:hover{background:rgba(255,255,255,.2)}
+.nav button.active{background:#fff;color:var(--primary)}
+.user-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);
+  padding:6px 12px;border-radius:999px;font-size:12px}
+.user-chip b{font-weight:800}
+
+/* LAYOUT */
+.container{width:min(1180px,calc(100% - 30px));margin:22px auto 60px}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* CARDS */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:24px;margin-bottom:18px}
+.card h1{margin:0 0 6px;font-size:clamp(20px,3vw,28px)}
+.card h2{margin:0 0 6px;font-size:18px}
+.card p.lead{color:var(--muted);margin:0;max-width:800px;font-size:14px}
+
+/* TYPE GRID */
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.type-card{border:2px solid var(--border);background:#fff;border-radius:14px;
+  padding:16px;text-align:left;min-height:120px;transition:.15s}
+.type-card:hover{transform:translateY(-2px);border-color:var(--secondary)}
+.type-card.active{border-color:var(--primary);background:#eef8f6}
+.type-icon{font-size:26px;margin-bottom:6px}
+.type-title{font-weight:800;font-size:14px}
+.type-desc{color:var(--muted);font-size:11px;margin-top:4px}
+
+/* FORM */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.full{grid-column:1/-1}
+.field{min-width:0}
+label{display:block;font-weight:700;font-size:12px;margin-bottom:6px}
+.req{color:var(--danger)}
+input,select,textarea{width:100%;border:1px solid var(--border);border-radius:10px;
+  padding:10px 12px;outline:none;background:#fff;color:var(--text);font-size:14px;
+  transition:.15s}
+input:focus,select:focus,textarea:focus{border-color:var(--secondary);
+  box-shadow:0 0 0 3px rgba(18,140,126,.1)}
+input.invalid,select.invalid,textarea.invalid{border-color:var(--danger);background:#fff8f7}
+textarea{min-height:90px;resize:vertical}
+.help{color:var(--muted);font-size:11px;margin-top:4px}
+
+.section{margin-bottom:26px}
+.section-title{display:flex;align-items:center;gap:9px;font-size:15px;
+  font-weight:800;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.section-num{width:26px;height:26px;display:grid;place-items:center;border-radius:50%;
+  background:var(--primary);color:#fff;font-size:11px;font-weight:800}
+
+.conditional{display:none}
+.conditional.show{display:block}
+
+.agreement{background:#f5faf8;border:1px solid #d9ebe6;padding:14px;border-radius:12px;
+  font-size:12px;color:#42514d}
+.check-row{display:flex;align-items:flex-start;gap:10px;margin-top:10px}
+.check-row input{width:18px;height:18px;margin-top:2px;flex:0 0 auto}
+
+.actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;
+  border-top:1px solid var(--border);padding-top:18px;margin-top:6px}
+.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:800;font-size:13px;transition:.15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-dark)}
+.btn-secondary{background:#edf2f0;color:#34403d}
+.btn-danger{background:#fce8e6;color:var(--danger)}
+.btn-success{background:#e6f4ea;color:var(--success)}
+.btn-info{background:#e8f0fe;color:var(--info)}
+.btn-sm{padding:7px 12px;font-size:12px}
+
+/* RESULT */
+.ticket{background:#f5faf8;border:1px dashed var(--secondary);border-radius:12px;
+  padding:14px;margin:14px 0;text-align:left}
+.ticket-row{display:flex;justify-content:space-between;gap:14px;padding:6px 0;
+  border-bottom:1px solid #dce9e5;font-size:13px}
+.ticket-row:last-child{border-bottom:0}
+.ticket-label{color:var(--muted)}
+.ticket-value{font-weight:800;text-align:right;word-break:break-all}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
+th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--border);
+  white-space:nowrap}
+th{background:#f8fbfa;font-weight:800;font-size:12px;color:#4a5653;
+  text-transform:uppercase;letter-spacing:.4px}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:#f9fcfb}
+
+/* BADGES */
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;
+  font-weight:800;white-space:nowrap}
+.badge-admin{background:#fff4e5;color:#b26a00}
+.badge-kaprodi{background:#e8f0fe;color:var(--info)}
+.badge-wadek{background:#f3e8fd;color:#7c3aed}
+.badge-dekan{background:#fce8e6;color:var(--danger)}
+.badge-done{background:#e6f4ea;color:var(--success)}
+.badge-reject{background:#fce8e6;color:var(--danger)}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;
+  margin-bottom:16px}
+.stat{background:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.stat-num{font-size:26px;font-weight:800;color:var(--primary)}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.5px;font-weight:700}
+
+/* LOGIN */
+.login-wrap{max-width:420px;margin:40px auto}
+.login-logo{text-align:center;margin-bottom:20px}
+.login-logo img{width:72px;height:72px;padding:6px;background:#fff;border-radius:16px;
+  box-shadow:var(--shadow)}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(15,25,22,.6);z-index:1000;
+  display:none;place-items:center;padding:16px;overflow-y:auto}
+.modal.show{display:grid}
+.modal-box{background:#fff;border-radius:16px;max-width:720px;width:100%;
+  max-height:92vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.modal-head{padding:18px 22px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  position:sticky;top:0;background:#fff;border-radius:16px 16px 0 0;z-index:2}
+.modal-head h3{margin:0;font-size:17px}
+.modal-body{padding:20px 22px}
+.modal-foot{padding:16px 22px;border-top:1px solid var(--border);display:flex;
+  gap:10px;justify-content:flex-end;flex-wrap:wrap;background:#fafcfb;
+  border-radius:0 0 16px 16px}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:8px 14px;font-size:13px;
+  margin-bottom:6px}
+.kv dt{color:var(--muted);font-weight:600}
+.kv dd{margin:0;font-weight:600;word-break:break-word}
+.modal-tabs{display:flex;gap:6px;padding:0 22px;border-bottom:1px solid var(--border);
+  background:#f8fbfa;overflow-x:auto}
+.modal-tab{background:transparent;border:0;padding:11px 14px;font-weight:700;
+  font-size:12px;color:var(--muted);border-bottom:2px solid transparent;
+  white-space:nowrap}
+.modal-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* LOADING & TOAST */
+.loading{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;
+  display:none;place-items:center;padding:20px}
+.loading.show{display:grid}
+.loading-box{background:#fff;border-radius:16px;padding:26px;min-width:260px;
+  text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.spinner{width:42px;height:42px;border:4px solid #dce8e5;border-top-color:var(--primary);
+  border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.toast{position:fixed;right:20px;bottom:20px;z-index:3000;min-width:260px;
+  max-width:400px;padding:13px 16px;background:#202725;color:#fff;border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);transform:translateY(140%);
+  transition:.25s;font-size:13px;font-weight:500}
+.toast.show{transform:translateY(0)}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+.toast.warning{background:#9a6700}
+.toast.info{background:var(--info)}
+
+.empty{text-align:center;padding:36px 16px;color:var(--muted)}
+.empty-icon{font-size:44px;opacity:.35;margin-bottom:8px}
+
+footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .type-grid{grid-template-columns:repeat(2,1fr)}
+  .grid,.grid-3{grid-template-columns:1fr}
+  .full{grid-column:auto}
+  .kv{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .brand-title{font-size:13px}
+  .brand-subtitle{font-size:10px}
+  .nav button{padding:7px 11px;font-size:11px}
+  .container{width:calc(100% - 18px);margin-top:14px}
+  .card{padding:16px}
+  .type-grid{grid-template-columns:1fr}
+  .actions .btn{width:100%}
+  .user-chip{font-size:11px}
+}
+</style>
 </head>
-
 <body>
 
-<div class="app">
-
-  <!-- ================= HEADER ================= -->
-
-  <header class="topbar">
-
-    <div class="topbar-inner">
-
-      <div class="brand">
-
-        <img
-          src="https://i.imgur.com/JkxRYd6.png"
-          alt="Logo FIKOM UPDM"
-          onerror="this.style.display='none'"
-        >
-
-        <div>
-          <div class="brand-title">
-            FAKULTAS ILMU KOMUNIKASI
-          </div>
-
-          <div class="brand-subtitle">
-            UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)
-          </div>
-        </div>
-
+<!-- ========== HEADER ========== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand" onclick="Router.go('home')">
+      <img src="https://i.imgur.com/JkxRYd6.png" alt="Logo" onerror="this.style.display='none'">
+      <div>
+        <div class="brand-title">FAKULTAS ILMU KOMUNIKASI</div>
+        <div class="brand-subtitle">UNIV. PROF. DR. MOESTOPO (BERAGAMA)</div>
       </div>
-
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        Sistem Pengajuan Surat
+    </div>
+    <nav class="nav" id="navBar">
+      <button data-nav="home" onclick="Router.go('home')">🏠 Beranda</button>
+      <button data-nav="tracking" onclick="Router.go('tracking')">🔍 Lacak</button>
+      <button data-nav="login" id="navLogin" onclick="Router.go('login')">🔐 Login</button>
+      <button data-nav="dashboard" id="navDash" style="display:none" onclick="Router.go('dashboard')">📋 Dashboard</button>
+      <div class="user-chip" id="userChip" style="display:none">
+        <span>👤</span>
+        <b id="userChipName">-</b>
+        <button onclick="Auth.logout()" style="background:transparent;border:0;color:#fff;font-size:12px">✕</button>
       </div>
+    </nav>
+  </div>
+</header>
 
+<main class="container">
+
+  <!-- ========== VIEW: HOME (FORM PENGAJUAN) ========== -->
+  <section class="view active" id="view-home">
+    <div class="card">
+      <h1>📄 Pengajuan Surat Mahasiswa</h1>
+      <p class="lead">Ajukan surat administrasi akademik secara online. Pilih jenis surat, lengkapi data, lalu pantau statusnya melalui halaman Lacak.</p>
+      <div class="type-grid">
+        <button class="type-card" data-type="OBSERVASI" onclick="Form.selectType('OBSERVASI')">
+          <div class="type-icon">🔎</div><div class="type-title">Surat Observasi</div>
+          <div class="type-desc">Izin kegiatan observasi lapangan.</div>
+        </button>
+        <button class="type-card" data-type="PENELITIAN" onclick="Form.selectType('PENELITIAN')">
+          <div class="type-icon">🔬</div><div class="type-title">Surat Penelitian</div>
+          <div class="type-desc">Izin pengumpulan data penelitian.</div>
+        </button>
+        <button class="type-card" data-type="PKL" onclick="Form.selectType('PKL')">
+          <div class="type-icon">💼</div><div class="type-title">Surat PKL</div>
+          <div class="type-desc">Praktik Kerja Lapangan.</div>
+        </button>
+        <button class="type-card" data-type="MAGANG" onclick="Form.selectType('MAGANG')">
+          <div class="type-icon">🚀</div><div class="type-title">Surat Magang</div>
+          <div class="type-desc">Kegiatan magang mahasiswa.</div>
+        </button>
+      </div>
     </div>
 
-  </header>
-
-
-  <main class="container">
-
-    <!-- ================= HERO ================= -->
-
-    <section class="hero">
-
-      <h1>
-        📄 Pengajuan Surat Mahasiswa
-      </h1>
-
-      <p>
-        Ajukan surat administrasi akademik secara online.
-        Pilih jenis surat sesuai kebutuhan Anda kemudian lengkapi
-        data yang diperlukan.
-      </p>
-
-      <!-- ================= TYPE ================= -->
-
-      <div class="type-grid">
-
-        <button
-          type="button"
-          class="type-card"
-          data-type="OBSERVASI"
-          onclick="selectType('OBSERVASI')"
-        >
-
-          <div class="type-icon">🔎</div>
-
-          <div class="type-title">
-            Surat Observasi
-          </div>
-
-          <div class="type-desc">
-            Permohonan izin melakukan kegiatan observasi.
-          </div>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="type-card"
-          data-type="PENELITIAN"
-          onclick="selectType('PENELITIAN')"
-        >
-
-          <div class="type-icon">🔬</div>
-
-          <div class="type-title">
-            Surat Penelitian
-          </div>
-
-          <div class="type-desc">
-            Permohonan izin pengumpulan data penelitian.
-          </div>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="type-card"
-          data-type="PKL"
-          onclick="selectType('PKL')"
-        >
-
-          <div class="type-icon">💼</div>
-
-          <div class="type-title">
-            Surat PKL
-          </div>
-
-          <div class="type-desc">
-            Permohonan Praktik Kerja Lapangan.
-          </div>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="type-card"
-          data-type="MAGANG"
-          onclick="selectType('MAGANG')"
-        >
-
-          <div class="type-icon">🚀</div>
-
-          <div class="type-title">
-            Surat Magang
-          </div>
-
-          <div class="type-desc">
-            Permohonan kegiatan magang mahasiswa.
-          </div>
-
-        </button>
-
+    <section class="card" id="formCard" style="display:none">
+      <div style="border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:18px">
+        <h2 id="formTitle">Pengajuan Surat</h2>
+        <p class="lead" id="formDesc" style="margin-top:4px">Lengkapi data.</p>
       </div>
 
-    </section>
-
-
-    <!-- ================= FORM ================= -->
-
-    <section
-      class="form-card"
-      id="formCard"
-      style="display:none"
-    >
-
-      <div class="form-header">
-
-        <h2 id="formTitle">
-          Pengajuan Surat
-        </h2>
-
-        <p id="formDescription">
-          Lengkapi data pengajuan.
-        </p>
-
-      </div>
-
-
-      <form
-        id="applicationForm"
-        class="form-body"
-        novalidate
-      >
-
-        <!-- ================= SECTION 1 ================= -->
-
+      <form id="applicationForm" novalidate>
+        <!-- SECTION 1 -->
         <div class="section">
-
-          <div class="section-title">
-
-            <span class="section-number">1</span>
-
-            Identitas Mahasiswa
-
-          </div>
-
-
+          <div class="section-title"><span class="section-num">1</span>Identitas Mahasiswa</div>
           <div class="grid">
-
-            <div class="field">
-
-              <label for="nama">
-                Nama Lengkap
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="nama"
-                name="nama"
-                type="text"
-                maxlength="150"
-                autocomplete="name"
-                placeholder="Masukkan nama lengkap"
-                required
-              >
-
-              <div class="error-text" id="namaError">
-                Nama wajib diisi.
-              </div>
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="nim">
-                NIM
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="nim"
-                name="nim"
-                type="text"
-                inputmode="numeric"
-                maxlength="30"
-                placeholder="Contoh: 202241003"
-                required
-              >
-
-              <div class="error-text" id="nimError">
-                NIM wajib diisi.
-              </div>
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="programStudi">
-                Program Studi
-                <span class="required">*</span>
-              </label>
-
-              <select
-                id="programStudi"
-                name="programStudi"
-                required
-              >
-
-                <option value="">
-                  -- Pilih Program Studi --
-                </option>
-
-                <option value="S1 ILMU KOMUNIKASI">
-                  S1 Ilmu Komunikasi
-                </option>
-
-                <option value="S2 MAGISTER ILMU KOMUNIKASI">
-                  S2 Magister Ilmu Komunikasi
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="semester">
-                Semester
-                <span class="required">*</span>
-              </label>
-
-              <select
-                id="semester"
-                name="semester"
-                required
-              >
-
-                <option value="">
-                  -- Pilih Semester --
-                </option>
-
-                <option value="1">Semester 1</option>
-                <option value="2">Semester 2</option>
-                <option value="3">Semester 3</option>
-                <option value="4">Semester 4</option>
-                <option value="5">Semester 5</option>
-                <option value="6">Semester 6</option>
-                <option value="7">Semester 7</option>
-                <option value="8">Semester 8</option>
-                <option value="9">Semester 9</option>
-                <option value="10">Semester 10+</option>
-
-              </select>
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="email">
-                Email
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="email"
-                name="email"
-                type="email"
-                maxlength="150"
-                autocomplete="email"
-                placeholder="nama@email.com"
-                required
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="whatsapp">
-                No. WhatsApp
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="whatsapp"
-                name="whatsapp"
-                type="tel"
-                inputmode="tel"
-                maxlength="20"
-                placeholder="08xxxxxxxxxx"
-                required
-              >
-
-            </div>
-
-
-            <div class="field full">
-
-              <label for="alamat">
-                Alamat Mahasiswa
-              </label>
-
-              <textarea
-                id="alamat"
-                name="alamat"
-                maxlength="500"
-                placeholder="Alamat mahasiswa"
-              ></textarea>
-
-            </div>
-
+            <div class="field"><label>Nama Lengkap <span class="req">*</span></label>
+              <input id="nama" name="nama" type="text" maxlength="150" placeholder="Nama lengkap" required></div>
+            <div class="field"><label>NIM <span class="req">*</span></label>
+              <input id="nim" name="nim" type="text" inputmode="numeric" maxlength="30" placeholder="Contoh: 202241003" required></div>
+            <div class="field"><label>Program Studi <span class="req">*</span></label>
+              <select id="programStudi" name="programStudi" required>
+                <option value="">-- Pilih --</option>
+                <option value="S1 ILMU KOMUNIKASI">S1 Ilmu Komunikasi</option>
+                <option value="S2 MAGISTER ILMU KOMUNIKASI">S2 Magister Ilmu Komunikasi</option>
+              </select></div>
+            <div class="field"><label>Semester <span class="req">*</span></label>
+              <select id="semester" name="semester" required>
+                <option value="">-- Pilih --</option>
+                <option>1</option><option>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8</option>
+                <option>9</option><option>10</option><option>11</option><option>12</option>
+                <option>13</option><option>14</option>
+              </select></div>
+            <div class="field"><label>Email <span class="req">*</span></label>
+              <input id="email" name="email" type="email" maxlength="150" placeholder="nama@email.com" required></div>
+            <div class="field"><label>No. WhatsApp <span class="req">*</span></label>
+              <input id="whatsapp" name="whatsapp" type="tel" maxlength="20" placeholder="08xxxxxxxxxx" required></div>
+            <div class="field full"><label>Alamat Mahasiswa</label>
+              <textarea id="alamat" name="alamat" maxlength="500" placeholder="Alamat lengkap"></textarea></div>
           </div>
-
         </div>
 
-
-        <!-- ================= SECTION 2 ================= -->
-
+        <!-- SECTION 2 -->
         <div class="section">
-
-          <div class="section-title">
-
-            <span class="section-number">2</span>
-
-            Informasi Instansi / Lokasi
-
-          </div>
-
-
+          <div class="section-title"><span class="section-num">2</span>Informasi Instansi</div>
           <div class="grid">
-
-            <div class="field">
-
-              <label for="namaInstansi">
-                Nama Instansi / Perusahaan
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="namaInstansi"
-                name="namaInstansi"
-                type="text"
-                maxlength="200"
-                placeholder="Nama instansi/perusahaan"
-                required
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="namaPimpinan">
-                Nama Pimpinan / Penanggung Jawab
-              </label>
-
-              <input
-                id="namaPimpinan"
-                name="namaPimpinan"
-                type="text"
-                maxlength="150"
-                placeholder="Nama pimpinan"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="jabatanPimpinan">
-                Jabatan Pimpinan
-              </label>
-
-              <input
-                id="jabatanPimpinan"
-                name="jabatanPimpinan"
-                type="text"
-                maxlength="150"
-                placeholder="Direktur / Manager / Kepala Divisi"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="unit">
-                Unit / Bagian / Divisi
-              </label>
-
-              <input
-                id="unit"
-                name="unit"
-                type="text"
-                maxlength="150"
-                placeholder="Nama unit/bagian/divisi"
-              >
-
-            </div>
-
-
-            <div class="field full">
-
-              <label for="alamatInstansi">
-                Alamat Instansi / Perusahaan
-                <span class="required">*</span>
-              </label>
-
-              <textarea
-                id="alamatInstansi"
-                name="alamatInstansi"
-                maxlength="500"
-                placeholder="Alamat lengkap instansi/perusahaan"
-                required
-              ></textarea>
-
-            </div>
-
+            <div class="field"><label>Nama Instansi <span class="req">*</span></label>
+              <input id="namaInstansi" name="namaInstansi" maxlength="200" required></div>
+            <div class="field"><label>Nama Pimpinan</label>
+              <input id="namaPimpinan" name="namaPimpinan" maxlength="150"></div>
+            <div class="field"><label>Jabatan Pimpinan</label>
+              <input id="jabatanPimpinan" name="jabatanPimpinan" maxlength="150"></div>
+            <div class="field"><label>Unit / Divisi</label>
+              <input id="unit" name="unit" maxlength="150"></div>
+            <div class="field full"><label>Alamat Instansi <span class="req">*</span></label>
+              <textarea id="alamatInstansi" name="alamatInstansi" maxlength="500" required></textarea></div>
           </div>
-
         </div>
 
-
-        <!-- ================= OBSERVASI ================= -->
-
-        <div
-          id="sectionObservasi"
-          class="section conditional"
-        >
-
-          <div class="section-title">
-
-            <span class="section-number">3</span>
-
-            Detail Observasi
-
-          </div>
-
-
+        <!-- SECTION: OBSERVASI -->
+        <div class="section conditional" id="secObservasi">
+          <div class="section-title"><span class="section-num">3</span>Detail Observasi</div>
           <div class="grid">
-
-            <div class="field">
-
-              <label for="objekObservasi">
-                Objek Observasi
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="objekObservasi"
-                name="objekObservasi"
-                type="text"
-                maxlength="300"
-                placeholder="Objek yang akan diamati"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="topikObservasi">
-                Topik Observasi
-              </label>
-
-              <input
-                id="topikObservasi"
-                name="topikObservasi"
-                type="text"
-                maxlength="300"
-                placeholder="Topik kegiatan"
-              >
-
-            </div>
-
-
-            <div class="field full">
-
-              <label for="tujuanObservasi">
-                Tujuan Observasi
-                <span class="required">*</span>
-              </label>
-
-              <textarea
-                id="tujuanObservasi"
-                name="tujuanObservasi"
-                maxlength="1000"
-                placeholder="Jelaskan tujuan observasi"
-              ></textarea>
-
-            </div>
-
+            <div class="field"><label>Objek Observasi <span class="req">*</span></label>
+              <input id="objekObservasi" name="objekObservasi" maxlength="300"></div>
+            <div class="field"><label>Topik Observasi</label>
+              <input id="topikObservasi" name="topikObservasi" maxlength="300"></div>
+            <div class="field full"><label>Tujuan Observasi <span class="req">*</span></label>
+              <textarea id="tujuanObservasi" name="tujuanObservasi" maxlength="1000"></textarea></div>
           </div>
-
         </div>
 
-
-        <!-- ================= PENELITIAN ================= -->
-
-        <div
-          id="sectionPenelitian"
-          class="section conditional"
-        >
-
-          <div class="section-title">
-
-            <span class="section-number">3</span>
-
-            Detail Penelitian
-
-          </div>
-
-
+        <!-- SECTION: PENELITIAN -->
+        <div class="section conditional" id="secPenelitian">
+          <div class="section-title"><span class="section-num">3</span>Detail Penelitian</div>
           <div class="grid">
-
-            <div class="field full">
-
-              <label for="judulPenelitian">
-                Judul Penelitian
-                <span class="required">*</span>
-              </label>
-
-              <textarea
-                id="judulPenelitian"
-                name="judulPenelitian"
-                maxlength="1000"
-                placeholder="Masukkan judul penelitian"
-              ></textarea>
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="jenisPenelitian">
-                Jenis Penelitian
-                <span class="required">*</span>
-              </label>
-
-              <select
-                id="jenisPenelitian"
-                name="jenisPenelitian"
-              >
-
-                <option value="">
-                  -- Pilih --
-                </option>
-
-                <option value="KUALITATIF">
-                  Kualitatif
-                </option>
-
-                <option value="KUANTITATIF">
-                  Kuantitatif
-                </option>
-
-                <option value="MIXED METHOD">
-                  Mixed Method
-                </option>
-
-                <option value="LAINNYA">
-                  Lainnya
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="metodePenelitian">
-                Metode Penelitian
-              </label>
-
-              <input
-                id="metodePenelitian"
-                name="metodePenelitian"
-                type="text"
-                maxlength="300"
-                placeholder="Contoh: Studi kasus"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="subjekPenelitian">
-                Subjek / Informan / Responden
-              </label>
-
-              <input
-                id="subjekPenelitian"
-                name="subjekPenelitian"
-                type="text"
-                maxlength="500"
-                placeholder="Subjek penelitian"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="teknikData">
-                Teknik Pengumpulan Data
-              </label>
-
-              <input
-                id="teknikData"
-                name="teknikData"
-                type="text"
-                maxlength="500"
-                placeholder="Wawancara, observasi, dokumentasi, dll."
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="dosenPembimbing">
-                Dosen Pembimbing
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="dosenPembimbing"
-                name="dosenPembimbing"
-                type="text"
-                maxlength="200"
-                placeholder="Nama dosen pembimbing"
-              >
-
-            </div>
-
+            <div class="field full"><label>Judul Penelitian <span class="req">*</span></label>
+              <textarea id="judulPenelitian" name="judulPenelitian" maxlength="1000"></textarea></div>
+            <div class="field"><label>Jenis Penelitian <span class="req">*</span></label>
+              <select id="jenisPenelitian" name="jenisPenelitian">
+                <option value="">-- Pilih --</option>
+                <option>KUALITATIF</option><option>KUANTITATIF</option>
+                <option>MIXED METHOD</option><option>LAINNYA</option>
+              </select></div>
+            <div class="field"><label>Metode Penelitian</label>
+              <input id="metodePenelitian" name="metodePenelitian" maxlength="300"></div>
+            <div class="field"><label>Subjek / Informan</label>
+              <input id="subjekPenelitian" name="subjekPenelitian" maxlength="500"></div>
+            <div class="field"><label>Teknik Pengumpulan Data</label>
+              <input id="teknikPengumpulanData" name="teknikPengumpulanData" maxlength="500"></div>
+            <div class="field"><label>Dosen Pembimbing <span class="req">*</span></label>
+              <input id="dosenPembimbing" name="dosenPembimbing" maxlength="200"></div>
           </div>
-
         </div>
 
-
-        <!-- ================= PKL ================= -->
-
-        <div
-          id="sectionPKL"
-          class="section conditional"
-        >
-
-          <div class="section-title">
-
-            <span class="section-number">3</span>
-
-            Detail PKL
-
-          </div>
-
-
+        <!-- SECTION: PKL -->
+        <div class="section conditional" id="secPKL">
+          <div class="section-title"><span class="section-num">3</span>Detail PKL</div>
           <div class="grid">
-
-            <div class="field">
-
-              <label for="konsentrasi">
-                Konsentrasi
-              </label>
-
-              <select
-                id="konsentrasi"
-                name="konsentrasi"
-              >
-
-                <option value="">
-                  -- Pilih Konsentrasi --
-                </option>
-
-                <option value="HUMAS">
-                  Humas
-                </option>
-
-                <option value="PERIKLANAN">
-                  Periklanan
-                </option>
-
-                <option value="JURNALISTIK">
-                  Jurnalistik
-                </option>
-
-                <option value="PENYIARAN DIGITAL">
-                  Penyiaran Digital
-                </option>
-
-                <option value="LAINNYA">
-                  Lainnya
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="posisiPKL">
-                Posisi / Bagian PKL
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="posisiPKL"
-                name="posisiPKL"
-                type="text"
-                maxlength="200"
-                placeholder="Posisi atau bagian"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="pembimbingLapangan">
-                Pembimbing Lapangan
-              </label>
-
-              <input
-                id="pembimbingLapangan"
-                name="pembimbingLapangan"
-                type="text"
-                maxlength="200"
-                placeholder="Nama pembimbing lapangan"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="dosenPembimbingPKL">
-                Dosen Pembimbing
-              </label>
-
-              <input
-                id="dosenPembimbingPKL"
-                name="dosenPembimbingPKL"
-                type="text"
-                maxlength="200"
-                placeholder="Nama dosen pembimbing"
-              >
-
-            </div>
-
+            <div class="field"><label>Konsentrasi</label>
+              <select id="konsentrasi" name="konsentrasi">
+                <option value="">-- Pilih --</option>
+                <option>HUMAS</option><option>PERIKLANAN</option>
+                <option>JURNALISTIK</option><option>PENYIARAN DIGITAL</option>
+                <option>LAINNYA</option>
+              </select></div>
+            <div class="field"><label>Posisi PKL <span class="req">*</span></label>
+              <input id="posisiPKL" name="posisiPKL" maxlength="200"></div>
+            <div class="field"><label>Pembimbing Lapangan</label>
+              <input id="pembimbingLapangan" name="pembimbingLapangan" maxlength="200"></div>
+            <div class="field"><label>Dosen Pembimbing PKL</label>
+              <input id="dosenPembimbingPKL" name="dosenPembimbingPKL" maxlength="200"></div>
           </div>
-
         </div>
 
-
-        <!-- ================= MAGANG ================= -->
-
-        <div
-          id="sectionMagang"
-          class="section conditional"
-        >
-
-          <div class="section-title">
-
-            <span class="section-number">3</span>
-
-            Detail Magang
-
-          </div>
-
-
+        <!-- SECTION: MAGANG -->
+        <div class="section conditional" id="secMagang">
+          <div class="section-title"><span class="section-num">3</span>Detail Magang</div>
           <div class="grid">
-
-            <div class="field">
-
-              <label for="divisiMagang">
-                Divisi / Departemen
-              </label>
-
-              <input
-                id="divisiMagang"
-                name="divisiMagang"
-                type="text"
-                maxlength="200"
-                placeholder="Nama divisi"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="posisiMagang">
-                Posisi Magang
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="posisiMagang"
-                name="posisiMagang"
-                type="text"
-                maxlength="200"
-                placeholder="Posisi magang"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="pembimbingMagang">
-                Pembimbing Lapangan
-              </label>
-
-              <input
-                id="pembimbingMagang"
-                name="pembimbingMagang"
-                type="text"
-                maxlength="200"
-                placeholder="Nama pembimbing lapangan"
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="dosenPembimbingMagang">
-                Dosen / Koordinator Magang
-              </label>
-
-              <input
-                id="dosenPembimbingMagang"
-                name="dosenPembimbingMagang"
-                type="text"
-                maxlength="200"
-                placeholder="Nama dosen/koordinator"
-              >
-
-            </div>
-
+            <div class="field"><label>Divisi / Departemen</label>
+              <input id="divisiMagang" name="divisiMagang" maxlength="200"></div>
+            <div class="field"><label>Posisi Magang <span class="req">*</span></label>
+              <input id="posisiMagang" name="posisiMagang" maxlength="200"></div>
+            <div class="field"><label>Pembimbing Lapangan</label>
+              <input id="pembimbingMagang" name="pembimbingMagang" maxlength="200"></div>
+            <div class="field"><label>Dosen / Koordinator Magang</label>
+              <input id="dosenPembimbingMagang" name="dosenPembimbingMagang" maxlength="200"></div>
           </div>
-
         </div>
 
-
-        <!-- ================= PERIOD ================= -->
-
+        <!-- SECTION 4 -->
         <div class="section">
-
-          <div class="section-title">
-
-            <span class="section-number">4</span>
-
-            Waktu Pelaksanaan
-
-          </div>
-
-
+          <div class="section-title"><span class="section-num">4</span>Waktu Pelaksanaan</div>
           <div class="grid grid-3">
-
-            <div class="field">
-
-              <label for="tanggalMulai">
-                Tanggal Mulai
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="tanggalMulai"
-                name="tanggalMulai"
-                type="date"
-                required
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="tanggalSelesai">
-                Tanggal Selesai
-                <span class="required">*</span>
-              </label>
-
-              <input
-                id="tanggalSelesai"
-                name="tanggalSelesai"
-                type="date"
-                required
-              >
-
-            </div>
-
-
-            <div class="field">
-
-              <label for="waktu">
-                Waktu / Jam Kegiatan
-              </label>
-
-              <input
-                id="waktu"
-                name="waktu"
-                type="text"
-                maxlength="100"
-                placeholder="Contoh: 08.00 - 16.00 WIB"
-              >
-
-            </div>
-
+            <div class="field"><label>Tanggal Mulai <span class="req">*</span></label>
+              <input id="tanggalMulai" name="tanggalMulai" type="date" required></div>
+            <div class="field"><label>Tanggal Selesai <span class="req">*</span></label>
+              <input id="tanggalSelesai" name="tanggalSelesai" type="date" required></div>
+            <div class="field"><label>Waktu / Jam</label>
+              <input id="waktu" name="waktu" maxlength="100" placeholder="08.00 - 16.00 WIB"></div>
           </div>
-
         </div>
 
-
-        <!-- ================= PURPOSE ================= -->
-
+        <!-- SECTION 5 -->
         <div class="section">
-
-          <div class="section-title">
-
-            <span class="section-number">5</span>
-
-            Keterangan Tambahan
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="keterangan">
-              Keterangan
-            </label>
-
-            <textarea
-              id="keterangan"
-              name="keterangan"
-              maxlength="1000"
-              placeholder="Keterangan tambahan jika ada"
-            ></textarea>
-
-          </div>
-
+          <div class="section-title"><span class="section-num">5</span>Keterangan Tambahan</div>
+          <div class="field"><textarea id="keterangan" name="keterangan" maxlength="1000" placeholder="Keterangan tambahan (opsional)"></textarea></div>
         </div>
 
-
-        <!-- ================= AGREEMENT ================= -->
-
+        <!-- SECTION 6 -->
         <div class="section">
-
-          <div class="section-title">
-
-            <span class="section-number">6</span>
-
-            Pernyataan
-
-          </div>
-
-
+          <div class="section-title"><span class="section-num">6</span>Pernyataan</div>
           <div class="agreement">
-
-            Data yang saya masukkan dalam formulir ini adalah benar
-            dan dapat dipertanggungjawabkan. Saya bersedia mematuhi
-            ketentuan administrasi akademik Fakultas Ilmu Komunikasi
-            Universitas Prof. Dr. Moestopo (Beragama).
-
+            Data yang saya masukkan adalah benar dan dapat dipertanggungjawabkan.
             <label class="check-row">
-
-              <input
-                type="checkbox"
-                id="agreement"
-                name="agreement"
-              >
-
-              <span>
-                Saya menyatakan bahwa data yang saya isi benar dan
-                menyetujui proses pengajuan surat.
-              </span>
-
+              <input type="checkbox" id="agreement" name="agreement">
+              <span>Saya menyatakan data benar dan menyetujui proses pengajuan.</span>
             </label>
-
           </div>
-
         </div>
-
-
-        <!-- ================= ACTION ================= -->
 
         <div class="actions">
-
-          <button
-            type="button"
-            class="btn btn-secondary"
-            onclick="resetForm()"
-          >
-            Reset
-          </button>
-
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="submitButton"
-            onclick="submitApplication()"
-          >
-            🚀 Ajukan Surat
-          </button>
-
+          <button type="button" class="btn btn-secondary" onclick="Form.reset()">Reset</button>
+          <button type="button" class="btn btn-primary" id="submitBtn" onclick="Form.submit()">🚀 Ajukan Surat</button>
         </div>
-
       </form>
-
     </section>
+  </section>
 
-
-    <!-- ================= RESULT ================= -->
-
-    <section
-      class="result"
-      id="result"
-    >
-
-      <div class="result-icon">
-        ✅
-      </div>
-
-      <h2>
-        Pengajuan Berhasil
-      </h2>
-
-      <p>
-        Data pengajuan telah berhasil dikirim ke sistem administrasi
-        Fakultas Ilmu Komunikasi.
-      </p>
-
-
+  <!-- ========== VIEW: RESULT ========== -->
+  <section class="view" id="view-result">
+    <div class="card" style="text-align:center">
+      <div style="font-size:52px">✅</div>
+      <h1 style="margin-top:6px">Pengajuan Berhasil</h1>
+      <p class="lead" style="margin:auto">Simpan ID Pengajuan dan Token Tracking di bawah untuk melacak status.</p>
       <div class="ticket">
-
-        <div class="ticket-row">
-
-          <span class="ticket-label">
-            ID Pengajuan
-          </span>
-
-          <span
-            class="ticket-value"
-            id="resultId"
-          >
-            -
-          </span>
-
-        </div>
-
-
-        <div class="ticket-row">
-
-          <span class="ticket-label">
-            Jenis Surat
-          </span>
-
-          <span
-            class="ticket-value"
-            id="resultType"
-          >
-            -
-          </span>
-
-        </div>
-
-
-        <div class="ticket-row">
-
-          <span class="ticket-label">
-            Nama
-          </span>
-
-          <span
-            class="ticket-value"
-            id="resultName"
-          >
-            -
-          </span>
-
-        </div>
-
-
-        <div class="ticket-row">
-
-          <span class="ticket-label">
-            NIM
-          </span>
-
-          <span
-            class="ticket-value"
-            id="resultNim"
-          >
-            -
-          </span>
-
-        </div>
-
-
-        <div class="ticket-row">
-
-          <span class="ticket-label">
-            Status
-          </span>
-
-          <span
-            class="ticket-value"
-            id="resultStatus"
-          >
-            Diajukan
-          </span>
-
-        </div>
-
+        <div class="ticket-row"><span class="ticket-label">ID Pengajuan</span><span class="ticket-value" id="rId">-</span></div>
+        <div class="ticket-row"><span class="ticket-label">Token Tracking</span><span class="ticket-value" id="rToken">-</span></div>
+        <div class="ticket-row"><span class="ticket-label">Jenis Surat</span><span class="ticket-value" id="rType">-</span></div>
+        <div class="ticket-row"><span class="ticket-label">Nama</span><span class="ticket-value" id="rName">-</span></div>
+        <div class="ticket-row"><span class="ticket-label">NIM</span><span class="ticket-value" id="rNim">-</span></div>
+        <div class="ticket-row"><span class="ticket-label">Status</span><span class="ticket-value" id="rStatus">-</span></div>
       </div>
-
-
-      <button
-        type="button"
-        class="btn btn-primary"
-        onclick="newApplication()"
-      >
-        ➕ Pengajuan Baru
-      </button>
-
-    </section>
-
-  </main>
-
-
-  <footer>
-
-    <div>
-      Fakultas Ilmu Komunikasi
-      Universitas Prof. Dr. Moestopo (Beragama)
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+        <button class="btn btn-info" onclick="Form.copyTicket()">📋 Salin Tiket</button>
+        <button class="btn btn-primary" onclick="Form.newApplication()">➕ Pengajuan Baru</button>
+      </div>
     </div>
+  </section>
 
-    <div>
-      Sistem Administrasi Mahasiswa
+  <!-- ========== VIEW: TRACKING ========== -->
+  <section class="view" id="view-tracking">
+    <div class="card">
+      <h2>🔍 Lacak Status Pengajuan</h2>
+      <p class="lead">Masukkan ID Pengajuan dan Token Tracking Anda.</p>
+      <div class="grid" style="margin-top:14px">
+        <div class="field"><label>ID Pengajuan</label><input id="trId" placeholder="REQ-..."></div>
+        <div class="field"><label>Token Tracking</label><input id="trToken" placeholder="Token"></div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" onclick="Tracking.lookup()">Cari</button></div>
+      <div id="trResult" style="margin-top:16px"></div>
     </div>
+  </section>
 
-  </footer>
-
-</div>
-
-
-<!-- ================= LOADING ================= -->
-
-<div
-  class="loading"
-  id="loading"
->
-
-  <div class="loading-box">
-
-    <div class="spinner"></div>
-
-    <strong id="loadingText">
-      Mengirim pengajuan...
-    </strong>
-
-    <div
-      style="
-        color:#6b7774;
-        font-size:12px;
-        margin-top:7px;
-      "
-    >
-      Mohon jangan menutup halaman.
+  <!-- ========== VIEW: LOGIN ========== -->
+  <section class="view" id="view-login">
+    <div class="login-wrap">
+      <div class="login-logo">
+        <img src="https://i.imgur.com/JkxRYd6.png" onerror="this.style.display='none'">
+      </div>
+      <div class="card">
+        <h2 style="text-align:center">🔐 Login Petugas</h2>
+        <p class="lead" style="text-align:center">Untuk Admin, Kaprodi, Wadek, dan Dekan.</p>
+        <div style="margin-top:16px">
+          <div class="field" style="margin-bottom:12px">
+            <label>Username</label>
+            <input id="loginUser" autocomplete="username">
+          </div>
+          <div class="field" style="margin-bottom:16px">
+            <label>Password</label>
+            <input id="loginPass" type="password" autocomplete="current-password">
+          </div>
+          <button class="btn btn-primary" style="width:100%" id="loginBtn" onclick="Auth.login()">Masuk</button>
+        </div>
+      </div>
     </div>
+  </section>
 
+  <!-- ========== VIEW: DASHBOARD ========== -->
+  <section class="view" id="view-dashboard">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <h1 id="dashTitle">Dashboard</h1>
+          <p class="lead" id="dashSub">Memuat data...</p>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="Dashboard.refresh()">🔄 Refresh</button>
+      </div>
+    </div>
+    <div class="stats" id="statsBox"></div>
+    <div class="card">
+      <h2 id="listTitle">Daftar Menunggu Persetujuan</h2>
+      <div class="table-wrap" id="listBox"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Fakultas Ilmu Komunikasi · Universitas Prof. Dr. Moestopo (Beragama)<br>
+  <span style="opacity:.7">Sistem Administrasi Mahasiswa v3.1.0</span>
+</footer>
+
+<!-- ========== MODAL DETAIL ========== -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">Detail Pengajuan</h3>
+      <button class="btn btn-secondary btn-sm" onclick="Modal.close()">✕ Tutup</button>
+    </div>
+    <div class="modal-tabs" id="modalTabs">
+      <button class="modal-tab active" data-tab="detail">Detail</button>
+      <button class="modal-tab" data-tab="data">Data Pengajuan</button>
+    </div>
+    <div class="modal-body">
+      <div class="tab-pane active" id="tab-detail"></div>
+      <div class="tab-pane" id="tab-data"></div>
+    </div>
+    <div class="modal-foot" id="modalFoot"></div>
   </div>
-
 </div>
 
+<!-- ========== LOADING ========== -->
+<div class="loading" id="loading">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <strong id="loadingText">Memproses...</strong>
+  </div>
+</div>
 
-<!-- ================= TOAST ================= -->
-
-<div
-  class="toast"
-  id="toast"
-></div>
-
+<!-- ========== TOAST ========== -->
+<div class="toast" id="toast"></div>
 
 <script>
-
-/* ==========================================================
-   KONFIGURASI
-   ========================================================== */
-
-/*
- * GANTI URL DI BAWAH DENGAN URL WEB APP GOOGLE APPS SCRIPT.
- *
- * Contoh:
- * https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxx/exec
- */
-
+/* =========================================================
+ * CONFIG
+ * ========================================================= */
 const CONFIG = {
-
-  GAS_API_URL:
-    "https://script.google.com/macros/s/AKfycbyj_B8w7x4FysY-QEKEi6b9r6CYL504Fui5UiRLjyTaCDusv5FRyNKlqlvIIUd9QwU8KQ/exec",
-
-  APP_NAME:
-    "FIKOM UPDM (B) - Permohonan Surat Mahasiswa",
-
-  TIMEOUT:
-    30000
-
+  GAS_API_URL: "https://script.google.com/macros/s/AKfycbyj_B8w7x4FysY-QEKEi6b9r6CYL504Fui5UiRLjyTaCDusv5FRyNKlqlvIIUd9QwU8KQ/exec",
+  APP_NAME: "FIKOM UPDM (B) - Sistem Surat",
+  TIMEOUT: 30000,
+  TOKEN_KEY: "fikom_token",
+  USER_KEY: "fikom_user"
 };
-
-
-/* ==========================================================
-   STATE
-   ========================================================== */
-
-let selectedType = "";
-
-let jsonpCounter = 0;
-
-
-/* ==========================================================
-   TYPE CONFIG
-   ========================================================== */
 
 const TYPE_CONFIG = {
-
-  OBSERVASI: {
-    title: "Surat Permohonan Izin Observasi",
-    description:
-      "Permohonan izin untuk melakukan kegiatan observasi."
-  },
-
-  PENELITIAN: {
-    title: "Surat Permohonan Izin Penelitian",
-    description:
-      "Permohonan izin untuk melaksanakan kegiatan penelitian."
-  },
-
-  PKL: {
-    title: "Surat Permohonan Praktik Kerja Lapangan",
-    description:
-      "Permohonan izin untuk melaksanakan kegiatan PKL."
-  },
-
-  MAGANG: {
-    title: "Surat Permohonan Izin Magang",
-    description:
-      "Permohonan izin untuk melaksanakan kegiatan magang."
-  }
-
+  OBSERVASI: { title:"Surat Permohonan Izin Observasi", desc:"Permohonan izin untuk kegiatan observasi." },
+  PENELITIAN:{ title:"Surat Permohonan Izin Penelitian", desc:"Permohonan izin untuk kegiatan penelitian." },
+  PKL:       { title:"Surat Permohonan Praktik Kerja Lapangan", desc:"Permohonan izin untuk PKL." },
+  MAGANG:    { title:"Surat Permohonan Izin Magang", desc:"Permohonan izin untuk magang." }
 };
 
+const STATUS_LABEL = {
+  DIAJUKAN:"Diajukan",
+  VERIFIKASI_ADMIN:"Verifikasi Admin",
+  APPROVAL_KAPRODI:"Approval Kaprodi",
+  APPROVAL_WADEK:"Approval Wadek",
+  APPROVAL_DEKAN:"Approval Dekan",
+  DISETUJUI:"Disetujui",
+  DITOLAK:"Ditolak",
+  SELESAI:"Selesai"
+};
 
-/* ==========================================================
-   DOM HELPER
-   ========================================================== */
+/* =========================================================
+ * UTIL
+ * ========================================================= */
+const $ = id => document.getElementById(id);
 
-function $(id) {
-
-  return document.getElementById(id);
-
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
 }
 
+function normalizeText(v){
+  if (v === null || v === undefined) return "";
+  return String(v).replace(/\s+/g," ").trim();
+}
 
-/* ==========================================================
-   SELECT TYPE
-   ========================================================== */
+function utf8ToBase64(text){
+  const bytes = new TextEncoder().encode(text);
+  let bin = "";
+  const chunk = 0x8000;
+  for (let i=0;i<bytes.length;i+=chunk){
+    bin += String.fromCharCode(...bytes.subarray(i,i+chunk));
+  }
+  return btoa(bin);
+}
 
-function selectType(type) {
+function toast(msg,type="success"){
+  const t = $("toast");
+  t.textContent = msg;
+  t.className = "toast show " + type;
+  clearTimeout(t._tm);
+  t._tm = setTimeout(()=>t.classList.remove("show"), 4200);
+}
 
-  if (!TYPE_CONFIG[type]) {
+function showLoading(text){
+  $("loadingText").textContent = text || "Memproses...";
+  $("loading").classList.add("show");
+}
+function hideLoading(){ $("loading").classList.remove("show"); }
 
-    showToast(
-      "Jenis surat tidak dikenali.",
-      "error"
+/* =========================================================
+ * JSONP
+ * ========================================================= */
+let jsonpCount = 0;
+function jsonp(params, timeout=CONFIG.TIMEOUT){
+  return new Promise((resolve,reject)=>{
+    if (!CONFIG.GAS_API_URL || CONFIG.GAS_API_URL.includes("GANTI")){
+      reject(new Error("URL GAS belum dikonfigurasi."));
+      return;
+    }
+    const cbName = "__c" + Date.now() + "_" + (++jsonpCount);
+    const script = document.createElement("script");
+    let done = false;
+
+    const timer = setTimeout(()=>{
+      if (done) return; done = true; cleanup();
+      reject(new Error("Timeout: server tidak merespons."));
+    }, timeout);
+
+    function cleanup(){
+      clearTimeout(timer);
+      try{ delete window[cbName]; }catch(_){ window[cbName]=undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    window[cbName] = resp => {
+      if (done) return; done = true; cleanup();
+      resolve(resp);
+    };
+    script.onerror = ()=>{
+      if (done) return; done = true; cleanup();
+      reject(new Error("Gagal menghubungi server."));
+    };
+
+    const q = new URLSearchParams();
+    Object.keys(params).forEach(k => q.set(k, params[k]));
+    q.set("callback", cbName);
+    script.src = CONFIG.GAS_API_URL + "?" + q.toString();
+    script.async = true;
+    document.head.appendChild(script);
+  });
+}
+
+/* =========================================================
+ * API layer
+ * ========================================================= */
+const API = {
+  ping:      ()                        => jsonp({action:"ping"}),
+  login:     (u,p)                     => jsonp({action:"login", username:u, password:p}),
+  submit:    data                      => jsonp({action:"submit", data: utf8ToBase64(JSON.stringify(data))}),
+  tracking:  (id,token)                => jsonp({action:"tracking", requestId:id, trackingToken:token}),
+  verify:    token                     => jsonp({action:"verify", token:token}),
+  list:      token                     => jsonp({action:"list", token:token}),
+  detail:    (token,id)                => jsonp({action:"detail", token:token, requestId:id}),
+  stats:     token                     => jsonp({action:"stats", token:token}),
+  approve:   (token,id,note)           => jsonp({action:"approve", token:token, requestId:id, note:note||""}),
+  reject:    (token,id,reason)         => jsonp({action:"reject", token:token, requestId:id, reason:reason})
+};
+
+function unwrap(resp, ctx){
+  if (!resp || typeof resp !== "object") throw new Error("Respons tidak valid.");
+  if (resp.success === true) return resp.data || {};
+  const err = resp.error || {};
+  throw new Error(err.message || (ctx||"Terjadi kesalahan pada server."));
+}
+
+/* =========================================================
+ * AUTH
+ * ========================================================= */
+const Auth = {
+  token: null,
+  user: null,
+
+  init(){
+    try{
+      this.token = localStorage.getItem(CONFIG.TOKEN_KEY) || null;
+      const u = localStorage.getItem(CONFIG.USER_KEY);
+      this.user = u ? JSON.parse(u) : null;
+    }catch(_){ this.token=null; this.user=null; }
+    this.renderChip();
+  },
+
+  save(token,user){
+    this.token = token; this.user = user;
+    localStorage.setItem(CONFIG.TOKEN_KEY, token);
+    localStorage.setItem(CONFIG.USER_KEY, JSON.stringify(user));
+    this.renderChip();
+  },
+
+  logout(){
+    this.token = null; this.user = null;
+    localStorage.removeItem(CONFIG.TOKEN_KEY);
+    localStorage.removeItem(CONFIG.USER_KEY);
+    this.renderChip();
+    toast("Anda telah keluar.","info");
+    Router.go("home");
+  },
+
+  renderChip(){
+    const chip = $("userChip"), name = $("userChipName");
+    const navLogin = $("navLogin"), navDash = $("navDash");
+    if (this.token && this.user){
+      chip.style.display = "flex";
+      navLogin.style.display = "none";
+      navDash.style.display = "";
+      name.textContent = this.user.nama + " · " + this.user.role;
+    } else {
+      chip.style.display = "none";
+      navLogin.style.display = "";
+      navDash.style.display = "none";
+    }
+  },
+
+  async login(){
+    const u = $("loginUser").value.trim();
+    const p = $("loginPass").value;
+    if (!u || !p) return toast("Username dan password wajib diisi.","warning");
+    const btn = $("loginBtn"); btn.disabled = true;
+    showLoading("Memverifikasi...");
+    try{
+      const data = unwrap(await API.login(u,p), "Login gagal.");
+      this.save(data.token, data.user);
+      hideLoading();
+      toast("Selamat datang, " + data.user.nama + "!","success");
+      $("loginPass").value = "";
+      Router.go("dashboard");
+    }catch(e){
+      hideLoading();
+      toast(e.message,"error");
+    }finally{
+      btn.disabled = false;
+    }
+  }
+};
+
+/* =========================================================
+ * ROUTER
+ * ========================================================= */
+const Router = {
+  current: "home",
+  go(view){
+    const views = document.querySelectorAll(".view");
+    views.forEach(v => v.classList.remove("active"));
+    const target = $("view-" + view);
+    if (!target) return;
+
+    if ((view === "dashboard") && !Auth.token){
+      toast("Silakan login terlebih dahulu.","warning");
+      view = "login";
+    }
+
+    $("view-" + view).classList.add("active");
+    this.current = view;
+    document.querySelectorAll(".nav button").forEach(b=>{
+      b.classList.toggle("active", b.dataset.nav === view);
+    });
+    window.scrollTo({top:0, behavior:"smooth"});
+
+    if (view === "dashboard") Dashboard.load();
+  }
+};
+
+/* =========================================================
+ * FORM (Student submission)
+ * ========================================================= */
+const Form = {
+  selectedType: "",
+  lastTicket: null,
+
+  selectType(type){
+    if (!TYPE_CONFIG[type]) return toast("Jenis surat tidak dikenal.","error");
+    this.selectedType = type;
+    document.querySelectorAll(".type-card").forEach(c=>{
+      c.classList.toggle("active", c.dataset.type === type);
+    });
+    $("formCard").style.display = "block";
+    $("formTitle").textContent = TYPE_CONFIG[type].title;
+    $("formDesc").textContent = TYPE_CONFIG[type].desc;
+    document.querySelectorAll(".conditional").forEach(el=>el.classList.remove("show"));
+    const map = {OBSERVASI:"secObservasi",PENELITIAN:"secPenelitian",PKL:"secPKL",MAGANG:"secMagang"};
+    $(map[type]).classList.add("show");
+    $("formCard").scrollIntoView({behavior:"smooth",block:"start"});
+  },
+
+  reset(){
+    if (!confirm("Reset seluruh data formulir?")) return;
+    $("applicationForm").reset();
+    document.querySelectorAll(".invalid").forEach(el=>el.classList.remove("invalid"));
+    toast("Formulir telah direset.","success");
+  },
+
+  newApplication(){
+    $("applicationForm").reset();
+    document.querySelectorAll(".invalid").forEach(el=>el.classList.remove("invalid"));
+    document.querySelectorAll(".type-card").forEach(c=>c.classList.remove("active"));
+    document.querySelectorAll(".conditional").forEach(el=>el.classList.remove("show"));
+    this.selectedType = "";
+    $("formCard").style.display = "none";
+    Router.go("home");
+  },
+
+  copyTicket(){
+    if (!this.lastTicket) return;
+    const t = this.lastTicket;
+    const text =
+      "ID Pengajuan: " + t.requestId + "\n" +
+      "Token Tracking: " + t.trackingToken + "\n" +
+      "Jenis Surat: " + t.jenisSurat + "\n" +
+      "Nama: " + t.nama + "\n" +
+      "NIM: " + t.nim;
+    navigator.clipboard.writeText(text).then(
+      ()=>toast("Tiket disalin ke clipboard.","success"),
+      ()=>toast("Gagal menyalin.","error")
+    );
+  },
+
+  validate(){
+    const req = (id,msg)=>{
+      const el = $(id);
+      const v = normalizeText(el.value);
+      if (!v){ el.classList.add("invalid"); el.focus(); toast(msg,"error"); return false; }
+      el.classList.remove("invalid"); return true;
+    };
+
+    if (!this.selectedType) return toast("Pilih jenis surat terlebih dahulu.","warning"), false;
+
+    if (!req("nama","Nama lengkap wajib diisi.")) return false;
+    if (!req("nim","NIM wajib diisi.")) return false;
+    if (!/^\d{6,20}$/.test($("nim").value.trim())) return toast("Format NIM harus 6-20 digit angka.","error"), false;
+    if (!req("programStudi","Program studi wajib dipilih.")) return false;
+    if (!req("semester","Semester wajib dipilih.")) return false;
+    if (!req("email","Email wajib diisi.")) return false;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("email").value.trim())) return toast("Format email tidak valid.","error"), false;
+    if (!req("whatsapp","Nomor WhatsApp wajib diisi.")) return false;
+    if (!/^(\+?62|0)8[0-9]{7,13}$/.test($("whatsapp").value.replace(/[\s\-().]/g,""))) return toast("Format WhatsApp tidak valid.","error"), false;
+    if (!req("namaInstansi","Nama instansi wajib diisi.")) return false;
+    if (!req("alamatInstansi","Alamat instansi wajib diisi.")) return false;
+
+    if (this.selectedType === "OBSERVASI"){
+      if (!req("objekObservasi","Objek observasi wajib diisi.")) return false;
+      if (!req("tujuanObservasi","Tujuan observasi wajib diisi.")) return false;
+    }
+    if (this.selectedType === "PENELITIAN"){
+      if (!req("judulPenelitian","Judul penelitian wajib diisi.")) return false;
+      if (!req("jenisPenelitian","Jenis penelitian wajib dipilih.")) return false;
+      if (!req("dosenPembimbing","Dosen pembimbing wajib diisi.")) return false;
+    }
+    if (this.selectedType === "PKL"){
+      if (!req("posisiPKL","Posisi PKL wajib diisi.")) return false;
+    }
+    if (this.selectedType === "MAGANG"){
+      if (!req("posisiMagang","Posisi magang wajib diisi.")) return false;
+    }
+
+    if (!req("tanggalMulai","Tanggal mulai wajib diisi.")) return false;
+    if (!req("tanggalSelesai","Tanggal selesai wajib diisi.")) return false;
+    if ($("tanggalSelesai").value < $("tanggalMulai").value){
+      return toast("Tanggal selesai tidak boleh sebelum tanggal mulai.","error"), false;
+    }
+    if (!$("agreement").checked){
+      return toast("Anda harus menyetujui pernyataan.","warning"), false;
+    }
+    return true;
+  },
+
+  collect(){
+    const fd = new FormData($("applicationForm"));
+    const data = {};
+    fd.forEach((v,k)=>{ data[k] = normalizeText(v); });
+    data.jenisSurat = this.selectedType;
+    data.clientTimestamp = new Date().toISOString();
+    data.clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Jakarta";
+    return data;
+  },
+
+  async submit(){
+    if (!this.validate()) return;
+    const btn = $("submitBtn");
+    if (btn.disabled) return;
+    btn.disabled = true;
+    showLoading("Mengirim pengajuan...");
+    try{
+      const data = this.collect();
+      const resp = unwrap(await API.submit(data), "Gagal mengirim pengajuan.");
+      hideLoading();
+
+      const ticket = {
+        requestId: resp.requestId,
+        trackingToken: resp.trackingToken,
+        jenisSurat: TYPE_CONFIG[this.selectedType].title,
+        nama: data.nama,
+        nim: data.nim
+      };
+      this.lastTicket = ticket;
+
+      // simpan ke localStorage utk tracking cepat
+      localStorage.setItem("fikom_lastTicket", JSON.stringify(ticket));
+
+      $("rId").textContent = ticket.requestId;
+      $("rToken").textContent = ticket.trackingToken;
+      $("rType").textContent = ticket.jenisSurat;
+      $("rName").textContent = ticket.nama;
+      $("rNim").textContent = ticket.nim;
+      $("rStatus").textContent = STATUS_LABEL[resp.status] || resp.status || "Diajukan";
+
+      Router.go("result");
+      toast("Pengajuan berhasil dikirim.","success");
+    }catch(e){
+      hideLoading();
+      toast(e.message,"error");
+    }finally{
+      btn.disabled = false;
+    }
+  }
+};
+
+/* =========================================================
+ * TRACKING
+ * ========================================================= */
+const Tracking = {
+  init(){
+    try{
+      const t = JSON.parse(localStorage.getItem("fikom_lastTicket") || "null");
+      if (t){
+        $("trId").value = t.requestId || "";
+        $("trToken").value = t.trackingToken || "";
+      }
+    }catch(_){}
+  },
+
+  async lookup(){
+    const id = $("trId").value.trim();
+    const token = $("trToken").value.trim();
+    if (!id || !token) return toast("ID dan Token wajib diisi.","warning");
+    showLoading("Mencari pengajuan...");
+    try{
+      const data = unwrap(await API.tracking(id, token), "Data tidak ditemukan.");
+      hideLoading();
+      const t = data.tracking || {};
+      $("trResult").innerHTML = this.render(t);
+    }catch(e){
+      hideLoading();
+      $("trResult").innerHTML = "";
+      toast(e.message,"error");
+    }
+  },
+
+  render(t){
+    const badge = this.badge(t.status);
+    return `
+      <div class="ticket" style="margin-top:8px">
+        <div class="ticket-row"><span class="ticket-label">ID</span><span class="ticket-value">${escapeHtml(t.requestId)}</span></div>
+        <div class="ticket-row"><span class="ticket-label">Jenis</span><span class="ticket-value">${escapeHtml(t.jenisSurat)}</span></div>
+        <div class="ticket-row"><span class="ticket-label">Nama</span><span class="ticket-value">${escapeHtml(t.nama)}</span></div>
+        <div class="ticket-row"><span class="ticket-label">NIM</span><span class="ticket-value">${escapeHtml(t.nim)}</span></div>
+        <div class="ticket-row"><span class="ticket-label">Status</span><span class="ticket-value">${badge}</span></div>
+        ${t.nomorSurat?`<div class="ticket-row"><span class="ticket-label">Nomor Surat</span><span class="ticket-value">${escapeHtml(t.nomorSurat)}</span></div>`:''}
+        ${t.rejectionReason?`<div class="ticket-row"><span class="ticket-label">Alasan Ditolak</span><span class="ticket-value" style="color:var(--danger)">${escapeHtml(t.rejectionReason)}</span></div>`:''}
+        ${t.pdfUrl?`<div class="ticket-row"><span class="ticket-label">Unduh PDF</span><span class="ticket-value"><a href="${escapeHtml(t.pdfUrl)}" target="_blank">Buka PDF</a></span></div>`:''}
+      </div>
+    `;
+  },
+
+  badge(status){
+    const s = String(status||"");
+    const map = {
+      "VERIFIKASI_ADMIN":"badge-admin","APPROVAL_KAPRODI":"badge-kaprodi",
+      "APPROVAL_WADEK":"badge-wadek","APPROVAL_DEKAN":"badge-dekan",
+      "SELESAI":"badge-done","DISETUJUI":"badge-done","DITOLAK":"badge-reject"
+    };
+    return `<span class="badge ${map[s]||''}">${escapeHtml(STATUS_LABEL[s]||s||'-')}</span>`;
+  }
+};
+
+/* =========================================================
+ * DASHBOARD (role-based)
+ * ========================================================= */
+const Dashboard = {
+  data: [],
+  currentItem: null,
+
+  async load(){
+    if (!Auth.token) return Router.go("login");
+    const role = Auth.user.role;
+
+    $("dashTitle").textContent = "Dashboard " + role;
+    const subMap = {
+      ADMIN:   "Verifikasi pengajuan mahasiswa dan teruskan ke Kaprodi.",
+      KAPRODI: "Setujui pengajuan mahasiswa " + (Auth.user.programStudi || "-") + ".",
+      WADEK:   "Persetujuan tingkat Wakil Dekan.",
+      DEKAN:   "Persetujuan akhir dan penerbitan surat digital."
+    };
+    $("dashSub").textContent = subMap[role] || "";
+    $("listTitle").textContent = "Menunggu Persetujuan Anda (" + role + ")";
+
+    showLoading("Memuat data...");
+    try{
+      const [statsData, listData] = await Promise.all([
+        API.stats(Auth.token).then(r=>unwrap(r)),
+        API.list(Auth.token).then(r=>unwrap(r))
+      ]);
+      hideLoading();
+      this.renderStats(statsData.stats || {});
+      this.data = listData.items || [];
+      this.renderList();
+    }catch(e){
+      hideLoading();
+      if (/token|auth/i.test(e.message)) {
+        Auth.logout();
+      }
+      toast(e.message,"error");
+      $("listBox").innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div>${escapeHtml(e.message)}</div>`;
+    }
+  },
+
+  async refresh(){ await this.load(); toast("Data diperbarui.","info"); },
+
+  renderStats(s){
+    const items = [
+      {label:"Verifikasi Admin", val:s.pendingAdmin||0},
+      {label:"Approval Kaprodi", val:s.pendingKaprodi||0},
+      {label:"Approval Wadek", val:s.pendingWadek||0},
+      {label:"Approval Dekan", val:s.pendingDekan||0},
+      {label:"Selesai", val:s.completed||0},
+      {label:"Ditolak", val:s.rejected||0}
+    ];
+    $("statsBox").innerHTML = items.map(it=>`
+      <div class="stat">
+        <div class="stat-num">${it.val}</div>
+        <div class="stat-label">${escapeHtml(it.label)}</div>
+      </div>
+    `).join("");
+  },
+
+  renderList(){
+    if (!this.data.length){
+      $("listBox").innerHTML = `<div class="empty"><div class="empty-icon">📭</div>Tidak ada pengajuan yang menunggu persetujuan Anda.</div>`;
+      return;
+    }
+    const rows = this.data.map((it,i)=>{
+      return `<tr>
+        <td>${i+1}</td>
+        <td><code style="font-size:11px">${escapeHtml(it.requestId)}</code></td>
+        <td>${escapeHtml(it.nama)}<br><small style="color:var(--muted)">${escapeHtml(it.nim)}</small></td>
+        <td>${escapeHtml(it.jenisSurat)}</td>
+        <td>${escapeHtml(it.programStudi||'-')}</td>
+        <td>${Tracking.badge(it.status)}</td>
+        <td><button class="btn btn-info btn-sm" onclick="Dashboard.openDetail('${escapeHtml(it.requestId)}')">Detail</button></td>
+      </tr>`;
+    }).join("");
+    $("listBox").innerHTML = `
+      <table>
+        <thead><tr>
+          <th>#</th><th>ID</th><th>Mahasiswa</th><th>Jenis</th>
+          <th>Prodi</th><th>Status</th><th>Aksi</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  },
+
+  async openDetail(requestId){
+    showLoading("Memuat detail...");
+    try{
+      const data = unwrap(await API.detail(Auth.token, requestId), "Gagal memuat detail.");
+      hideLoading();
+      this.currentItem = data.item;
+      Modal.open(data.item);
+    }catch(e){
+      hideLoading();
+      toast(e.message,"error");
+    }
+  },
+
+  async approve(){
+    if (!this.currentItem) return;
+    const id = this.currentItem.REQUEST_ID;
+    const note = $("approveNote") ? $("approveNote").value.trim() : "";
+    if (!confirm("Setujui pengajuan " + id + "?")) return;
+    showLoading("Memproses persetujuan...");
+    try{
+      const resp = unwrap(await API.approve(Auth.token, id, note), "Gagal menyetujui.");
+      hideLoading();
+      Modal.close();
+      toast("Berhasil disetujui. Status: " + (STATUS_LABEL[resp.status]||resp.status), "success");
+      if (resp.letter && resp.letter.pdfUrl){
+        setTimeout(()=>toast("Surat PDF telah diterbitkan.","success"), 700);
+      }
+      this.refresh();
+    }catch(e){
+      hideLoading();
+      toast(e.message,"error");
+    }
+  },
+
+  async reject(){
+    if (!this.currentItem) return;
+    const id = this.currentItem.REQUEST_ID;
+    const reason = prompt("Alasan penolakan (wajib):");
+    if (!reason || !reason.trim()) return toast("Alasan wajib diisi.","warning");
+    showLoading("Memproses penolakan...");
+    try{
+      unwrap(await API.reject(Auth.token, id, reason.trim()), "Gagal menolak.");
+      hideLoading();
+      Modal.close();
+      toast("Pengajuan ditolak.","info");
+      this.refresh();
+    }catch(e){
+      hideLoading();
+      toast(e.message,"error");
+    }
+  }
+};
+
+/* =========================================================
+ * MODAL
+ * ========================================================= */
+const Modal = {
+  open(item){
+    $("modalTitle").textContent = "Pengajuan " + (item.REQUEST_ID || "");
+    $("tab-detail").innerHTML = this.renderDetail(item);
+    $("tab-data").innerHTML = this.renderData(item);
+    $("modalFoot").innerHTML = this.renderFooter(item);
+
+    // tab reset
+    document.querySelectorAll(".modal-tab").forEach(b=>{
+      b.classList.toggle("active", b.dataset.tab === "detail");
+    });
+    document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+    $("tab-detail").classList.add("active");
+
+    $("modal").classList.add("show");
+    document.body.style.overflow = "hidden";
+  },
+
+  close(){
+    $("modal").classList.remove("show");
+    document.body.style.overflow = "";
+    Dashboard.currentItem = null;
+  },
+
+  renderDetail(r){
+    return `
+      <dl class="kv">
+        <dt>ID Pengajuan</dt><dd><code>${escapeHtml(r.REQUEST_ID)}</code></dd>
+        <dt>Status</dt><dd>${Tracking.badge(r.STATUS)}</dd>
+        <dt>Jenis Surat</dt><dd>${escapeHtml(r.NAMA_JENIS_SURAT || r.JENIS_SURAT || '-')}</dd>
+        <dt>Nomor Surat</dt><dd>${escapeHtml(r.NOMOR_SURAT || '(belum diterbitkan)')}</dd>
+        <dt>Nama</dt><dd>${escapeHtml(r.NAMA)}</dd>
+        <dt>NIM</dt><dd>${escapeHtml(r.NIM)}</dd>
+        <dt>Program Studi</dt><dd>${escapeHtml(r.PROGRAM_STUDI || '-')}</dd>
+        <dt>Semester</dt><dd>${escapeHtml(r.SEMESTER || '-')}</dd>
+        <dt>Email</dt><dd>${escapeHtml(r.EMAIL || '-')}</dd>
+        <dt>WhatsApp</dt><dd>${escapeHtml(r.WHATSAPP || '-')}</dd>
+        <dt>Instansi</dt><dd>${escapeHtml(r.NAMA_INSTANSI || '-')}</dd>
+        <dt>Alamat Instansi</dt><dd>${escapeHtml(r.ALAMAT_INSTANSI || '-')}</dd>
+        <dt>Waktu</dt><dd>${escapeHtml(r.TANGGAL_MULAI || '-')} s/d ${escapeHtml(r.TANGGAL_SELESAI || '-')}</dd>
+      </dl>
+    `;
+  },
+
+  renderData(r){
+    const rows = [
+      ["Objek Observasi", r.OBJEK_OBSERVASI],
+      ["Topik Observasi", r.TOPIK_OBSERVASI],
+      ["Tujuan Observasi", r.TUJUAN_OBSERVASI],
+      ["Judul Penelitian", r.JUDUL_PENELITIAN],
+      ["Jenis Penelitian", r.JENIS_PENELITIAN],
+      ["Metode Penelitian", r.METODE_PENELITIAN],
+      ["Subjek Penelitian", r.SUBJEK_PENELITIAN],
+      ["Teknik Pengumpulan Data", r.TEKNIK_PENGUMPULAN_DATA],
+      ["Dosen Pembimbing", r.DOSEN_PEMBIMBING],
+      ["Konsentrasi", r.KONSENTRASI],
+      ["Posisi PKL", r.POSISI_PKL],
+      ["Pembimbing Lapangan", r.PEMBIMBING_LAPANGAN],
+      ["Dosen Pembimbing PKL", r.DOSEN_PEMBIMBING_PKL],
+      ["Divisi Magang", r.DIVISI_MAGANG],
+      ["Posisi Magang", r.POSISI_MAGANG],
+      ["Dosen Pembimbing Magang", r.DOSEN_PEMBIMBING_MAGANG],
+      ["Waktu", r.WAKTU],
+      ["Keterangan", r.KETERANGAN]
+    ].filter(x => x[1] && String(x[1]).trim());
+    if (!rows.length) return `<div class="empty">Tidak ada data tambahan.</div>`;
+    return `<dl class="kv">${
+      rows.map(([k,v])=>`<dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v)}</dd>`).join("")
+    }</dl>`;
+  },
+
+  renderFooter(r){
+    if (!Auth.token) return "";
+    const role = Auth.user.role;
+    const status = String(r.STATUS||'');
+    const canAct = (
+      (role==="ADMIN"   && status==="VERIFIKASI_ADMIN") ||
+      (role==="KAPRODI" && status==="APPROVAL_KAPRODI") ||
+      (role==="WADEK"   && status==="APPROVAL_WADEK") ||
+      (role==="DEKAN"   && status==="APPROVAL_DEKAN")
     );
 
-    return;
-
+    let html = "";
+    if (r.PDF_URL){
+      html += `<a class="btn btn-info" href="${escapeHtml(r.PDF_URL)}" target="_blank" rel="noopener">📄 Lihat PDF</a>`;
+    }
+    if (canAct){
+      html += `<button class="btn btn-danger" onclick="Dashboard.reject()">✕ Tolak</button>`;
+      html += `<button class="btn btn-success" onclick="Dashboard.approve()">✓ Setujui</button>`;
+    }
+    return html || `<button class="btn btn-secondary" onclick="Modal.close()">Tutup</button>`;
   }
+};
 
+/* =========================================================
+ * MODAL TAB HANDLERS
+ * ========================================================= */
+document.addEventListener("click", e=>{
+  const t = e.target.closest(".modal-tab");
+  if (!t) return;
+  document.querySelectorAll(".modal-tab").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+  t.classList.add("active");
+  $("tab-" + t.dataset.tab).classList.add("active");
+});
 
-  selectedType = type;
+// close modal by click backdrop
+$("modal").addEventListener("click", e=>{
+  if (e.target.id === "modal") Modal.close();
+});
+// close modal by ESC
+document.addEventListener("keydown", e=>{
+  if (e.key === "Escape" && $("modal").classList.contains("show")) Modal.close();
+});
 
+/* =========================================================
+ * INIT
+ * ========================================================= */
+document.addEventListener("DOMContentLoaded", ()=>{
+  Auth.init();
+  Tracking.init();
 
-  document
-    .querySelectorAll(".type-card")
-    .forEach(card => {
-
-      card.classList.toggle(
-        "active",
-        card.dataset.type === type
-      );
-
-    });
-
-
-  $("formCard").style.display = "block";
-
-  $("formTitle").textContent =
-    TYPE_CONFIG[type].title;
-
-  $("formDescription").textContent =
-    TYPE_CONFIG[type].description;
-
-
-  hideAllConditionalSections();
-
-
-  if (type === "OBSERVASI") {
-
-    $("sectionObservasi")
-      .classList.add("show");
-
-  }
-
-
-  if (type === "PENELITIAN") {
-
-    $("sectionPenelitian")
-      .classList.add("show");
-
-  }
-
-
-  if (type === "PKL") {
-
-    $("sectionPKL")
-      .classList.add("show");
-
-  }
-
-
-  if (type === "MAGANG") {
-
-    $("sectionMagang")
-      .classList.add("show");
-
-  }
-
-
-  $("formCard").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+  // constraint tanggal
+  $("tanggalMulai").addEventListener("change", function(){
+    $("tanggalSelesai").min = this.value;
   });
 
-}
-
-
-/* ==========================================================
-   HIDE CONDITIONAL
-   ========================================================== */
-
-function hideAllConditionalSections() {
-
-  document
-    .querySelectorAll(".conditional")
-    .forEach(el => {
-
-      el.classList.remove("show");
-
-    });
-
-}
-
-
-/* ==========================================================
-   NORMALIZE TEXT
-   ========================================================== */
-
-function normalizeText(value) {
-
-  if (value === null ||
-      value === undefined) {
-
-    return "";
-
-  }
-
-  return String(value)
-    .replace(/\s+/g, " ")
-    .trim();
-
-}
-
-
-/* ==========================================================
-   EMAIL VALIDATION
-   ========================================================== */
-
-function isValidEmail(email) {
-
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    .test(email);
-
-}
-
-
-/* ==========================================================
-   WHATSAPP VALIDATION
-   ========================================================== */
-
-function isValidWhatsApp(phone) {
-
-  const clean =
-    String(phone)
-      .replace(/[\s\-().]/g, "");
-
-  return /^(?:\+62|62|0)8[0-9]{7,13}$/
-    .test(clean);
-
-}
-
-
-/* ==========================================================
-   NIM VALIDATION
-   ========================================================== */
-
-function isValidNIM(nim) {
-
-  return /^[0-9]{5,30}$/.test(
-    String(nim).trim()
-  );
-
-}
-
-
-/* ==========================================================
-   REQUIRED FIELD
-   ========================================================== */
-
-function requireField(
-  id,
-  message
-) {
-
-  const el = $(id);
-
-  if (!el) return true;
-
-
-  const value =
-    normalizeText(el.value);
-
-
-  if (!value) {
-
-    el.classList.add("invalid");
-
-    showToast(
-      message,
-      "error"
-    );
-
-    el.focus();
-
-    return false;
-
-  }
-
-
-  el.classList.remove("invalid");
-
-  return true;
-
-}
-
-
-/* ==========================================================
-   VALIDATION
-   ========================================================== */
-
-function validateForm() {
-
-  if (!selectedType) {
-
-    showToast(
-      "Pilih jenis surat terlebih dahulu.",
-      "warning"
-    );
-
-    return false;
-
-  }
-
-
-  if (!requireField(
-    "nama",
-    "Nama lengkap wajib diisi."
-  )) return false;
-
-
-  if (!requireField(
-    "nim",
-    "NIM wajib diisi."
-  )) return false;
-
-
-  if (!isValidNIM(
-    $("nim").value
-  )) {
-
-    $("nim").classList.add("invalid");
-
-    showToast(
-      "Format NIM tidak valid.",
-      "error"
-    );
-
-    $("nim").focus();
-
-    return false;
-
-  }
-
-
-  if (!requireField(
-    "programStudi",
-    "Program studi wajib dipilih."
-  )) return false;
-
-
-  if (!requireField(
-    "semester",
-    "Semester wajib dipilih."
-  )) return false;
-
-
-  if (!requireField(
-    "email",
-    "Email wajib diisi."
-  )) return false;
-
-
-  if (!isValidEmail(
-    $("email").value
-  )) {
-
-    $("email").classList.add("invalid");
-
-    showToast(
-      "Format email tidak valid.",
-      "error"
-    );
-
-    $("email").focus();
-
-    return false;
-
-  }
-
-
-  if (!requireField(
-    "whatsapp",
-    "Nomor WhatsApp wajib diisi."
-  )) return false;
-
-
-  if (!isValidWhatsApp(
-    $("whatsapp").value
-  )) {
-
-    $("whatsapp").classList.add("invalid");
-
-    showToast(
-      "Nomor WhatsApp tidak valid.",
-      "error"
-    );
-
-    $("whatsapp").focus();
-
-    return false;
-
-  }
-
-
-  if (!requireField(
-    "namaInstansi",
-    "Nama instansi/perusahaan wajib diisi."
-  )) return false;
-
-
-  if (!requireField(
-    "alamatInstansi",
-    "Alamat instansi wajib diisi."
-  )) return false;
-
-
-  /* ===== OBSERVASI ===== */
-
-  if (selectedType === "OBSERVASI") {
-
-    if (!requireField(
-      "objekObservasi",
-      "Objek observasi wajib diisi."
-    )) return false;
-
-
-    if (!requireField(
-      "tujuanObservasi",
-      "Tujuan observasi wajib diisi."
-    )) return false;
-
-  }
-
-
-  /* ===== PENELITIAN ===== */
-
-  if (selectedType === "PENELITIAN") {
-
-    if (!requireField(
-      "judulPenelitian",
-      "Judul penelitian wajib diisi."
-    )) return false;
-
-
-    if (!requireField(
-      "jenisPenelitian",
-      "Jenis penelitian wajib dipilih."
-    )) return false;
-
-
-    if (!requireField(
-      "dosenPembimbing",
-      "Dosen pembimbing wajib diisi."
-    )) return false;
-
-  }
-
-
-  /* ===== PKL ===== */
-
-  if (selectedType === "PKL") {
-
-    if (!requireField(
-      "posisiPKL",
-      "Posisi PKL wajib diisi."
-    )) return false;
-
-  }
-
-
-  /* ===== MAGANG ===== */
-
-  if (selectedType === "MAGANG") {
-
-    if (!requireField(
-      "posisiMagang",
-      "Posisi magang wajib diisi."
-    )) return false;
-
-  }
-
-
-  /* ===== DATE ===== */
-
-  if (!requireField(
-    "tanggalMulai",
-    "Tanggal mulai wajib dipilih."
-  )) return false;
-
-
-  if (!requireField(
-    "tanggalSelesai",
-    "Tanggal selesai wajib dipilih."
-  )) return false;
-
-
-  const start =
-    $("tanggalMulai").value;
-
-  const end =
-    $("tanggalSelesai").value;
-
-
-  if (
-    start &&
-    end &&
-    end < start
-  ) {
-
-    $("tanggalSelesai")
-      .classList.add("invalid");
-
-    showToast(
-      "Tanggal selesai tidak boleh sebelum tanggal mulai.",
-      "error"
-    );
-
-    $("tanggalSelesai").focus();
-
-    return false;
-
-  }
-
-
-  if (!$("agreement").checked) {
-
-    showToast(
-      "Anda harus menyetujui pernyataan.",
-      "warning"
-    );
-
-    $("agreement").focus();
-
-    return false;
-
-  }
-
-
-  return true;
-
-}
-
-
-/* ==========================================================
-   COLLECT FORM DATA
-   ========================================================== */
-
-function collectFormData() {
-
-  const form =
-    $("applicationForm");
-
-
-  const fd =
-    new FormData(form);
-
-
-  const data = {};
-
-
-  fd.forEach(
-    (value, key) => {
-
-      if (
-        typeof value === "string"
-      ) {
-
-        data[key] =
-          normalizeText(value);
-
-      } else {
-
-        data[key] = value;
-
-      }
-
-    }
-  );
-
-
-  data.jenisSurat =
-    selectedType;
-
-
-  data.namaJenisSurat =
-    TYPE_CONFIG[selectedType].title;
-
-
-  data.appName =
-    CONFIG.APP_NAME;
-
-
-  data.clientTimestamp =
-    new Date().toISOString();
-
-
-  data.timezone =
-    Intl.DateTimeFormat()
-      .resolvedOptions()
-      .timeZone || "Asia/Jakarta";
-
-
-  data.status =
-    "DIAJUKAN";
-
-
-  return data;
-
-}
-
-
-/* ==========================================================
-   UTF-8 BASE64
-   ========================================================== */
-
-function utf8ToBase64(text) {
-
-  const bytes =
-    new TextEncoder()
-      .encode(text);
-
-
-  let binary = "";
-
-
-  const chunkSize = 0x8000;
-
-
-  for (
-    let i = 0;
-    i < bytes.length;
-    i += chunkSize
-  ) {
-
-    const chunk =
-      bytes.subarray(
-        i,
-        i + chunkSize
-      );
-
-
-    binary += String.fromCharCode(
-      ...chunk
-    );
-
-  }
-
-
-  return btoa(binary);
-
-}
-
-
-/* ==========================================================
-   BASE64 TO UTF-8
-   ========================================================== */
-
-function base64ToUtf8(base64) {
-
-  const binary =
-    atob(base64);
-
-
-  const bytes =
-    Uint8Array.from(
-      binary,
-      char => char.charCodeAt(0)
-    );
-
-
-  return new TextDecoder()
-    .decode(bytes);
-
-}
-
-
-/* ==========================================================
-   CREATE REQUEST ID
-   ========================================================== */
-
-function createRequestId() {
-
-  const now =
-    new Date();
-
-
-  const timestamp =
-    now.getTime()
-      .toString(36)
-      .toUpperCase();
-
-
-  const random =
-    Math.random()
-      .toString(36)
-      .substring(2, 8)
-      .toUpperCase();
-
-
-  return (
-    "REQ-" +
-    timestamp +
-    "-" +
-    random
-  );
-
-}
-
-
-/* ==========================================================
-   JSONP REQUEST
-   ========================================================== */
-
-function sendJSONP(
-  params,
-  timeout = CONFIG.TIMEOUT
-) {
-
-  return new Promise(
-    (resolve, reject) => {
-
-      if (
-        !CONFIG.GAS_API_URL ||
-        CONFIG.GAS_API_URL.includes(
-          "GANTI_DENGAN"
-        )
-      ) {
-
-        reject(
-          new Error(
-            "URL GAS belum dikonfigurasi."
-          )
-        );
-
-        return;
-
-      }
-
-
-      const callbackName =
-        "__gasCallback_" +
-        Date.now() +
-        "_" +
-        (++jsonpCounter);
-
-
-      const script =
-        document.createElement("script");
-
-
-      let finished = false;
-
-
-      const timer =
-        setTimeout(
-          () => {
-
-            if (finished) return;
-
-            finished = true;
-
-            cleanup();
-
-            reject(
-              new Error(
-                "Timeout: GAS tidak memberikan respons."
-              )
-            );
-
-          },
-          timeout
-        );
-
-
-      function cleanup() {
-
-        clearTimeout(timer);
-
-        try {
-
-          delete window[
-            callbackName
-          ];
-
-        } catch (e) {
-
-          window[
-            callbackName
-          ] = undefined;
-
-        }
-
-
-        if (script.parentNode) {
-
-          script.parentNode.removeChild(
-            script
-          );
-
-        }
-
-      }
-
-
-      window[callbackName] =
-        function(response) {
-
-          if (finished) return;
-
-          finished = true;
-
-          cleanup();
-
-          resolve(response);
-
-        };
-
-
-      script.onerror =
-        function() {
-
-          if (finished) return;
-
-          finished = true;
-
-          cleanup();
-
-          reject(
-            new Error(
-              "Gagal menghubungi Google Apps Script."
-            )
-          );
-
-        };
-
-
-      const query =
-        new URLSearchParams();
-
-
-      Object.keys(params)
-        .forEach(key => {
-
-          query.set(
-            key,
-            params[key]
-          );
-
-        });
-
-
-      query.set(
-        "callback",
-        callbackName
-      );
-
-
-      script.src =
-        CONFIG.GAS_API_URL +
-        "?" +
-        query.toString();
-
-
-      script.async = true;
-
-
-      document.head.appendChild(
-        script
-      );
-
-    }
-  );
-
-}
-
-
-/* ==========================================================
-   SUBMIT
-   ========================================================== */
-
-async function submitApplication() {
-
-  if (!validateForm()) {
-
-    return;
-
-  }
-
-
-  const button =
-    $("submitButton");
-
-
-  button.disabled = true;
-
-
-  showLoading(
-    "Mengirim pengajuan ke server..."
-  );
-
-
-  try {
-
-    const data =
-      collectFormData();
-
-
-    const requestId =
-      createRequestId();
-
-
-    data.requestId =
-      requestId;
-
-
-    /*
-     * Encode seluruh object menjadi JSON
-     * kemudian Base64 UTF-8.
-     */
-
-    const json =
-      JSON.stringify(data);
-
-
-    const encoded =
-      utf8ToBase64(json);
-
-
-    /*
-     * JSONP:
-     *
-     * action = submitApplication
-     * data   = Base64
-     */
-
-    const response =
-      await sendJSONP({
-
-        action:
-          "submitApplication",
-
-        data:
-          encoded
-
-      });
-
-
-    console.log(
-      "GAS RESPONSE:",
-      response
-    );
-
-
-    if (
-      !response ||
-      response.success !== true
-    ) {
-
-      throw new Error(
-        response &&
-        response.message
-          ? response.message
-          : "Server menolak pengajuan."
-      );
-
-    }
-
-
-    hideLoading();
-
-
-    showResult(
-      response,
-      data
-    );
-
-
-    showToast(
-      "Pengajuan berhasil dikirim.",
-      "success"
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      "SUBMIT ERROR:",
-      error
-    );
-
-
-    hideLoading();
-
-
-    showToast(
-      error.message ||
-      "Terjadi kesalahan saat mengirim data.",
-      "error"
-    );
-
-
-  } finally {
-
-    button.disabled = false;
-
-  }
-
-}
-
-
-/* ==========================================================
-   RESULT
-   ========================================================== */
-
-function showResult(
-  response,
-  data
-) {
-
-  $("formCard").style.display =
-    "none";
-
-
-  $("result").classList.add(
-    "show"
-  );
-
-
-  $("resultId").textContent =
-    response.requestId ||
-    data.requestId ||
-    "-";
-
-
-  $("resultType").textContent =
-    TYPE_CONFIG[selectedType]
-      .title;
-
-
-  $("resultName").textContent =
-    data.nama ||
-    "-";
-
-
-  $("resultNim").textContent =
-    data.nim ||
-    "-";
-
-
-  $("resultStatus").textContent =
-    response.status ||
-    "DIAJUKAN";
-
-
-  $("result").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+  // remove invalid on typing
+  document.addEventListener("input", e=>{
+    if (e.target.matches("input,select,textarea")) e.target.classList.remove("invalid");
   });
 
-}
-
-
-/* ==========================================================
-   NEW APPLICATION
-   ========================================================== */
-
-function newApplication() {
-
-  $("result")
-    .classList.remove("show");
-
-
-  $("applicationForm")
-    .reset();
-
-
-  selectedType = "";
-
-
-  document
-    .querySelectorAll(".type-card")
-    .forEach(card => {
-
-      card.classList.remove(
-        "active"
-      );
-
-    });
-
-
-  hideAllConditionalSections();
-
-
-  $("formCard").style.display =
-    "none";
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+  // enter to submit login
+  $("loginPass").addEventListener("keydown", e=>{
+    if (e.key === "Enter") Auth.login();
   });
 
-}
-
-
-/* ==========================================================
-   RESET
-   ========================================================== */
-
-function resetForm() {
-
-  if (
-    !confirm(
-      "Reset seluruh data formulir?"
-    )
-  ) {
-
-    return;
-
-  }
-
-
-  $("applicationForm").reset();
-
-
-  document
-    .querySelectorAll(".invalid")
-    .forEach(el => {
-
-      el.classList.remove(
-        "invalid"
-      );
-
-    });
-
-
-  showToast(
-    "Formulir telah direset.",
-    "success"
-  );
-
-}
-
-
-/* ==========================================================
-   LOADING
-   ========================================================== */
-
-function showLoading(
-  text
-) {
-
-  $("loadingText")
-    .textContent =
-    text ||
-    "Memproses...";
-
-
-  $("loading")
-    .classList.add("show");
-
-}
-
-
-function hideLoading() {
-
-  $("loading")
-    .classList.remove("show");
-
-}
-
-
-/* ==========================================================
-   TOAST
-   ========================================================== */
-
-let toastTimer = null;
-
-
-function showToast(
-  message,
-  type = "success"
-) {
-
-  const toast =
-    $("toast");
-
-
-  toast.textContent =
-    message;
-
-
-  toast.className =
-    "toast show " +
-    type;
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(
-      () => {
-
-        toast.classList.remove(
-          "show"
-        );
-
-      },
-      4500
-    );
-
-}
-
-
-/* ==========================================================
-   AUTO REMOVE INVALID
-   ========================================================== */
-
-document.addEventListener(
-  "input",
-  event => {
-
-    if (
-      event.target.matches(
-        "input, select, textarea"
-      )
-    ) {
-
-      event.target.classList.remove(
-        "invalid"
-      );
-
-    }
-
-  }
-);
-
-
-/* ==========================================================
-   ENTER KEY
-   ========================================================== */
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Enter" &&
-      event.target.tagName !== "TEXTAREA"
-    ) {
-
-      event.preventDefault();
-
-    }
-
-  }
-);
-
-
-/* ==========================================================
-   PREVENT DOUBLE SUBMIT
-   ========================================================== */
-
-let submitting = false;
-
-
-/* ==========================================================
-   DATE VALIDATION
-   ========================================================== */
-
-$("tanggalMulai")
-  .addEventListener(
-    "change",
-    function() {
-
-      $("tanggalSelesai")
-        .min = this.value;
-
-    }
-  );
-
-
-/* ==========================================================
-   INIT
-   ========================================================== */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    console.log(
-      CONFIG.APP_NAME +
-      " initialized."
-    );
-
-
-    console.log(
-      "GAS endpoint:",
-      CONFIG.GAS_API_URL
-    );
-
-  }
-);
-
+  console.log(CONFIG.APP_NAME + " siap.");
+  console.log("GAS endpoint:", CONFIG.GAS_API_URL);
+
+  // quick health-check
+  API.ping().then(r=>{
+    if (r && r.success) console.log("Server online:", r.data);
+  }).catch(()=>{ /* silent */ });
+});
 </script>
 
 </body>
