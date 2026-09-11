@@ -1,0 +1,3179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pengajuan Surat Mahasiswa | FIKOM UPDM (B)</title>
+
+  <meta
+    name="description"
+    content="Sistem Pengajuan Surat Mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama)"
+  >
+
+  <style>
+    :root {
+      --primary: #075e54;
+      --primary-dark: #064e46;
+      --secondary: #128c7e;
+      --accent: #25d366;
+      --bg: #f4f7f6;
+      --card: #ffffff;
+      --text: #17201e;
+      --muted: #6b7774;
+      --border: #dce5e2;
+      --danger: #d93025;
+      --warning: #f9ab00;
+      --success: #188038;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    /* ================= HEADER ================= */
+
+    .topbar {
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary-dark),
+          var(--primary)
+        );
+      color: #fff;
+      padding: 22px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 18px rgba(0,0,0,.15);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 14px;
+      padding: 5px;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .brand-subtitle {
+      font-size: 13px;
+      opacity: .88;
+      margin-top: 3px;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,.12);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(37,211,102,.15);
+    }
+
+    /* ================= MAIN ================= */
+
+    .container {
+      width: min(1180px, calc(100% - 30px));
+      margin: 30px auto 60px;
+    }
+
+    .hero {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 4vw, 34px);
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin: 0;
+      max-width: 850px;
+    }
+
+    /* ================= TYPE CARDS ================= */
+
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .type-card {
+      border: 2px solid var(--border);
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      transition: .2s ease;
+      text-align: left;
+      min-height: 140px;
+    }
+
+    .type-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--secondary);
+    }
+
+    .type-card.active {
+      border-color: var(--primary);
+      background: #eef8f6;
+      box-shadow: 0 5px 15px rgba(7,94,84,.10);
+    }
+
+    .type-icon {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .type-title {
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .type-desc {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    /* ================= FORM ================= */
+
+    .form-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-top: 22px;
+      overflow: hidden;
+    }
+
+    .form-header {
+      padding: 22px 25px;
+      border-bottom: 1px solid var(--border);
+      background: #fbfdfc;
+    }
+
+    .form-header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .form-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .form-body {
+      padding: 25px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-number {
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .required {
+      color: var(--danger);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 11px 13px;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+      transition: .18s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(18,140,126,.10);
+    }
+
+    input.invalid,
+    select.invalid,
+    textarea.invalid {
+      border-color: var(--danger);
+      background: #fff8f7;
+    }
+
+    textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+
+    .help {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    .error-text {
+      color: var(--danger);
+      font-size: 11px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .error-text.show {
+      display: block;
+    }
+
+    /* ================= CONDITIONAL ================= */
+
+    .conditional {
+      display: none;
+    }
+
+    .conditional.show {
+      display: block;
+    }
+
+    /* ================= AGREEMENT ================= */
+
+    .agreement {
+      background: #f5faf8;
+      border: 1px solid #d9ebe6;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #42514d;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .check-row input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+
+    /* ================= BUTTON ================= */
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+      padding-top: 22px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 11px;
+      padding: 12px 18px;
+      font-weight: 800;
+      transition: .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #edf2f0;
+      color: #34403d;
+    }
+
+    .btn-danger {
+      background: #fff0ee;
+      color: var(--danger);
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ================= RESULT ================= */
+
+    .result {
+      display: none;
+      margin-top: 22px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result-icon {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    .result h2 {
+      margin: 0 0 8px;
+    }
+
+    .result p {
+      color: var(--muted);
+    }
+
+    .ticket {
+      max-width: 650px;
+      margin: 20px auto;
+      background: #f5faf8;
+      border: 1px dashed var(--secondary);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: left;
+    }
+
+    .ticket-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 7px 0;
+      border-bottom: 1px solid #dce9e5;
+      font-size: 13px;
+    }
+
+    .ticket-row:last-child {
+      border-bottom: 0;
+    }
+
+    .ticket-label {
+      color: var(--muted);
+    }
+
+    .ticket-value {
+      font-weight: 800;
+      text-align: right;
+    }
+
+    /* ================= LOADING ================= */
+
+    .loading {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,.55);
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .loading.show {
+      display: grid;
+    }
+
+    .loading-box {
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      min-width: 280px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #dce8e5;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 10000;
+      min-width: 280px;
+      max-width: 420px;
+      padding: 14px 16px;
+      background: #202725;
+      color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+      transform: translateY(130%);
+      transition: .25s ease;
+      font-size: 13px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      background: var(--success);
+    }
+
+    .toast.error {
+      background: var(--danger);
+    }
+
+    .toast.warning {
+      background: #9a6700;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 25px 15px 45px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 900px) {
+      .type-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .status-pill {
+        display: none;
+      }
+
+      .brand img {
+        width: 48px;
+        height: 48px;
+      }
+
+      .brand-title {
+        font-size: 14px;
+      }
+
+      .brand-subtitle {
+        font-size: 11px;
+      }
+
+      .container {
+        width: min(100% - 18px, 1180px);
+        margin-top: 15px;
+      }
+
+      .hero,
+      .form-body {
+        padding: 18px;
+      }
+
+      .form-header {
+        padding: 18px;
+      }
+
+      .type-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions .btn {
+        width: 100%;
+      }
+
+      .ticket-row {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .ticket-value {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="topbar">
+
+    <div class="topbar-inner">
+
+      <div class="brand">
+
+        <img
+          src="https://i.imgur.com/JkxRYd6.png"
+          alt="Logo FIKOM UPDM"
+          onerror="this.style.display='none'"
+        >
+
+        <div>
+          <div class="brand-title">
+            FAKULTAS ILMU KOMUNIKASI
+          </div>
+
+          <div class="brand-subtitle">
+            UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)
+          </div>
+        </div>
+
+      </div>
+
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        Sistem Pengajuan Surat
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+      <h1>
+        📄 Pengajuan Surat Mahasiswa
+      </h1>
+
+      <p>
+        Ajukan surat administrasi akademik secara online.
+        Pilih jenis surat sesuai kebutuhan Anda kemudian lengkapi
+        data yang diperlukan.
+      </p>
+
+      <!-- ================= TYPE ================= -->
+
+      <div class="type-grid">
+
+        <button
+          type="button"
+          class="type-card"
+          data-type="OBSERVASI"
+          onclick="selectType('OBSERVASI')"
+        >
+
+          <div class="type-icon">🔎</div>
+
+          <div class="type-title">
+            Surat Observasi
+          </div>
+
+          <div class="type-desc">
+            Permohonan izin melakukan kegiatan observasi.
+          </div>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="type-card"
+          data-type="PENELITIAN"
+          onclick="selectType('PENELITIAN')"
+        >
+
+          <div class="type-icon">🔬</div>
+
+          <div class="type-title">
+            Surat Penelitian
+          </div>
+
+          <div class="type-desc">
+            Permohonan izin pengumpulan data penelitian.
+          </div>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="type-card"
+          data-type="PKL"
+          onclick="selectType('PKL')"
+        >
+
+          <div class="type-icon">💼</div>
+
+          <div class="type-title">
+            Surat PKL
+          </div>
+
+          <div class="type-desc">
+            Permohonan Praktik Kerja Lapangan.
+          </div>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="type-card"
+          data-type="MAGANG"
+          onclick="selectType('MAGANG')"
+        >
+
+          <div class="type-icon">🚀</div>
+
+          <div class="type-title">
+            Surat Magang
+          </div>
+
+          <div class="type-desc">
+            Permohonan kegiatan magang mahasiswa.
+          </div>
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= FORM ================= -->
+
+    <section
+      class="form-card"
+      id="formCard"
+      style="display:none"
+    >
+
+      <div class="form-header">
+
+        <h2 id="formTitle">
+          Pengajuan Surat
+        </h2>
+
+        <p id="formDescription">
+          Lengkapi data pengajuan.
+        </p>
+
+      </div>
+
+
+      <form
+        id="applicationForm"
+        class="form-body"
+        novalidate
+      >
+
+        <!-- ================= SECTION 1 ================= -->
+
+        <div class="section">
+
+          <div class="section-title">
+
+            <span class="section-number">1</span>
+
+            Identitas Mahasiswa
+
+          </div>
+
+
+          <div class="grid">
+
+            <div class="field">
+
+              <label for="nama">
+                Nama Lengkap
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="nama"
+                name="nama"
+                type="text"
+                maxlength="150"
+                autocomplete="name"
+                placeholder="Masukkan nama lengkap"
+                required
+              >
+
+              <div class="error-text" id="namaError">
+                Nama wajib diisi.
+              </div>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="nim">
+                NIM
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="nim"
+                name="nim"
+                type="text"
+                inputmode="numeric"
+                maxlength="30"
+                placeholder="Contoh: 202241003"
+                required
+              >
+
+              <div class="error-text" id="nimError">
+                NIM wajib diisi.
+              </div>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="programStudi">
+                Program Studi
+                <span class="required">*</span>
+              </label>
+
+              <select
+                id="programStudi"
+                name="programStudi"
+                required
+              >
+
+                <option value="">
+                  -- Pilih Program Studi --
+                </option>
+
+                <option value="S1 ILMU KOMUNIKASI">
+                  S1 Ilmu Komunikasi
+                </option>
+
+                <option value="S2 MAGISTER ILMU KOMUNIKASI">
+                  S2 Magister Ilmu Komunikasi
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="semester">
+                Semester
+                <span class="required">*</span>
+              </label>
+
+              <select
+                id="semester"
+                name="semester"
+                required
+              >
+
+                <option value="">
+                  -- Pilih Semester --
+                </option>
+
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+                <option value="9">Semester 9</option>
+                <option value="10">Semester 10+</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="email">
+                Email
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                maxlength="150"
+                autocomplete="email"
+                placeholder="nama@email.com"
+                required
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="whatsapp">
+                No. WhatsApp
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="whatsapp"
+                name="whatsapp"
+                type="tel"
+                inputmode="tel"
+                maxlength="20"
+                placeholder="08xxxxxxxxxx"
+                required
+              >
+
+            </div>
+
+
+            <div class="field full">
+
+              <label for="alamat">
+                Alamat Mahasiswa
+              </label>
+
+              <textarea
+                id="alamat"
+                name="alamat"
+                maxlength="500"
+                placeholder="Alamat mahasiswa"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= SECTION 2 ================= -->
+
+        <div class="section">
+
+          <div class="section-title">
+
+            <span class="section-number">2</span>
+
+            Informasi Instansi / Lokasi
+
+          </div>
+
+
+          <div class="grid">
+
+            <div class="field">
+
+              <label for="namaInstansi">
+                Nama Instansi / Perusahaan
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="namaInstansi"
+                name="namaInstansi"
+                type="text"
+                maxlength="200"
+                placeholder="Nama instansi/perusahaan"
+                required
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="namaPimpinan">
+                Nama Pimpinan / Penanggung Jawab
+              </label>
+
+              <input
+                id="namaPimpinan"
+                name="namaPimpinan"
+                type="text"
+                maxlength="150"
+                placeholder="Nama pimpinan"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="jabatanPimpinan">
+                Jabatan Pimpinan
+              </label>
+
+              <input
+                id="jabatanPimpinan"
+                name="jabatanPimpinan"
+                type="text"
+                maxlength="150"
+                placeholder="Direktur / Manager / Kepala Divisi"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="unit">
+                Unit / Bagian / Divisi
+              </label>
+
+              <input
+                id="unit"
+                name="unit"
+                type="text"
+                maxlength="150"
+                placeholder="Nama unit/bagian/divisi"
+              >
+
+            </div>
+
+
+            <div class="field full">
+
+              <label for="alamatInstansi">
+                Alamat Instansi / Perusahaan
+                <span class="required">*</span>
+              </label>
+
+              <textarea
+                id="alamatInstansi"
+                name="alamatInstansi"
+                maxlength="500"
+                placeholder="Alamat lengkap instansi/perusahaan"
+                required
+              ></textarea>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= OBSERVASI ================= -->
+
+        <div
+          id="sectionObservasi"
+          class="section conditional"
+        >
+
+          <div class="section-title">
+
+            <span class="section-number">3</span>
+
+            Detail Observasi
+
+          </div>
+
+
+          <div class="grid">
+
+            <div class="field">
+
+              <label for="objekObservasi">
+                Objek Observasi
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="objekObservasi"
+                name="objekObservasi"
+                type="text"
+                maxlength="300"
+                placeholder="Objek yang akan diamati"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="topikObservasi">
+                Topik Observasi
+              </label>
+
+              <input
+                id="topikObservasi"
+                name="topikObservasi"
+                type="text"
+                maxlength="300"
+                placeholder="Topik kegiatan"
+              >
+
+            </div>
+
+
+            <div class="field full">
+
+              <label for="tujuanObservasi">
+                Tujuan Observasi
+                <span class="required">*</span>
+              </label>
+
+              <textarea
+                id="tujuanObservasi"
+                name="tujuanObservasi"
+                maxlength="1000"
+                placeholder="Jelaskan tujuan observasi"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= PENELITIAN ================= -->
+
+        <div
+          id="sectionPenelitian"
+          class="section conditional"
+        >
+
+          <div class="section-title">
+
+            <span class="section-number">3</span>
+
+            Detail Penelitian
+
+          </div>
+
+
+          <div class="grid">
+
+            <div class="field full">
+
+              <label for="judulPenelitian">
+                Judul Penelitian
+                <span class="required">*</span>
+              </label>
+
+              <textarea
+                id="judulPenelitian"
+                name="judulPenelitian"
+                maxlength="1000"
+                placeholder="Masukkan judul penelitian"
+              ></textarea>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="jenisPenelitian">
+                Jenis Penelitian
+                <span class="required">*</span>
+              </label>
+
+              <select
+                id="jenisPenelitian"
+                name="jenisPenelitian"
+              >
+
+                <option value="">
+                  -- Pilih --
+                </option>
+
+                <option value="KUALITATIF">
+                  Kualitatif
+                </option>
+
+                <option value="KUANTITATIF">
+                  Kuantitatif
+                </option>
+
+                <option value="MIXED METHOD">
+                  Mixed Method
+                </option>
+
+                <option value="LAINNYA">
+                  Lainnya
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="metodePenelitian">
+                Metode Penelitian
+              </label>
+
+              <input
+                id="metodePenelitian"
+                name="metodePenelitian"
+                type="text"
+                maxlength="300"
+                placeholder="Contoh: Studi kasus"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="subjekPenelitian">
+                Subjek / Informan / Responden
+              </label>
+
+              <input
+                id="subjekPenelitian"
+                name="subjekPenelitian"
+                type="text"
+                maxlength="500"
+                placeholder="Subjek penelitian"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="teknikData">
+                Teknik Pengumpulan Data
+              </label>
+
+              <input
+                id="teknikData"
+                name="teknikData"
+                type="text"
+                maxlength="500"
+                placeholder="Wawancara, observasi, dokumentasi, dll."
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="dosenPembimbing">
+                Dosen Pembimbing
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="dosenPembimbing"
+                name="dosenPembimbing"
+                type="text"
+                maxlength="200"
+                placeholder="Nama dosen pembimbing"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= PKL ================= -->
+
+        <div
+          id="sectionPKL"
+          class="section conditional"
+        >
+
+          <div class="section-title">
+
+            <span class="section-number">3</span>
+
+            Detail PKL
+
+          </div>
+
+
+          <div class="grid">
+
+            <div class="field">
+
+              <label for="konsentrasi">
+                Konsentrasi
+              </label>
+
+              <select
+                id="konsentrasi"
+                name="konsentrasi"
+              >
+
+                <option value="">
+                  -- Pilih Konsentrasi --
+                </option>
+
+                <option value="HUMAS">
+                  Humas
+                </option>
+
+                <option value="PERIKLANAN">
+                  Periklanan
+                </option>
+
+                <option value="JURNALISTIK">
+                  Jurnalistik
+                </option>
+
+                <option value="PENYIARAN DIGITAL">
+                  Penyiaran Digital
+                </option>
+
+                <option value="LAINNYA">
+                  Lainnya
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="posisiPKL">
+                Posisi / Bagian PKL
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="posisiPKL"
+                name="posisiPKL"
+                type="text"
+                maxlength="200"
+                placeholder="Posisi atau bagian"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="pembimbingLapangan">
+                Pembimbing Lapangan
+              </label>
+
+              <input
+                id="pembimbingLapangan"
+                name="pembimbingLapangan"
+                type="text"
+                maxlength="200"
+                placeholder="Nama pembimbing lapangan"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="dosenPembimbingPKL">
+                Dosen Pembimbing
+              </label>
+
+              <input
+                id="dosenPembimbingPKL"
+                name="dosenPembimbingPKL"
+                type="text"
+                maxlength="200"
+                placeholder="Nama dosen pembimbing"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= MAGANG ================= -->
+
+        <div
+          id="sectionMagang"
+          class="section conditional"
+        >
+
+          <div class="section-title">
+
+            <span class="section-number">3</span>
+
+            Detail Magang
+
+          </div>
+
+
+          <div class="grid">
+
+            <div class="field">
+
+              <label for="divisiMagang">
+                Divisi / Departemen
+              </label>
+
+              <input
+                id="divisiMagang"
+                name="divisiMagang"
+                type="text"
+                maxlength="200"
+                placeholder="Nama divisi"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="posisiMagang">
+                Posisi Magang
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="posisiMagang"
+                name="posisiMagang"
+                type="text"
+                maxlength="200"
+                placeholder="Posisi magang"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="pembimbingMagang">
+                Pembimbing Lapangan
+              </label>
+
+              <input
+                id="pembimbingMagang"
+                name="pembimbingMagang"
+                type="text"
+                maxlength="200"
+                placeholder="Nama pembimbing lapangan"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="dosenPembimbingMagang">
+                Dosen / Koordinator Magang
+              </label>
+
+              <input
+                id="dosenPembimbingMagang"
+                name="dosenPembimbingMagang"
+                type="text"
+                maxlength="200"
+                placeholder="Nama dosen/koordinator"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= PERIOD ================= -->
+
+        <div class="section">
+
+          <div class="section-title">
+
+            <span class="section-number">4</span>
+
+            Waktu Pelaksanaan
+
+          </div>
+
+
+          <div class="grid grid-3">
+
+            <div class="field">
+
+              <label for="tanggalMulai">
+                Tanggal Mulai
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="tanggalMulai"
+                name="tanggalMulai"
+                type="date"
+                required
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="tanggalSelesai">
+                Tanggal Selesai
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="tanggalSelesai"
+                name="tanggalSelesai"
+                type="date"
+                required
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="waktu">
+                Waktu / Jam Kegiatan
+              </label>
+
+              <input
+                id="waktu"
+                name="waktu"
+                type="text"
+                maxlength="100"
+                placeholder="Contoh: 08.00 - 16.00 WIB"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= PURPOSE ================= -->
+
+        <div class="section">
+
+          <div class="section-title">
+
+            <span class="section-number">5</span>
+
+            Keterangan Tambahan
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="keterangan">
+              Keterangan
+            </label>
+
+            <textarea
+              id="keterangan"
+              name="keterangan"
+              maxlength="1000"
+              placeholder="Keterangan tambahan jika ada"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= AGREEMENT ================= -->
+
+        <div class="section">
+
+          <div class="section-title">
+
+            <span class="section-number">6</span>
+
+            Pernyataan
+
+          </div>
+
+
+          <div class="agreement">
+
+            Data yang saya masukkan dalam formulir ini adalah benar
+            dan dapat dipertanggungjawabkan. Saya bersedia mematuhi
+            ketentuan administrasi akademik Fakultas Ilmu Komunikasi
+            Universitas Prof. Dr. Moestopo (Beragama).
+
+            <label class="check-row">
+
+              <input
+                type="checkbox"
+                id="agreement"
+                name="agreement"
+              >
+
+              <span>
+                Saya menyatakan bahwa data yang saya isi benar dan
+                menyetujui proses pengajuan surat.
+              </span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= ACTION ================= -->
+
+        <div class="actions">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="resetForm()"
+          >
+            Reset
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="submitButton"
+            onclick="submitApplication()"
+          >
+            🚀 Ajukan Surat
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+
+    <!-- ================= RESULT ================= -->
+
+    <section
+      class="result"
+      id="result"
+    >
+
+      <div class="result-icon">
+        ✅
+      </div>
+
+      <h2>
+        Pengajuan Berhasil
+      </h2>
+
+      <p>
+        Data pengajuan telah berhasil dikirim ke sistem administrasi
+        Fakultas Ilmu Komunikasi.
+      </p>
+
+
+      <div class="ticket">
+
+        <div class="ticket-row">
+
+          <span class="ticket-label">
+            ID Pengajuan
+          </span>
+
+          <span
+            class="ticket-value"
+            id="resultId"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="ticket-row">
+
+          <span class="ticket-label">
+            Jenis Surat
+          </span>
+
+          <span
+            class="ticket-value"
+            id="resultType"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="ticket-row">
+
+          <span class="ticket-label">
+            Nama
+          </span>
+
+          <span
+            class="ticket-value"
+            id="resultName"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="ticket-row">
+
+          <span class="ticket-label">
+            NIM
+          </span>
+
+          <span
+            class="ticket-value"
+            id="resultNim"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="ticket-row">
+
+          <span class="ticket-label">
+            Status
+          </span>
+
+          <span
+            class="ticket-value"
+            id="resultStatus"
+          >
+            Diajukan
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="newApplication()"
+      >
+        ➕ Pengajuan Baru
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <div>
+      Fakultas Ilmu Komunikasi
+      Universitas Prof. Dr. Moestopo (Beragama)
+    </div>
+
+    <div>
+      Sistem Administrasi Mahasiswa
+    </div>
+
+  </footer>
+
+</div>
+
+
+<!-- ================= LOADING ================= -->
+
+<div
+  class="loading"
+  id="loading"
+>
+
+  <div class="loading-box">
+
+    <div class="spinner"></div>
+
+    <strong id="loadingText">
+      Mengirim pengajuan...
+    </strong>
+
+    <div
+      style="
+        color:#6b7774;
+        font-size:12px;
+        margin-top:7px;
+      "
+    >
+      Mohon jangan menutup halaman.
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+<script>
+
+/* ==========================================================
+   KONFIGURASI
+   ========================================================== */
+
+/*
+ * GANTI URL DI BAWAH DENGAN URL WEB APP GOOGLE APPS SCRIPT.
+ *
+ * Contoh:
+ * https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxx/exec
+ */
+
+const CONFIG = {
+
+  GAS_API_URL:
+    "https://script.google.com/macros/s/AKfycbyj_B8w7x4FysY-QEKEi6b9r6CYL504Fui5UiRLjyTaCDusv5FRyNKlqlvIIUd9QwU8KQ/exec",
+
+  APP_NAME:
+    "FIKOM UPDM (B) - Permohonan Surat Mahasiswa",
+
+  TIMEOUT:
+    30000
+
+};
+
+
+/* ==========================================================
+   STATE
+   ========================================================== */
+
+let selectedType = "";
+
+let jsonpCounter = 0;
+
+
+/* ==========================================================
+   TYPE CONFIG
+   ========================================================== */
+
+const TYPE_CONFIG = {
+
+  OBSERVASI: {
+    title: "Surat Permohonan Izin Observasi",
+    description:
+      "Permohonan izin untuk melakukan kegiatan observasi."
+  },
+
+  PENELITIAN: {
+    title: "Surat Permohonan Izin Penelitian",
+    description:
+      "Permohonan izin untuk melaksanakan kegiatan penelitian."
+  },
+
+  PKL: {
+    title: "Surat Permohonan Praktik Kerja Lapangan",
+    description:
+      "Permohonan izin untuk melaksanakan kegiatan PKL."
+  },
+
+  MAGANG: {
+    title: "Surat Permohonan Izin Magang",
+    description:
+      "Permohonan izin untuk melaksanakan kegiatan magang."
+  }
+
+};
+
+
+/* ==========================================================
+   DOM HELPER
+   ========================================================== */
+
+function $(id) {
+
+  return document.getElementById(id);
+
+}
+
+
+/* ==========================================================
+   SELECT TYPE
+   ========================================================== */
+
+function selectType(type) {
+
+  if (!TYPE_CONFIG[type]) {
+
+    showToast(
+      "Jenis surat tidak dikenali.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  selectedType = type;
+
+
+  document
+    .querySelectorAll(".type-card")
+    .forEach(card => {
+
+      card.classList.toggle(
+        "active",
+        card.dataset.type === type
+      );
+
+    });
+
+
+  $("formCard").style.display = "block";
+
+  $("formTitle").textContent =
+    TYPE_CONFIG[type].title;
+
+  $("formDescription").textContent =
+    TYPE_CONFIG[type].description;
+
+
+  hideAllConditionalSections();
+
+
+  if (type === "OBSERVASI") {
+
+    $("sectionObservasi")
+      .classList.add("show");
+
+  }
+
+
+  if (type === "PENELITIAN") {
+
+    $("sectionPenelitian")
+      .classList.add("show");
+
+  }
+
+
+  if (type === "PKL") {
+
+    $("sectionPKL")
+      .classList.add("show");
+
+  }
+
+
+  if (type === "MAGANG") {
+
+    $("sectionMagang")
+      .classList.add("show");
+
+  }
+
+
+  $("formCard").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+}
+
+
+/* ==========================================================
+   HIDE CONDITIONAL
+   ========================================================== */
+
+function hideAllConditionalSections() {
+
+  document
+    .querySelectorAll(".conditional")
+    .forEach(el => {
+
+      el.classList.remove("show");
+
+    });
+
+}
+
+
+/* ==========================================================
+   NORMALIZE TEXT
+   ========================================================== */
+
+function normalizeText(value) {
+
+  if (value === null ||
+      value === undefined) {
+
+    return "";
+
+  }
+
+  return String(value)
+    .replace(/\s+/g, " ")
+    .trim();
+
+}
+
+
+/* ==========================================================
+   EMAIL VALIDATION
+   ========================================================== */
+
+function isValidEmail(email) {
+
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    .test(email);
+
+}
+
+
+/* ==========================================================
+   WHATSAPP VALIDATION
+   ========================================================== */
+
+function isValidWhatsApp(phone) {
+
+  const clean =
+    String(phone)
+      .replace(/[\s\-().]/g, "");
+
+  return /^(?:\+62|62|0)8[0-9]{7,13}$/
+    .test(clean);
+
+}
+
+
+/* ==========================================================
+   NIM VALIDATION
+   ========================================================== */
+
+function isValidNIM(nim) {
+
+  return /^[0-9]{5,30}$/.test(
+    String(nim).trim()
+  );
+
+}
+
+
+/* ==========================================================
+   REQUIRED FIELD
+   ========================================================== */
+
+function requireField(
+  id,
+  message
+) {
+
+  const el = $(id);
+
+  if (!el) return true;
+
+
+  const value =
+    normalizeText(el.value);
+
+
+  if (!value) {
+
+    el.classList.add("invalid");
+
+    showToast(
+      message,
+      "error"
+    );
+
+    el.focus();
+
+    return false;
+
+  }
+
+
+  el.classList.remove("invalid");
+
+  return true;
+
+}
+
+
+/* ==========================================================
+   VALIDATION
+   ========================================================== */
+
+function validateForm() {
+
+  if (!selectedType) {
+
+    showToast(
+      "Pilih jenis surat terlebih dahulu.",
+      "warning"
+    );
+
+    return false;
+
+  }
+
+
+  if (!requireField(
+    "nama",
+    "Nama lengkap wajib diisi."
+  )) return false;
+
+
+  if (!requireField(
+    "nim",
+    "NIM wajib diisi."
+  )) return false;
+
+
+  if (!isValidNIM(
+    $("nim").value
+  )) {
+
+    $("nim").classList.add("invalid");
+
+    showToast(
+      "Format NIM tidak valid.",
+      "error"
+    );
+
+    $("nim").focus();
+
+    return false;
+
+  }
+
+
+  if (!requireField(
+    "programStudi",
+    "Program studi wajib dipilih."
+  )) return false;
+
+
+  if (!requireField(
+    "semester",
+    "Semester wajib dipilih."
+  )) return false;
+
+
+  if (!requireField(
+    "email",
+    "Email wajib diisi."
+  )) return false;
+
+
+  if (!isValidEmail(
+    $("email").value
+  )) {
+
+    $("email").classList.add("invalid");
+
+    showToast(
+      "Format email tidak valid.",
+      "error"
+    );
+
+    $("email").focus();
+
+    return false;
+
+  }
+
+
+  if (!requireField(
+    "whatsapp",
+    "Nomor WhatsApp wajib diisi."
+  )) return false;
+
+
+  if (!isValidWhatsApp(
+    $("whatsapp").value
+  )) {
+
+    $("whatsapp").classList.add("invalid");
+
+    showToast(
+      "Nomor WhatsApp tidak valid.",
+      "error"
+    );
+
+    $("whatsapp").focus();
+
+    return false;
+
+  }
+
+
+  if (!requireField(
+    "namaInstansi",
+    "Nama instansi/perusahaan wajib diisi."
+  )) return false;
+
+
+  if (!requireField(
+    "alamatInstansi",
+    "Alamat instansi wajib diisi."
+  )) return false;
+
+
+  /* ===== OBSERVASI ===== */
+
+  if (selectedType === "OBSERVASI") {
+
+    if (!requireField(
+      "objekObservasi",
+      "Objek observasi wajib diisi."
+    )) return false;
+
+
+    if (!requireField(
+      "tujuanObservasi",
+      "Tujuan observasi wajib diisi."
+    )) return false;
+
+  }
+
+
+  /* ===== PENELITIAN ===== */
+
+  if (selectedType === "PENELITIAN") {
+
+    if (!requireField(
+      "judulPenelitian",
+      "Judul penelitian wajib diisi."
+    )) return false;
+
+
+    if (!requireField(
+      "jenisPenelitian",
+      "Jenis penelitian wajib dipilih."
+    )) return false;
+
+
+    if (!requireField(
+      "dosenPembimbing",
+      "Dosen pembimbing wajib diisi."
+    )) return false;
+
+  }
+
+
+  /* ===== PKL ===== */
+
+  if (selectedType === "PKL") {
+
+    if (!requireField(
+      "posisiPKL",
+      "Posisi PKL wajib diisi."
+    )) return false;
+
+  }
+
+
+  /* ===== MAGANG ===== */
+
+  if (selectedType === "MAGANG") {
+
+    if (!requireField(
+      "posisiMagang",
+      "Posisi magang wajib diisi."
+    )) return false;
+
+  }
+
+
+  /* ===== DATE ===== */
+
+  if (!requireField(
+    "tanggalMulai",
+    "Tanggal mulai wajib dipilih."
+  )) return false;
+
+
+  if (!requireField(
+    "tanggalSelesai",
+    "Tanggal selesai wajib dipilih."
+  )) return false;
+
+
+  const start =
+    $("tanggalMulai").value;
+
+  const end =
+    $("tanggalSelesai").value;
+
+
+  if (
+    start &&
+    end &&
+    end < start
+  ) {
+
+    $("tanggalSelesai")
+      .classList.add("invalid");
+
+    showToast(
+      "Tanggal selesai tidak boleh sebelum tanggal mulai.",
+      "error"
+    );
+
+    $("tanggalSelesai").focus();
+
+    return false;
+
+  }
+
+
+  if (!$("agreement").checked) {
+
+    showToast(
+      "Anda harus menyetujui pernyataan.",
+      "warning"
+    );
+
+    $("agreement").focus();
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* ==========================================================
+   COLLECT FORM DATA
+   ========================================================== */
+
+function collectFormData() {
+
+  const form =
+    $("applicationForm");
+
+
+  const fd =
+    new FormData(form);
+
+
+  const data = {};
+
+
+  fd.forEach(
+    (value, key) => {
+
+      if (
+        typeof value === "string"
+      ) {
+
+        data[key] =
+          normalizeText(value);
+
+      } else {
+
+        data[key] = value;
+
+      }
+
+    }
+  );
+
+
+  data.jenisSurat =
+    selectedType;
+
+
+  data.namaJenisSurat =
+    TYPE_CONFIG[selectedType].title;
+
+
+  data.appName =
+    CONFIG.APP_NAME;
+
+
+  data.clientTimestamp =
+    new Date().toISOString();
+
+
+  data.timezone =
+    Intl.DateTimeFormat()
+      .resolvedOptions()
+      .timeZone || "Asia/Jakarta";
+
+
+  data.status =
+    "DIAJUKAN";
+
+
+  return data;
+
+}
+
+
+/* ==========================================================
+   UTF-8 BASE64
+   ========================================================== */
+
+function utf8ToBase64(text) {
+
+  const bytes =
+    new TextEncoder()
+      .encode(text);
+
+
+  let binary = "";
+
+
+  const chunkSize = 0x8000;
+
+
+  for (
+    let i = 0;
+    i < bytes.length;
+    i += chunkSize
+  ) {
+
+    const chunk =
+      bytes.subarray(
+        i,
+        i + chunkSize
+      );
+
+
+    binary += String.fromCharCode(
+      ...chunk
+    );
+
+  }
+
+
+  return btoa(binary);
+
+}
+
+
+/* ==========================================================
+   BASE64 TO UTF-8
+   ========================================================== */
+
+function base64ToUtf8(base64) {
+
+  const binary =
+    atob(base64);
+
+
+  const bytes =
+    Uint8Array.from(
+      binary,
+      char => char.charCodeAt(0)
+    );
+
+
+  return new TextDecoder()
+    .decode(bytes);
+
+}
+
+
+/* ==========================================================
+   CREATE REQUEST ID
+   ========================================================== */
+
+function createRequestId() {
+
+  const now =
+    new Date();
+
+
+  const timestamp =
+    now.getTime()
+      .toString(36)
+      .toUpperCase();
+
+
+  const random =
+    Math.random()
+      .toString(36)
+      .substring(2, 8)
+      .toUpperCase();
+
+
+  return (
+    "REQ-" +
+    timestamp +
+    "-" +
+    random
+  );
+
+}
+
+
+/* ==========================================================
+   JSONP REQUEST
+   ========================================================== */
+
+function sendJSONP(
+  params,
+  timeout = CONFIG.TIMEOUT
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      if (
+        !CONFIG.GAS_API_URL ||
+        CONFIG.GAS_API_URL.includes(
+          "GANTI_DENGAN"
+        )
+      ) {
+
+        reject(
+          new Error(
+            "URL GAS belum dikonfigurasi."
+          )
+        );
+
+        return;
+
+      }
+
+
+      const callbackName =
+        "__gasCallback_" +
+        Date.now() +
+        "_" +
+        (++jsonpCounter);
+
+
+      const script =
+        document.createElement("script");
+
+
+      let finished = false;
+
+
+      const timer =
+        setTimeout(
+          () => {
+
+            if (finished) return;
+
+            finished = true;
+
+            cleanup();
+
+            reject(
+              new Error(
+                "Timeout: GAS tidak memberikan respons."
+              )
+            );
+
+          },
+          timeout
+        );
+
+
+      function cleanup() {
+
+        clearTimeout(timer);
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        } catch (e) {
+
+          window[
+            callbackName
+          ] = undefined;
+
+        }
+
+
+        if (script.parentNode) {
+
+          script.parentNode.removeChild(
+            script
+          );
+
+        }
+
+      }
+
+
+      window[callbackName] =
+        function(response) {
+
+          if (finished) return;
+
+          finished = true;
+
+          cleanup();
+
+          resolve(response);
+
+        };
+
+
+      script.onerror =
+        function() {
+
+          if (finished) return;
+
+          finished = true;
+
+          cleanup();
+
+          reject(
+            new Error(
+              "Gagal menghubungi Google Apps Script."
+            )
+          );
+
+        };
+
+
+      const query =
+        new URLSearchParams();
+
+
+      Object.keys(params)
+        .forEach(key => {
+
+          query.set(
+            key,
+            params[key]
+          );
+
+        });
+
+
+      query.set(
+        "callback",
+        callbackName
+      );
+
+
+      script.src =
+        CONFIG.GAS_API_URL +
+        "?" +
+        query.toString();
+
+
+      script.async = true;
+
+
+      document.head.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+/* ==========================================================
+   SUBMIT
+   ========================================================== */
+
+async function submitApplication() {
+
+  if (!validateForm()) {
+
+    return;
+
+  }
+
+
+  const button =
+    $("submitButton");
+
+
+  button.disabled = true;
+
+
+  showLoading(
+    "Mengirim pengajuan ke server..."
+  );
+
+
+  try {
+
+    const data =
+      collectFormData();
+
+
+    const requestId =
+      createRequestId();
+
+
+    data.requestId =
+      requestId;
+
+
+    /*
+     * Encode seluruh object menjadi JSON
+     * kemudian Base64 UTF-8.
+     */
+
+    const json =
+      JSON.stringify(data);
+
+
+    const encoded =
+      utf8ToBase64(json);
+
+
+    /*
+     * JSONP:
+     *
+     * action = submitApplication
+     * data   = Base64
+     */
+
+    const response =
+      await sendJSONP({
+
+        action:
+          "submitApplication",
+
+        data:
+          encoded
+
+      });
+
+
+    console.log(
+      "GAS RESPONSE:",
+      response
+    );
+
+
+    if (
+      !response ||
+      response.success !== true
+    ) {
+
+      throw new Error(
+        response &&
+        response.message
+          ? response.message
+          : "Server menolak pengajuan."
+      );
+
+    }
+
+
+    hideLoading();
+
+
+    showResult(
+      response,
+      data
+    );
+
+
+    showToast(
+      "Pengajuan berhasil dikirim.",
+      "success"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "SUBMIT ERROR:",
+      error
+    );
+
+
+    hideLoading();
+
+
+    showToast(
+      error.message ||
+      "Terjadi kesalahan saat mengirim data.",
+      "error"
+    );
+
+
+  } finally {
+
+    button.disabled = false;
+
+  }
+
+}
+
+
+/* ==========================================================
+   RESULT
+   ========================================================== */
+
+function showResult(
+  response,
+  data
+) {
+
+  $("formCard").style.display =
+    "none";
+
+
+  $("result").classList.add(
+    "show"
+  );
+
+
+  $("resultId").textContent =
+    response.requestId ||
+    data.requestId ||
+    "-";
+
+
+  $("resultType").textContent =
+    TYPE_CONFIG[selectedType]
+      .title;
+
+
+  $("resultName").textContent =
+    data.nama ||
+    "-";
+
+
+  $("resultNim").textContent =
+    data.nim ||
+    "-";
+
+
+  $("resultStatus").textContent =
+    response.status ||
+    "DIAJUKAN";
+
+
+  $("result").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+}
+
+
+/* ==========================================================
+   NEW APPLICATION
+   ========================================================== */
+
+function newApplication() {
+
+  $("result")
+    .classList.remove("show");
+
+
+  $("applicationForm")
+    .reset();
+
+
+  selectedType = "";
+
+
+  document
+    .querySelectorAll(".type-card")
+    .forEach(card => {
+
+      card.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  hideAllConditionalSections();
+
+
+  $("formCard").style.display =
+    "none";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* ==========================================================
+   RESET
+   ========================================================== */
+
+function resetForm() {
+
+  if (
+    !confirm(
+      "Reset seluruh data formulir?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  $("applicationForm").reset();
+
+
+  document
+    .querySelectorAll(".invalid")
+    .forEach(el => {
+
+      el.classList.remove(
+        "invalid"
+      );
+
+    });
+
+
+  showToast(
+    "Formulir telah direset.",
+    "success"
+  );
+
+}
+
+
+/* ==========================================================
+   LOADING
+   ========================================================== */
+
+function showLoading(
+  text
+) {
+
+  $("loadingText")
+    .textContent =
+    text ||
+    "Memproses...";
+
+
+  $("loading")
+    .classList.add("show");
+
+}
+
+
+function hideLoading() {
+
+  $("loading")
+    .classList.remove("show");
+
+}
+
+
+/* ==========================================================
+   TOAST
+   ========================================================== */
+
+let toastTimer = null;
+
+
+function showToast(
+  message,
+  type = "success"
+) {
+
+  const toast =
+    $("toast");
+
+
+  toast.textContent =
+    message;
+
+
+  toast.className =
+    "toast show " +
+    type;
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      4500
+    );
+
+}
+
+
+/* ==========================================================
+   AUTO REMOVE INVALID
+   ========================================================== */
+
+document.addEventListener(
+  "input",
+  event => {
+
+    if (
+      event.target.matches(
+        "input, select, textarea"
+      )
+    ) {
+
+      event.target.classList.remove(
+        "invalid"
+      );
+
+    }
+
+  }
+);
+
+
+/* ==========================================================
+   ENTER KEY
+   ========================================================== */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Enter" &&
+      event.target.tagName !== "TEXTAREA"
+    ) {
+
+      event.preventDefault();
+
+    }
+
+  }
+);
+
+
+/* ==========================================================
+   PREVENT DOUBLE SUBMIT
+   ========================================================== */
+
+let submitting = false;
+
+
+/* ==========================================================
+   DATE VALIDATION
+   ========================================================== */
+
+$("tanggalMulai")
+  .addEventListener(
+    "change",
+    function() {
+
+      $("tanggalSelesai")
+        .min = this.value;
+
+    }
+  );
+
+
+/* ==========================================================
+   INIT
+   ========================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    console.log(
+      CONFIG.APP_NAME +
+      " initialized."
+    );
+
+
+    console.log(
+      "GAS endpoint:",
+      CONFIG.GAS_API_URL
+    );
+
+  }
+);
+
+</script>
+
+</body>
+</html>
