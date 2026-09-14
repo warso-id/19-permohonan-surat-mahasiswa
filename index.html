@@ -56,7 +56,7 @@ a{color:var(--primary)}
 .card p.lead{color:var(--muted);margin:0;max-width:800px;font-size:14px}
 
 /* TYPE GRID */
-.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
 .type-card{border:2px solid var(--border);background:#fff;border-radius:14px;
   padding:16px;text-align:left;min-height:120px;transition:.15s}
 .type-card:hover{transform:translateY(-2px);border-color:var(--secondary)}
@@ -255,23 +255,42 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
     <div class="card">
       <h1>📄 Pengajuan Surat Mahasiswa</h1>
       <p class="lead">Ajukan surat administrasi akademik secara online. Pilih jenis surat, lengkapi data, lalu pantau statusnya melalui halaman Lacak.</p>
-      <div class="type-grid">
-        <button class="type-card" data-type="OBSERVASI" onclick="Form.selectType('OBSERVASI')">
-          <div class="type-icon">🔎</div><div class="type-title">Surat Observasi</div>
-          <div class="type-desc">Izin kegiatan observasi lapangan.</div>
-        </button>
-        <button class="type-card" data-type="PENELITIAN" onclick="Form.selectType('PENELITIAN')">
-          <div class="type-icon">🔬</div><div class="type-title">Surat Penelitian</div>
-          <div class="type-desc">Izin pengumpulan data penelitian.</div>
-        </button>
-        <button class="type-card" data-type="PKL" onclick="Form.selectType('PKL')">
-          <div class="type-icon">💼</div><div class="type-title">Surat PKL</div>
-          <div class="type-desc">Praktik Kerja Lapangan.</div>
-        </button>
-        <button class="type-card" data-type="MAGANG" onclick="Form.selectType('MAGANG')">
-          <div class="type-icon">🚀</div><div class="type-title">Surat Magang</div>
-          <div class="type-desc">Kegiatan magang mahasiswa.</div>
-        </button>
+      <div class="type-grid" id="typeGrid">
+        <button class="type-card" data-type="AKTIF" onclick="Form.selectType('AKTIF')"><div class="type-icon">🎓</div><div class="type-title">Surat Keterangan Mahasiswa Aktif</div><div class="type-desc">Keterangan status mahasiswa aktif.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="TERDAFTAR" onclick="Form.selectType('TERDAFTAR')"><div class="type-icon">📋</div><div class="type-title">Surat Keterangan Terdaftar sebagai Mahasiswa</div><div class="type-desc">Keterangan terdaftar sebagai mahasiswa.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="LULUS" onclick="Form.selectType('LULUS')"><div class="type-icon">🎓</div><div class="type-title">Surat Keterangan Lulus</div><div class="type-desc">Keterangan kelulusan.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="SELESAI_STUDI" onclick="Form.selectType('SELESAI_STUDI')"><div class="type-icon">🎓</div><div class="type-title">Surat Keterangan Telah Menyelesaikan Studi</div><div class="type-desc">Keterangan telah menyelesaikan studi.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="CUTI" onclick="Form.selectType('CUTI')"><div class="type-icon">⏸️</div><div class="type-title">Surat Keterangan Cuti Akademik</div><div class="type-desc">Keterangan cuti akademik.</div><div class="help">S1,S2 · KAPRODI>WADEK>DEKAN</div></button>
+        <button class="type-card" data-type="TIDAK_CUTI" onclick="Form.selectType('TIDAK_CUTI')"><div class="type-icon">✅</div><div class="type-title">Surat Keterangan Tidak Cuti</div><div class="type-desc">Keterangan tidak sedang cuti.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="TIDAK_BEASISWA" onclick="Form.selectType('TIDAK_BEASISWA')"><div class="type-icon">💳</div><div class="type-title">Surat Keterangan Tidak Menerima Beasiswa</div><div class="type-desc">Keterangan tidak menerima beasiswa.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="REK_AKADEMIK" onclick="Form.selectType('REK_AKADEMIK')"><div class="type-icon">⭐</div><div class="type-title">Surat Rekomendasi Akademik</div><div class="type-desc">Rekomendasi akademik.</div><div class="help">S1,S2 · KAPRODI>WADEK>DEKAN</div></button>
+        <button class="type-card" data-type="REK_BEASISWA" onclick="Form.selectType('REK_BEASISWA')"><div class="type-icon">🏅</div><div class="type-title">Surat Rekomendasi Beasiswa</div><div class="type-desc">Rekomendasi beasiswa.</div><div class="help">S1,S2 · KAPRODI>WADEK>DEKAN</div></button>
+        <button class="type-card" data-type="PENGANTAR_PENELITIAN" onclick="Form.selectType('PENGANTAR_PENELITIAN')"><div class="type-icon">🔬</div><div class="type-title">Surat Pengantar Penelitian</div><div class="type-desc">Pengantar penelitian.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PENGANTAR_OBSERVASI" onclick="Form.selectType('PENGANTAR_OBSERVASI')"><div class="type-icon">🔎</div><div class="type-title">Surat Pengantar Observasi</div><div class="type-desc">Pengantar observasi.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PENGANTAR_PKL" onclick="Form.selectType('PENGANTAR_PKL')"><div class="type-icon">💼</div><div class="type-title">Surat Pengantar PKL</div><div class="type-desc">Pengantar Praktik Kerja Lapangan.</div><div class="help">S1 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PENGANTAR_MAGANG" onclick="Form.selectType('PENGANTAR_MAGANG')"><div class="type-icon">🚀</div><div class="type-title">Surat Pengantar Magang</div><div class="type-desc">Pengantar magang.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PRAKTIK_KERJA" onclick="Form.selectType('PRAKTIK_KERJA')"><div class="type-icon">🧰</div><div class="type-title">Surat Pengantar Praktik Kerja</div><div class="type-desc">Pengantar praktik kerja.</div><div class="help">S1 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PERMOHONAN_DATA" onclick="Form.selectType('PERMOHONAN_DATA')"><div class="type-icon">📊</div><div class="type-title">Surat Permohonan Data Penelitian</div><div class="type-desc">Permohonan data penelitian.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PERMOHONAN_WAWANCARA" onclick="Form.selectType('PERMOHONAN_WAWANCARA')"><div class="type-icon">🎙️</div><div class="type-title">Surat Permohonan Wawancara Penelitian</div><div class="type-desc">Permohonan wawancara penelitian.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PENGANTAR_KUESIONER" onclick="Form.selectType('PENGANTAR_KUESIONER')"><div class="type-icon">📝</div><div class="type-title">Surat Pengantar Kuesioner</div><div class="type-desc">Pengantar kuesioner penelitian.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PENGAMBILAN_DATA" onclick="Form.selectType('PENGAMBILAN_DATA')"><div class="type-icon">📥</div><div class="type-title">Surat Pengantar Pengambilan Data</div><div class="type-desc">Pengantar pengambilan data.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="TELAH_PENELITIAN" onclick="Form.selectType('TELAH_PENELITIAN')"><div class="type-icon">🔬</div><div class="type-title">Surat Keterangan Telah Melakukan Penelitian</div><div class="type-desc">Keterangan telah melakukan penelitian.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="TELAH_PKL" onclick="Form.selectType('TELAH_PKL')"><div class="type-icon">💼</div><div class="type-title">Surat Keterangan Telah Melakukan PKL</div><div class="type-desc">Keterangan telah melakukan PKL.</div><div class="help">S1 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="TELAH_MAGANG" onclick="Form.selectType('TELAH_MAGANG')"><div class="type-icon">🚀</div><div class="type-title">Surat Keterangan Telah Melakukan Magang</div><div class="type-desc">Keterangan telah melakukan magang.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="IZIN_KEGIATAN" onclick="Form.selectType('IZIN_KEGIATAN')"><div class="type-icon">🎪</div><div class="type-title">Surat Permohonan Izin Kegiatan Mahasiswa</div><div class="type-desc">Izin kegiatan mahasiswa.</div><div class="help">S1,S2 · KAPRODI>WADEK>DEKAN</div></button>
+        <button class="type-card" data-type="ORGANISASI" onclick="Form.selectType('ORGANISASI')"><div class="type-icon">🤝</div><div class="type-title">Surat Pengantar Kegiatan Organisasi</div><div class="type-desc">Pengantar kegiatan organisasi.</div><div class="help">S1,S2 · KAPRODI>WADEK</div></button>
+        <button class="type-card" data-type="REK_KEGIATAN" onclick="Form.selectType('REK_KEGIATAN')"><div class="type-icon">🌟</div><div class="type-title">Surat Rekomendasi Mengikuti Kegiatan</div><div class="type-desc">Rekomendasi mengikuti kegiatan.</div><div class="help">S1,S2 · KAPRODI>WADEK>DEKAN</div></button>
+        <button class="type-card" data-type="LOMBA" onclick="Form.selectType('LOMBA')"><div class="type-icon">🏆</div><div class="type-title">Surat Pengantar Lomba/Kompetisi</div><div class="type-desc">Pengantar lomba atau kompetisi.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="SEMINAR" onclick="Form.selectType('SEMINAR')"><div class="type-icon">🎤</div><div class="type-title">Surat Pengantar Seminar/Konferensi</div><div class="type-desc">Pengantar seminar atau konferensi.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="PRESTASI" onclick="Form.selectType('PRESTASI')"><div class="type-icon">🏆</div><div class="type-title">Surat Keterangan Prestasi Mahasiswa</div><div class="type-desc">Keterangan prestasi mahasiswa.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="MENGIKUTI_KEGIATAN" onclick="Form.selectType('MENGIKUTI_KEGIATAN')"><div class="type-icon">📜</div><div class="type-title">Surat Keterangan Mengikuti Kegiatan</div><div class="type-desc">Keterangan mengikuti kegiatan.</div><div class="help">S1,S2 · ADMIN/KAPRODI</div></button>
+        <button class="type-card" data-type="PENGGANTI_KTM" onclick="Form.selectType('PENGGANTI_KTM')"><div class="type-icon">🪪</div><div class="type-title">Surat Keterangan Pengganti KTM</div><div class="type-desc">Pengganti sementara KTM.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="KEHILANGAN_DOKUMEN" onclick="Form.selectType('KEHILANGAN_DOKUMEN')"><div class="type-icon">⚠️</div><div class="type-title">Surat Keterangan Kehilangan Dokumen Akademik</div><div class="type-desc">Keterangan kehilangan dokumen akademik.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
+        <button class="type-card" data-type="TRANSKRIP" onclick="Form.selectType('TRANSKRIP')"><div class="type-icon">📚</div><div class="type-title">Surat Permohonan Transkrip Nilai</div><div class="type-desc">Permohonan transkrip nilai.</div><div class="help">S1,S2 · ADMIN</div></button>
+        <button class="type-card" data-type="LEGALISASI" onclick="Form.selectType('LEGALISASI')"><div class="type-icon">✔️</div><div class="type-title">Surat Permohonan Legalisasi Dokumen</div><div class="type-desc">Permohonan legalisasi dokumen.</div><div class="help">S1,S2 · ADMIN</div></button>
+        <button class="type-card" data-type="VISA_STUDI" onclick="Form.selectType('VISA_STUDI')"><div class="type-icon">🌏</div><div class="type-title">Surat Keterangan Pengajuan Visa/Studi</div><div class="type-desc">Keterangan untuk visa atau studi.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="LANJUT_STUDI" onclick="Form.selectType('LANJUT_STUDI')"><div class="type-icon">🎓</div><div class="type-title">Surat Rekomendasi Melanjutkan Studi</div><div class="type-desc">Rekomendasi melanjutkan studi.</div><div class="help">S1,S2 · KAPRODI>DEKAN</div></button>
+        <button class="type-card" data-type="ADMINISTRASI" onclick="Form.selectType('ADMINISTRASI')"><div class="type-icon">📄</div><div class="type-title">Surat Keterangan Untuk Keperluan Administrasi</div><div class="type-desc">Keterangan untuk keperluan administrasi.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
       </div>
     </div>
 
@@ -313,110 +332,23 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
           </div>
         </div>
 
-        <!-- SECTION 2 -->
+        <!-- SECTION 2: DINAMIS SESUAI JENIS SURAT -->
+        <div class="section" id="dynamicFieldsSection">
+          <div class="section-title"><span class="section-num">2</span>Data Permohonan</div>
+          <div id="dynamicFields" class="grid"></div>
+        </div>
+
         <div class="section">
-          <div class="section-title"><span class="section-num">2</span>Informasi Instansi</div>
-          <div class="grid">
-            <div class="field"><label>Nama Instansi <span class="req">*</span></label>
-              <input id="namaInstansi" name="namaInstansi" maxlength="200" required></div>
-            <div class="field"><label>Nama Pimpinan</label>
-              <input id="namaPimpinan" name="namaPimpinan" maxlength="150"></div>
-            <div class="field"><label>Jabatan Pimpinan</label>
-              <input id="jabatanPimpinan" name="jabatanPimpinan" maxlength="150"></div>
-            <div class="field"><label>Unit / Divisi</label>
-              <input id="unit" name="unit" maxlength="150"></div>
-            <div class="field full"><label>Alamat Instansi <span class="req">*</span></label>
-              <textarea id="alamatInstansi" name="alamatInstansi" maxlength="500" required></textarea></div>
-          </div>
-        </div>
-
-        <!-- SECTION: OBSERVASI -->
-        <div class="section conditional" id="secObservasi">
-          <div class="section-title"><span class="section-num">3</span>Detail Observasi</div>
-          <div class="grid">
-            <div class="field"><label>Objek Observasi <span class="req">*</span></label>
-              <input id="objekObservasi" name="objekObservasi" maxlength="300"></div>
-            <div class="field"><label>Topik Observasi</label>
-              <input id="topikObservasi" name="topikObservasi" maxlength="300"></div>
-            <div class="field full"><label>Tujuan Observasi <span class="req">*</span></label>
-              <textarea id="tujuanObservasi" name="tujuanObservasi" maxlength="1000"></textarea></div>
-          </div>
-        </div>
-
-        <!-- SECTION: PENELITIAN -->
-        <div class="section conditional" id="secPenelitian">
-          <div class="section-title"><span class="section-num">3</span>Detail Penelitian</div>
-          <div class="grid">
-            <div class="field full"><label>Judul Penelitian <span class="req">*</span></label>
-              <textarea id="judulPenelitian" name="judulPenelitian" maxlength="1000"></textarea></div>
-            <div class="field"><label>Jenis Penelitian <span class="req">*</span></label>
-              <select id="jenisPenelitian" name="jenisPenelitian">
-                <option value="">-- Pilih --</option>
-                <option>KUALITATIF</option><option>KUANTITATIF</option>
-                <option>MIXED METHOD</option><option>LAINNYA</option>
-              </select></div>
-            <div class="field"><label>Metode Penelitian</label>
-              <input id="metodePenelitian" name="metodePenelitian" maxlength="300"></div>
-            <div class="field"><label>Subjek / Informan</label>
-              <input id="subjekPenelitian" name="subjekPenelitian" maxlength="500"></div>
-            <div class="field"><label>Teknik Pengumpulan Data</label>
-              <input id="teknikPengumpulanData" name="teknikPengumpulanData" maxlength="500"></div>
-            <div class="field"><label>Dosen Pembimbing <span class="req">*</span></label>
-              <input id="dosenPembimbing" name="dosenPembimbing" maxlength="200"></div>
-          </div>
-        </div>
-
-        <!-- SECTION: PKL -->
-        <div class="section conditional" id="secPKL">
-          <div class="section-title"><span class="section-num">3</span>Detail PKL</div>
-          <div class="grid">
-            <div class="field"><label>Konsentrasi</label>
-              <select id="konsentrasi" name="konsentrasi">
-                <option value="">-- Pilih --</option>
-                <option>HUMAS</option><option>PERIKLANAN</option>
-                <option>JURNALISTIK</option><option>PENYIARAN DIGITAL</option>
-                <option>LAINNYA</option>
-              </select></div>
-            <div class="field"><label>Posisi PKL <span class="req">*</span></label>
-              <input id="posisiPKL" name="posisiPKL" maxlength="200"></div>
-            <div class="field"><label>Pembimbing Lapangan</label>
-              <input id="pembimbingLapangan" name="pembimbingLapangan" maxlength="200"></div>
-            <div class="field"><label>Dosen Pembimbing PKL</label>
-              <input id="dosenPembimbingPKL" name="dosenPembimbingPKL" maxlength="200"></div>
-          </div>
-        </div>
-
-        <!-- SECTION: MAGANG -->
-        <div class="section conditional" id="secMagang">
-          <div class="section-title"><span class="section-num">3</span>Detail Magang</div>
-          <div class="grid">
-            <div class="field"><label>Divisi / Departemen</label>
-              <input id="divisiMagang" name="divisiMagang" maxlength="200"></div>
-            <div class="field"><label>Posisi Magang <span class="req">*</span></label>
-              <input id="posisiMagang" name="posisiMagang" maxlength="200"></div>
-            <div class="field"><label>Pembimbing Lapangan</label>
-              <input id="pembimbingMagang" name="pembimbingMagang" maxlength="200"></div>
-            <div class="field"><label>Dosen / Koordinator Magang</label>
-              <input id="dosenPembimbingMagang" name="dosenPembimbingMagang" maxlength="200"></div>
-          </div>
-        </div>
-
-        <!-- SECTION 4 -->
-        <div class="section">
-          <div class="section-title"><span class="section-num">4</span>Waktu Pelaksanaan</div>
+          <div class="section-title"><span class="section-num">3</span>Waktu Pelaksanaan</div>
           <div class="grid grid-3">
-            <div class="field"><label>Tanggal Mulai <span class="req">*</span></label>
-              <input id="tanggalMulai" name="tanggalMulai" type="date" required></div>
-            <div class="field"><label>Tanggal Selesai <span class="req">*</span></label>
-              <input id="tanggalSelesai" name="tanggalSelesai" type="date" required></div>
-            <div class="field"><label>Waktu / Jam</label>
-              <input id="waktu" name="waktu" maxlength="100" placeholder="08.00 - 16.00 WIB"></div>
+            <div class="field"><label>Tanggal Mulai</label><input id="tanggalMulai" name="tanggalMulai" type="date"></div>
+            <div class="field"><label>Tanggal Selesai</label><input id="tanggalSelesai" name="tanggalSelesai" type="date"></div>
+            <div class="field"><label>Waktu / Jam</label><input id="waktu" name="waktu" maxlength="100" placeholder="08.00 - 16.00 WIB"></div>
           </div>
         </div>
 
-        <!-- SECTION 5 -->
         <div class="section">
-          <div class="section-title"><span class="section-num">5</span>Keterangan Tambahan</div>
+          <div class="section-title"><span class="section-num">4</span>Keterangan Tambahan</div>
           <div class="field"><textarea id="keterangan" name="keterangan" maxlength="1000" placeholder="Keterangan tambahan (opsional)"></textarea></div>
         </div>
 
@@ -521,7 +453,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
 
 <footer>
   Fakultas Ilmu Komunikasi · Universitas Prof. Dr. Moestopo (Beragama)<br>
-  <span style="opacity:.7">Sistem Administrasi Mahasiswa v3.1.0</span>
+  <span style="opacity:.7">Sistem Administrasi Mahasiswa v3.3.0</span>
 </footer>
 
 <!-- ========== MODAL DETAIL ========== -->
@@ -567,10 +499,83 @@ const CONFIG = {
 };
 
 const TYPE_CONFIG = {
-  OBSERVASI: { title:"Surat Permohonan Izin Observasi", desc:"Permohonan izin untuk kegiatan observasi." },
-  PENELITIAN:{ title:"Surat Permohonan Izin Penelitian", desc:"Permohonan izin untuk kegiatan penelitian." },
-  PKL:       { title:"Surat Permohonan Praktik Kerja Lapangan", desc:"Permohonan izin untuk PKL." },
-  MAGANG:    { title:"Surat Permohonan Izin Magang", desc:"Permohonan izin untuk magang." }
+  AKTIF: { icon:'🎓', title:'Surat Keterangan Mahasiswa Aktif', desc:'Keterangan status mahasiswa aktif.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  TERDAFTAR: { icon:'📋', title:'Surat Keterangan Terdaftar sebagai Mahasiswa', desc:'Keterangan terdaftar sebagai mahasiswa.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  LULUS: { icon:'🎓', title:'Surat Keterangan Lulus', desc:'Keterangan kelulusan.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  SELESAI_STUDI: { icon:'🎓', title:'Surat Keterangan Telah Menyelesaikan Studi', desc:'Keterangan telah menyelesaikan studi.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  CUTI: { icon:'⏸️', title:'Surat Keterangan Cuti Akademik', desc:'Keterangan cuti akademik.', jenjang:'S1,S2', workflow:'KAPRODI>WADEK>DEKAN' },
+  TIDAK_CUTI: { icon:'✅', title:'Surat Keterangan Tidak Cuti', desc:'Keterangan tidak sedang cuti.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  TIDAK_BEASISWA: { icon:'💳', title:'Surat Keterangan Tidak Menerima Beasiswa', desc:'Keterangan tidak menerima beasiswa.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  REK_AKADEMIK: { icon:'⭐', title:'Surat Rekomendasi Akademik', desc:'Rekomendasi akademik.', jenjang:'S1,S2', workflow:'KAPRODI>WADEK>DEKAN' },
+  REK_BEASISWA: { icon:'🏅', title:'Surat Rekomendasi Beasiswa', desc:'Rekomendasi beasiswa.', jenjang:'S1,S2', workflow:'KAPRODI>WADEK>DEKAN' },
+  PENGANTAR_PENELITIAN: { icon:'🔬', title:'Surat Pengantar Penelitian', desc:'Pengantar penelitian.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  PENGANTAR_OBSERVASI: { icon:'🔎', title:'Surat Pengantar Observasi', desc:'Pengantar observasi.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  PENGANTAR_PKL: { icon:'💼', title:'Surat Pengantar PKL', desc:'Pengantar Praktik Kerja Lapangan.', jenjang:'S1', workflow:'KAPRODI>DEKAN' },
+  PENGANTAR_MAGANG: { icon:'🚀', title:'Surat Pengantar Magang', desc:'Pengantar magang.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  PRAKTIK_KERJA: { icon:'🧰', title:'Surat Pengantar Praktik Kerja', desc:'Pengantar praktik kerja.', jenjang:'S1', workflow:'KAPRODI>DEKAN' },
+  PERMOHONAN_DATA: { icon:'📊', title:'Surat Permohonan Data Penelitian', desc:'Permohonan data penelitian.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  PERMOHONAN_WAWANCARA: { icon:'🎙️', title:'Surat Permohonan Wawancara Penelitian', desc:'Permohonan wawancara penelitian.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  PENGANTAR_KUESIONER: { icon:'📝', title:'Surat Pengantar Kuesioner', desc:'Pengantar kuesioner penelitian.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  PENGAMBILAN_DATA: { icon:'📥', title:'Surat Pengantar Pengambilan Data', desc:'Pengantar pengambilan data.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  TELAH_PENELITIAN: { icon:'🔬', title:'Surat Keterangan Telah Melakukan Penelitian', desc:'Keterangan telah melakukan penelitian.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  TELAH_PKL: { icon:'💼', title:'Surat Keterangan Telah Melakukan PKL', desc:'Keterangan telah melakukan PKL.', jenjang:'S1', workflow:'KAPRODI>DEKAN' },
+  TELAH_MAGANG: { icon:'🚀', title:'Surat Keterangan Telah Melakukan Magang', desc:'Keterangan telah melakukan magang.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  IZIN_KEGIATAN: { icon:'🎪', title:'Surat Permohonan Izin Kegiatan Mahasiswa', desc:'Izin kegiatan mahasiswa.', jenjang:'S1,S2', workflow:'KAPRODI>WADEK>DEKAN' },
+  ORGANISASI: { icon:'🤝', title:'Surat Pengantar Kegiatan Organisasi', desc:'Pengantar kegiatan organisasi.', jenjang:'S1,S2', workflow:'KAPRODI>WADEK' },
+  REK_KEGIATAN: { icon:'🌟', title:'Surat Rekomendasi Mengikuti Kegiatan', desc:'Rekomendasi mengikuti kegiatan.', jenjang:'S1,S2', workflow:'KAPRODI>WADEK>DEKAN' },
+  LOMBA: { icon:'🏆', title:'Surat Pengantar Lomba/Kompetisi', desc:'Pengantar lomba atau kompetisi.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  SEMINAR: { icon:'🎤', title:'Surat Pengantar Seminar/Konferensi', desc:'Pengantar seminar atau konferensi.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  PRESTASI: { icon:'🏆', title:'Surat Keterangan Prestasi Mahasiswa', desc:'Keterangan prestasi mahasiswa.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  MENGIKUTI_KEGIATAN: { icon:'📜', title:'Surat Keterangan Mengikuti Kegiatan', desc:'Keterangan mengikuti kegiatan.', jenjang:'S1,S2', workflow:'ADMIN/KAPRODI' },
+  PENGGANTI_KTM: { icon:'🪪', title:'Surat Keterangan Pengganti KTM', desc:'Pengganti sementara KTM.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  KEHILANGAN_DOKUMEN: { icon:'⚠️', title:'Surat Keterangan Kehilangan Dokumen Akademik', desc:'Keterangan kehilangan dokumen akademik.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
+  TRANSKRIP: { icon:'📚', title:'Surat Permohonan Transkrip Nilai', desc:'Permohonan transkrip nilai.', jenjang:'S1,S2', workflow:'ADMIN' },
+  LEGALISASI: { icon:'✔️', title:'Surat Permohonan Legalisasi Dokumen', desc:'Permohonan legalisasi dokumen.', jenjang:'S1,S2', workflow:'ADMIN' },
+  VISA_STUDI: { icon:'🌏', title:'Surat Keterangan Pengajuan Visa/Studi', desc:'Keterangan untuk visa atau studi.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  LANJUT_STUDI: { icon:'🎓', title:'Surat Rekomendasi Melanjutkan Studi', desc:'Rekomendasi melanjutkan studi.', jenjang:'S1,S2', workflow:'KAPRODI>DEKAN' },
+  ADMINISTRASI: { icon:'📄', title:'Surat Keterangan Untuk Keperluan Administrasi', desc:'Keterangan untuk keperluan administrasi.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' }
+};
+
+/* =========================================================
+ * 35 TEMPLATE SURAT — disimpan di index.html sebagai master copy.
+ * Backend dapat memakai kode yang sama untuk Google Docs/PDF.
+ * ========================================================= */
+const LETTER_TEMPLATES = {
+  AKTIF: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**  \n{{ALAMAT_FAKULTAS}}  \n{{TELEPON}} · {{EMAIL}} · {{WEBSITE}}\n\n### SURAT KETERANGAN MAHASISWA AKTIF\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini:\n\n**Nama** : {{NAMA_DEKAN}}  \n**Jabatan** : Dekan Fakultas Ilmu Komunikasi  \n**Universitas** : Universitas Prof. Dr. Moestopo (Beragama)\n\ndengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}  \n**Semester** : {{SEMESTER}}\n\nadalah benar **mahasiswa aktif Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama)** pada Tahun Akademik {{TAHUN_AKADEMIK}}.\n\nSurat keterangan ini dibuat untuk dipergunakan sebagai **{{KEPERLUAN}}**.\n\nDemikian surat keterangan ini dibuat dengan sebenarnya untuk dapat dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan Fakultas Ilmu Komunikasi  \nUniversitas Prof. Dr. Moestopo (Beragama)\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  TERDAFTAR: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TERDAFTAR SEBAGAI MAHASISWA\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini, Dekan Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama), menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}  \n**Tahun Masuk** : {{TAHUN_MASUK}}\n\nadalah benar terdaftar sebagai mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nSurat ini diberikan atas permohonan yang bersangkutan untuk keperluan **{{KEPERLUAN}}**.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  LULUS: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN LULUS\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nberdasarkan hasil evaluasi akademik dan ketentuan yang berlaku di Universitas Prof. Dr. Moestopo (Beragama), yang bersangkutan dinyatakan:\n\n**LULUS**\n\ndari Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nSurat keterangan ini diberikan untuk keperluan **{{KEPERLUAN}}** dan berlaku sampai dengan diterbitkannya dokumen kelulusan resmi sesuai ketentuan universitas.\n\nDemikian surat keterangan ini dibuat dengan sebenarnya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  SELESAI_STUDI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TELAH MENYELESAIKAN STUDI\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ntelah menyelesaikan seluruh kewajiban akademik pada Program Studi {{PROGRAM_STUDI}}, Fakultas Ilmu Komunikasi, Universitas Prof. Dr. Moestopo (Beragama), sesuai dengan ketentuan akademik yang berlaku.\n\nSurat keterangan ini dibuat atas permohonan yang bersangkutan untuk keperluan **{{KEPERLUAN}}**.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  CUTI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN CUTI AKADEMIK\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ntelah memperoleh persetujuan untuk menjalani **Cuti Akademik** pada:\n\n**Semester** : {{SEMESTER_CUTI}}  \n**Tahun Akademik** : {{TAHUN_AKADEMIK}}\n\nberdasarkan ketentuan akademik yang berlaku di Universitas Prof. Dr. Moestopo (Beragama).\n\nSurat ini dibuat untuk keperluan **{{KEPERLUAN}}**.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  TIDAK_CUTI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TIDAK CUTI\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nadalah mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama) yang **tidak sedang menjalani Cuti Akademik** pada Semester {{SEMESTER}}, Tahun Akademik {{TAHUN_AKADEMIK}}.\n\nSurat ini dibuat atas permohonan yang bersangkutan untuk keperluan **{{KEPERLUAN}}**.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  TIDAK_BEASISWA: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nberdasarkan data administrasi akademik yang tersedia pada Fakultas Ilmu Komunikasi, yang bersangkutan **tidak sedang tercatat sebagai penerima beasiswa** dari Universitas Prof. Dr. Moestopo (Beragama) untuk Tahun Akademik {{TAHUN_AKADEMIK}}.\n\nSurat ini dibuat untuk keperluan **{{KEPERLUAN}}**.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  REK_AKADEMIK: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT REKOMENDASI AKADEMIK\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini memberikan rekomendasi kepada:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nuntuk **{{TUJUAN_REKOMENDASI}}**.\n\nBerdasarkan penilaian akademik dan informasi yang tersedia, mahasiswa tersebut dinilai memiliki kemampuan dan memenuhi persyaratan untuk mengikuti kegiatan/program sebagaimana dimaksud.\n\nDemikian rekomendasi ini dibuat dengan sebenar-benarnya untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  REK_BEASISWA: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT REKOMENDASI BEASISWA\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nadalah mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nSetelah mempertimbangkan status akademik dan informasi yang tersedia, kami merekomendasikan yang bersangkutan untuk mengikuti **{{NAMA_BEASISWA}}**.\n\nSurat rekomendasi ini dibuat untuk dipergunakan sebagai salah satu persyaratan pengajuan beasiswa tersebut.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PENGANTAR_PENELITIAN: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR PENELITIAN\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{TUJUAN_SURAT}}**  \n**{{NAMA_INSTANSI}}**  \ndi tempat\n\nDengan hormat,\n\nDalam rangka memenuhi salah satu persyaratan akademik pada Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama), kami mohon kiranya Bapak/Ibu dapat memberikan izin kepada mahasiswa berikut:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nuntuk melaksanakan penelitian dengan judul:\n\n**“{{JUDUL_PENELITIAN}}”**\n\nPenelitian tersebut akan dilaksanakan pada periode **{{PERIODE_PENELITIAN}}**.\n\nDemikian surat pengantar ini kami sampaikan. Atas perhatian dan kerja sama Bapak/Ibu, kami mengucapkan terima kasih.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PENGANTAR_OBSERVASI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR OBSERVASI\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{TUJUAN_SURAT}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nDalam rangka kegiatan akademik Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama), kami mohon kiranya mahasiswa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ndiberikan kesempatan untuk melakukan **observasi** di lingkungan {{NAMA_INSTANSI}}.\n\nObservasi dilaksanakan untuk memperoleh informasi yang diperlukan dalam kegiatan akademik dengan topik:\n\n**“{{TOPIK_OBSERVASI}}”**\n\nDemikian surat pengantar ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PENGANTAR_PKL: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR PRAKTIK KERJA LAPANGAN\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{NAMA_PIMPINAN_INSTANSI}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nDalam rangka pelaksanaan kegiatan akademik, kami mengajukan mahasiswa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}\n\nuntuk melaksanakan **Praktik Kerja Lapangan (PKL)** di {{NAMA_INSTANSI}}.\n\nPelaksanaan PKL direncanakan pada:\n\n**Periode** : {{PERIODE_PKL}}  \n**Bidang/Konsentrasi** : {{KONSENTRASI}}\n\nKami berharap pihak instansi dapat memberikan kesempatan kepada mahasiswa tersebut untuk melaksanakan PKL sesuai ketentuan yang berlaku.\n\nAtas perhatian dan kerja samanya, kami mengucapkan terima kasih.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PENGANTAR_MAGANG: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR MAGANG\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{NAMA_PIMPINAN_INSTANSI}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nDalam rangka memberikan pengalaman praktis kepada mahasiswa, Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama) mengajukan:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nuntuk melaksanakan kegiatan **Magang** di {{NAMA_INSTANSI}}.\n\nKegiatan magang direncanakan:\n\n**Periode** : {{PERIODE_MAGANG}}  \n**Bidang** : {{BIDANG_MAGANG}}\n\nDemikian surat pengantar ini dibuat untuk dapat dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PRAKTIK_KERJA: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR PRAKTIK KERJA\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{NAMA_PIMPINAN_INSTANSI}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nKami mohon kiranya mahasiswa berikut:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ndapat diberikan kesempatan untuk melaksanakan praktik kerja di lingkungan {{NAMA_INSTANSI}}.\n\nAdapun kegiatan tersebut akan dilaksanakan pada **{{PERIODE_KEGIATAN}}** dalam bidang **{{BIDANG_KEGIATAN}}**.\n\nDemikian surat pengantar ini kami sampaikan.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PERMOHONAN_DATA: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PERMOHONAN DATA PENELITIAN\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{NAMA_PIMPINAN_INSTANSI}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nSehubungan dengan pelaksanaan penelitian mahasiswa Fakultas Ilmu Komunikasi:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Judul Penelitian** : {{JUDUL_PENELITIAN}}\n\nkami memohon kesediaan Bapak/Ibu untuk memberikan data/informasi yang diperlukan guna mendukung penelitian tersebut.\n\nData yang diperlukan meliputi:\n\n**{{DATA_YANG_DIMOHON}}**\n\nData tersebut akan digunakan semata-mata untuk kepentingan akademik dan penelitian.\n\nAtas bantuan dan kerja sama Bapak/Ibu, kami mengucapkan terima kasih.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PERMOHONAN_WAWANCARA: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PERMOHONAN WAWANCARA PENELITIAN\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{NAMA_NARASUMBER}}**  \n**{{JABATAN_NARASUMBER}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nDalam rangka penelitian dengan judul:\n\n**“{{JUDUL_PENELITIAN}}”**\n\nyang dilaksanakan oleh:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}\n\nkami memohon kesediaan Bapak/Ibu untuk berkenan menjadi narasumber/informan dalam kegiatan wawancara penelitian.\n\nWawancara direncanakan pada:\n\n**Hari/Tanggal** : {{TANGGAL_WAWANCARA}}  \n**Tempat/Media** : {{TEMPAT_WAWANCARA}}\n\nDemikian permohonan ini kami sampaikan. Atas kesediaan dan bantuan Bapak/Ibu, kami mengucapkan terima kasih.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PENGANTAR_KUESIONER: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR KUESIONER PENELITIAN\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{TUJUAN_SURAT}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nDalam rangka pelaksanaan penelitian mahasiswa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Judul Penelitian** : {{JUDUL_PENELITIAN}}\n\nkami memohon izin untuk melakukan penyebaran kuesioner kepada responden yang sesuai dengan kebutuhan penelitian.\n\nKegiatan ini semata-mata dilakukan untuk kepentingan akademik dan seluruh informasi yang diperoleh akan digunakan sesuai dengan etika penelitian yang berlaku.\n\nDemikian surat pengantar ini kami sampaikan.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PENGAMBILAN_DATA: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR PENGAMBILAN DATA\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{NAMA_PIMPINAN_INSTANSI}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nSehubungan dengan penelitian mahasiswa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Judul Penelitian** : {{JUDUL_PENELITIAN}}\n\nkami mohon kiranya mahasiswa tersebut diberikan izin untuk melakukan pengambilan data yang diperlukan untuk penelitian.\n\nJenis data yang diperlukan:\n\n**{{JENIS_DATA}}**\n\nPengambilan data akan dilaksanakan pada **{{PERIODE_PENGAMBILAN_DATA}}**.\n\nDemikian surat ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  TELAH_PENELITIAN: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TELAH MELAKUKAN PENELITIAN\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Judul Penelitian** : {{JUDUL_PENELITIAN}}\n\ntelah melaksanakan penelitian pada **{{NAMA_INSTANSI}}** dalam rangka memenuhi kebutuhan akademik pada Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nPenelitian dilaksanakan pada **{{PERIODE_PENELITIAN}}**.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  TELAH_PKL: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TELAH MELAKSANAKAN PKL\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}\n\ntelah melaksanakan **Praktik Kerja Lapangan (PKL)** di:\n\n**{{NAMA_INSTANSI}}**\n\npada periode **{{PERIODE_PKL}}**.\n\nSurat keterangan ini dibuat sebagai bukti bahwa yang bersangkutan telah melaksanakan kegiatan PKL untuk memenuhi kebutuhan akademik.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  TELAH_MAGANG: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TELAH MELAKSANAKAN MAGANG\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ntelah melaksanakan kegiatan **Magang** di:\n\n**{{NAMA_INSTANSI}}**\n\npada:\n\n**Periode** : {{PERIODE_MAGANG}}  \n**Bidang** : {{BIDANG_MAGANG}}\n\nSurat keterangan ini diberikan untuk keperluan **{{KEPERLUAN}}**.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  IZIN_KEGIATAN: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PERMOHONAN IZIN KEGIATAN MAHASISWA\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**{{NAMA_PIMPINAN_INSTANSI}}**  \n**{{NAMA_INSTANSI}}**\n\nDengan hormat,\n\nSehubungan dengan rencana pelaksanaan kegiatan:\n\n**Nama Kegiatan** : {{NAMA_KEGIATAN}}  \n**Penyelenggara** : {{PENYELENGGARA}}  \n**Hari/Tanggal** : {{TANGGAL_KEGIATAN}}  \n**Tempat** : {{TEMPAT_KEGIATAN}}\n\nyang akan diikuti oleh mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama), kami memohon izin dan dukungan untuk pelaksanaan kegiatan tersebut.\n\nDemikian permohonan ini kami sampaikan.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  ORGANISASI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR KEGIATAN ORGANISASI\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini menerangkan bahwa mahasiswa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}\n\nmerupakan mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama) yang akan mengikuti/melaksanakan kegiatan organisasi:\n\n**{{NAMA_KEGIATAN}}**\n\npada **{{TANGGAL_KEGIATAN}}**, bertempat di **{{TEMPAT_KEGIATAN}}**.\n\nSurat ini dibuat sebagai surat pengantar untuk keperluan kegiatan tersebut.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  REK_KEGIATAN: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT REKOMENDASI\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini memberikan rekomendasi kepada:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}\n\nuntuk mengikuti kegiatan:\n\n**{{NAMA_KEGIATAN}}**\n\nyang diselenggarakan oleh **{{PENYELENGGARA}}** pada **{{TANGGAL_KEGIATAN}}**.\n\nRekomendasi ini diberikan dengan mempertimbangkan bahwa kegiatan tersebut dapat memberikan manfaat bagi pengembangan kompetensi dan pengalaman mahasiswa.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  LOMBA: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR LOMBA/KOMPETISI\n**Nomor: {{NOMOR_SURAT}}**\n\nYth.  \n**Panitia {{NAMA_KOMPETISI}}**\n\nDengan hormat,\n\nKami menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Universitas** : Universitas Prof. Dr. Moestopo (Beragama)\n\nmerupakan mahasiswa Fakultas Ilmu Komunikasi yang kami izinkan/rekomendasikan untuk mengikuti:\n\n**{{NAMA_KOMPETISI}}**\n\nyang diselenggarakan oleh **{{PENYELENGGARA}}**.\n\nDemikian surat pengantar ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  SEMINAR: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT PENGANTAR SEMINAR/KONFERENSI\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}\n\nakan mengikuti kegiatan:\n\n**{{NAMA_SEMINAR_KONFERENSI}}**\n\nyang diselenggarakan oleh **{{PENYELENGGARA}}** pada **{{TANGGAL_KEGIATAN}}**.\n\nSurat ini dibuat sebagai pengantar dan bukti status mahasiswa yang bersangkutan.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  PRESTASI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN PRESTASI MAHASISWA\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ntelah memperoleh prestasi:\n\n**Nama Prestasi** : {{NAMA_PRESTASI}}  \n**Tingkat** : {{TINGKAT_PRESTASI}}  \n**Peringkat** : {{PERINGKAT}}  \n**Penyelenggara** : {{PENYELENGGARA}}  \n**Tanggal** : {{TANGGAL_PRESTASI}}\n\nSurat keterangan ini dibuat berdasarkan dokumen/bukti prestasi yang disampaikan dan telah diverifikasi oleh Fakultas.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  MENGIKUTI_KEGIATAN: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ntelah mengikuti kegiatan:\n\n**{{NAMA_KEGIATAN}}**\n\nyang diselenggarakan oleh **{{PENYELENGGARA}}**, pada **{{TANGGAL_KEGIATAN}}**, bertempat di **{{TEMPAT_KEGIATAN}}**.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\n**{{JABATAN_PEJABAT}}**\n\n**{{NAMA_PEJABAT}}**  \n{{NIP_PEJABAT}}',
+  PENGGANTI_KTM: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN PENGGANTI KARTU TANDA MAHASISWA\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nadalah mahasiswa aktif Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nSurat ini diberikan sebagai **pengganti sementara Kartu Tanda Mahasiswa (KTM)** sampai dengan diterbitkannya KTM sesuai ketentuan yang berlaku.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  KEHILANGAN_DOKUMEN: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}\n\ntelah melaporkan kehilangan dokumen akademik berupa:\n\n**{{NAMA_DOKUMEN}}**\n\nSurat keterangan ini dibuat berdasarkan permohonan yang bersangkutan dan dapat digunakan sebagai salah satu dokumen pendukung dalam proses penggantian dokumen tersebut sesuai ketentuan yang berlaku.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  TRANSKRIP: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### PERMOHONAN TRANSKRIP NILAI\n**Nomor: {{NOMOR_PERMOHONAN}}**\n\nYang bertanda tangan di bawah ini:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ndengan ini mengajukan permohonan penerbitan **Transkrip Nilai** untuk keperluan:\n\n**{{KEPERLUAN}}**\n\nDemikian permohonan ini saya ajukan. Atas perhatian dan pelayanan yang diberikan, saya mengucapkan terima kasih.\n\n{{KOTA}}, {{TANGGAL_PERMOHONAN}}\n\nPemohon,\n\n**{{NAMA_MAHASISWA}}**  \nNIM. {{NIM}}',
+  LEGALISASI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### PERMOHONAN LEGALISASI DOKUMEN\n**Nomor: {{NOMOR_PERMOHONAN}}**\n\nYang bertanda tangan di bawah ini:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nmengajukan permohonan legalisasi terhadap dokumen:\n\n**{{NAMA_DOKUMEN}}**\n\nsebanyak **{{JUMLAH_DOKUMEN}}** eksemplar untuk keperluan **{{KEPERLUAN}}**.\n\nDemikian permohonan ini dibuat untuk dapat diproses sesuai ketentuan yang berlaku.\n\n{{KOTA}}, {{TANGGAL_PERMOHONAN}}\n\nPemohon,\n\n**{{NAMA_MAHASISWA}}**  \nNIM. {{NIM}}',
+  VISA_STUDI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nadalah mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nYang bersangkutan memerlukan surat keterangan ini dalam rangka **{{KEPERLUAN_VISA_STUDI}}**, yaitu **{{TUJUAN_STUDI}}**.\n\nSurat ini dibuat untuk digunakan sebagai salah satu dokumen pendukung sesuai kebutuhan pihak yang berkepentingan.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  LANJUT_STUDI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT REKOMENDASI MELANJUTKAN STUDI\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini memberikan rekomendasi kepada:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nuntuk melanjutkan pendidikan pada:\n\n**Perguruan Tinggi/Institusi** : {{NAMA_PERGURUAN_TINGGI_TUJUAN}}  \n**Program Studi** : {{PROGRAM_STUDI_TUJUAN}}  \n**Jenjang** : {{JENJANG_TUJUAN}}\n\nBerdasarkan pertimbangan akademik dan informasi yang tersedia, kami memberikan rekomendasi kepada yang bersangkutan untuk melanjutkan studi tersebut.\n\nDemikian surat rekomendasi ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
+  ADMINISTRASI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini, Dekan Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama), menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nadalah benar mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nSurat keterangan ini diberikan atas permohonan yang bersangkutan untuk keperluan:\n\n**{{KEPERLUAN}}**\n\nDemikian surat keterangan ini dibuat dengan sebenarnya agar dapat dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}'
 };
 
 const STATUS_LABEL = {
@@ -793,150 +798,113 @@ const Form = {
   selectedType: "",
   lastTicket: null,
 
+  fieldSets: {
+    AKTIF:[['keperluan','Keperluan','text',true]],
+    TERDAFTAR:[['tahunMasuk','Tahun Masuk','text',true],['keperluan','Keperluan','text',true]],
+    LULUS:[['keperluan','Keperluan','text',true]],
+    SELESAI_STUDI:[['keperluan','Keperluan','text',true]],
+    CUTI:[['semesterCuti','Semester Cuti','text',true],['tahunAkademik','Tahun Akademik','text',true]],
+    TIDAK_CUTI:[['tahunAkademik','Tahun Akademik','text',true],['keperluan','Keperluan','text',true]],
+    TIDAK_BEASISWA:[['tahunAkademik','Tahun Akademik','text',true],['keperluan','Keperluan','text',true]],
+    REK_AKADEMIK:[['tujuanRekomendasi','Tujuan Rekomendasi','textarea',true]],
+    REK_BEASISWA:[['namaBeasiswa','Nama Beasiswa','text',true]],
+    PENGANTAR_PENELITIAN:[['judulPenelitian','Judul Penelitian','textarea',true],['periodePenelitian','Periode Penelitian','text',true]],
+    PENGANTAR_OBSERVASI:[['topikObservasi','Topik Observasi','text',false],['objekObservasi','Objek Observasi','text',true],['tujuanObservasi','Tujuan Observasi','textarea',true]],
+    PENGANTAR_PKL:[['konsentrasi','Konsentrasi','text',false],['posisiPKL','Posisi PKL','text',true]],
+    PENGANTAR_MAGANG:[['bidangMagang','Bidang Magang','text',false]],
+    PRAKTIK_KERJA:[['bidangKegiatan','Bidang Kegiatan','text',true]],
+    PERMOHONAN_DATA:[['judulPenelitian','Judul Penelitian','textarea',true],['dataYangDimohon','Data yang Dimohon','textarea',true]],
+    PERMOHONAN_WAWANCARA:[['judulPenelitian','Judul Penelitian','textarea',true],['namaNarasumber','Nama Narasumber','text',true],['jabatanNarasumber','Jabatan Narasumber','text',false],['tanggalWawancara','Tanggal Wawancara','date',false],['tempatWawancara','Tempat/Media Wawancara','text',false]],
+    PENGANTAR_KUESIONER:[['judulPenelitian','Judul Penelitian','textarea',true]],
+    PENGAMBILAN_DATA:[['judulPenelitian','Judul Penelitian','textarea',true],['jenisData','Jenis Data','textarea',true]],
+    TELAH_PENELITIAN:[['judulPenelitian','Judul Penelitian','textarea',true],['periodePenelitian','Periode Penelitian','text',true]],
+    TELAH_PKL:[['periodePKL','Periode PKL','text',true]],
+    TELAH_MAGANG:[['periodeMagang','Periode Magang','text',true],['bidangMagang','Bidang Magang','text',false]],
+    IZIN_KEGIATAN:[['namaKegiatan','Nama Kegiatan','text',true],['penyelenggara','Penyelenggara','text',true],['tanggalKegiatan','Tanggal Kegiatan','date',true],['tempatKegiatan','Tempat Kegiatan','text',true]],
+    ORGANISASI:[['namaKegiatan','Nama Kegiatan','text',true],['tanggalKegiatan','Tanggal Kegiatan','date',true],['tempatKegiatan','Tempat Kegiatan','text',true]],
+    REK_KEGIATAN:[['namaKegiatan','Nama Kegiatan','text',true],['penyelenggara','Penyelenggara','text',true],['tanggalKegiatan','Tanggal Kegiatan','date',false]],
+    LOMBA:[['namaKompetisi','Nama Kompetisi','text',true],['penyelenggara','Penyelenggara','text',true]],
+    SEMINAR:[['namaSeminarKonferensi','Nama Seminar/Konferensi','text',true],['penyelenggara','Penyelenggara','text',true],['tanggalKegiatan','Tanggal Kegiatan','date',false]],
+    PRESTASI:[['namaPrestasi','Nama Prestasi','text',true],['tingkatPrestasi','Tingkat','text',true],['peringkat','Peringkat','text',false],['penyelenggara','Penyelenggara','text',true],['tanggalPrestasi','Tanggal Prestasi','date',false]],
+    MENGIKUTI_KEGIATAN:[['namaKegiatan','Nama Kegiatan','text',true],['penyelenggara','Penyelenggara','text',false],['tanggalKegiatan','Tanggal Kegiatan','date',false],['tempatKegiatan','Tempat Kegiatan','text',false]],
+    PENGGANTI_KTM:[['alasanPengganti','Alasan Penggantian KTM','textarea',true]],
+    KEHILANGAN_DOKUMEN:[['namaDokumen','Nama Dokumen yang Hilang','text',true],['keteranganKehilangan','Keterangan Kehilangan','textarea',false]],
+    TRANSKRIP:[['keperluan','Keperluan','text',true]],
+    LEGALISASI:[['namaDokumen','Nama Dokumen','text',true],['jumlahDokumen','Jumlah Dokumen','number',true],['keperluan','Keperluan','text',true]],
+    VISA_STUDI:[['keperluanVisaStudi','Keperluan Visa/Studi','text',true],['tujuanStudi','Tujuan Studi','text',true]],
+    LANJUT_STUDI:[['namaPerguruanTinggiTujuan','Perguruan Tinggi Tujuan','text',true],['programStudiTujuan','Program Studi Tujuan','text',true],['jenjangTujuan','Jenjang Tujuan','text',true]],
+    ADMINISTRASI:[['keperluan','Keperluan Administrasi','textarea',true]]
+  },
+
   selectType(type){
     if (!TYPE_CONFIG[type]) return toast("Jenis surat tidak dikenal.","error");
-    this.selectedType = type;
-    document.querySelectorAll(".type-card").forEach(c=>{
-      c.classList.toggle("active", c.dataset.type === type);
-    });
-    $("formCard").style.display = "block";
-    $("formTitle").textContent = TYPE_CONFIG[type].title;
-    $("formDesc").textContent = TYPE_CONFIG[type].desc;
-    document.querySelectorAll(".conditional").forEach(el=>el.classList.remove("show"));
-    const map = {OBSERVASI:"secObservasi",PENELITIAN:"secPenelitian",PKL:"secPKL",MAGANG:"secMagang"};
-    $(map[type]).classList.add("show");
-    $("formCard").scrollIntoView({behavior:"smooth",block:"start"});
+    this.selectedType=type;
+    document.querySelectorAll('.type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===type));
+    $('formCard').style.display='block';
+    $('formTitle').textContent=TYPE_CONFIG[type].title;
+    $('formDesc').textContent=TYPE_CONFIG[type].desc;
+    this.renderFields(type);
+    $('formCard').scrollIntoView({behavior:'smooth',block:'start'});
+  },
+
+  renderFields(type){
+    const wrap=$('dynamicFields');
+    const fields=this.fieldSets[type]||[['keperluan','Keperluan','textarea',false]];
+    wrap.innerHTML=fields.map(([name,label,inputType,required])=>{
+      const req=required?' <span class="req">*</span>':'';
+      const common=`id="${name}" name="${name}" ${required?'required':''}`;
+      if(inputType==='textarea') return `<div class="field full"><label>${escapeHtml(label)}${req}</label><textarea ${common} maxlength="2000"></textarea></div>`;
+      return `<div class="field"><label>${escapeHtml(label)}${req}</label><input ${common} type="${inputType}" maxlength="500"></div>`;
+    }).join('');
   },
 
   reset(){
-    if (!confirm("Reset seluruh data formulir?")) return;
-    $("applicationForm").reset();
-    document.querySelectorAll(".invalid").forEach(el=>el.classList.remove("invalid"));
-    toast("Formulir telah direset.","success");
+    if(!confirm('Reset seluruh data formulir?')) return;
+    $('applicationForm').reset(); $('dynamicFields').innerHTML='';
+    document.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
+    toast('Formulir telah direset.','success');
   },
 
   newApplication(){
-    $("applicationForm").reset();
-    document.querySelectorAll(".invalid").forEach(el=>el.classList.remove("invalid"));
-    document.querySelectorAll(".type-card").forEach(c=>c.classList.remove("active"));
-    document.querySelectorAll(".conditional").forEach(el=>el.classList.remove("show"));
-    this.selectedType = "";
-    $("formCard").style.display = "none";
-    Router.go("home");
+    $('applicationForm').reset(); $('dynamicFields').innerHTML='';
+    document.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
+    document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('active'));
+    this.selectedType=''; $('formCard').style.display='none'; Router.go('home');
   },
 
   copyTicket(){
-    if (!this.lastTicket) return;
-    const t = this.lastTicket;
-    const text =
-      "ID Pengajuan: " + t.requestId + "\n" +
-      "Token Tracking: " + t.trackingToken + "\n" +
-      "Jenis Surat: " + t.jenisSurat + "\n" +
-      "Nama: " + t.nama + "\n" +
-      "NIM: " + t.nim;
-    navigator.clipboard.writeText(text).then(
-      ()=>toast("Tiket disalin ke clipboard.","success"),
-      ()=>toast("Gagal menyalin.","error")
-    );
+    if(!this.lastTicket) return;
+    const t=this.lastTicket;
+    const text='ID Pengajuan: '+t.requestId+'\nToken Tracking: '+t.trackingToken+'\nJenis Surat: '+t.jenisSurat+'\nNama: '+t.nama+'\nNIM: '+t.nim;
+    navigator.clipboard.writeText(text).then(()=>toast('Tiket disalin ke clipboard.','success'),()=>toast('Gagal menyalin.','error'));
   },
 
   validate(){
-    const req = (id,msg)=>{
-      const el = $(id);
-      const v = normalizeText(el.value);
-      if (!v){ el.classList.add("invalid"); el.focus(); toast(msg,"error"); return false; }
-      el.classList.remove("invalid"); return true;
-    };
-
-    if (!this.selectedType) return toast("Pilih jenis surat terlebih dahulu.","warning"), false;
-
-    if (!req("nama","Nama lengkap wajib diisi.")) return false;
-    if (!req("nim","NIM wajib diisi.")) return false;
-    if (!/^\d{6,20}$/.test($("nim").value.trim())) return toast("Format NIM harus 6-20 digit angka.","error"), false;
-    if (!req("programStudi","Program studi wajib dipilih.")) return false;
-    if (!req("semester","Semester wajib dipilih.")) return false;
-    if (!req("email","Email wajib diisi.")) return false;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("email").value.trim())) return toast("Format email tidak valid.","error"), false;
-    if (!req("whatsapp","Nomor WhatsApp wajib diisi.")) return false;
-    if (!/^(\+?62|0)8[0-9]{7,13}$/.test($("whatsapp").value.replace(/[\s\-().]/g,""))) return toast("Format WhatsApp tidak valid.","error"), false;
-    if (!req("namaInstansi","Nama instansi wajib diisi.")) return false;
-    if (!req("alamatInstansi","Alamat instansi wajib diisi.")) return false;
-
-    if (this.selectedType === "OBSERVASI"){
-      if (!req("objekObservasi","Objek observasi wajib diisi.")) return false;
-      if (!req("tujuanObservasi","Tujuan observasi wajib diisi.")) return false;
-    }
-    if (this.selectedType === "PENELITIAN"){
-      if (!req("judulPenelitian","Judul penelitian wajib diisi.")) return false;
-      if (!req("jenisPenelitian","Jenis penelitian wajib dipilih.")) return false;
-      if (!req("dosenPembimbing","Dosen pembimbing wajib diisi.")) return false;
-    }
-    if (this.selectedType === "PKL"){
-      if (!req("posisiPKL","Posisi PKL wajib diisi.")) return false;
-    }
-    if (this.selectedType === "MAGANG"){
-      if (!req("posisiMagang","Posisi magang wajib diisi.")) return false;
-    }
-
-    if (!req("tanggalMulai","Tanggal mulai wajib diisi.")) return false;
-    if (!req("tanggalSelesai","Tanggal selesai wajib diisi.")) return false;
-    if ($("tanggalSelesai").value < $("tanggalMulai").value){
-      return toast("Tanggal selesai tidak boleh sebelum tanggal mulai.","error"), false;
-    }
-    if (!$("agreement").checked){
-      return toast("Anda harus menyetujui pernyataan.","warning"), false;
-    }
+    const req=(id,msg)=>{const el=$(id); if(!el) return true; const v=normalizeText(el.value); if(!v){el.classList.add('invalid');el.focus();toast(msg,'error');return false;}el.classList.remove('invalid');return true;};
+    if(!this.selectedType) return toast('Pilih jenis surat terlebih dahulu.','warning'),false;
+    if(!req('nama','Nama lengkap wajib diisi.')||!req('nim','NIM wajib diisi.')||!req('programStudi','Program studi wajib dipilih.')||!req('semester','Semester wajib dipilih.')||!req('email','Email wajib diisi.')||!req('whatsapp','Nomor WhatsApp wajib diisi.')) return false;
+    if(!/^\d{6,20}$/.test($('nim').value.trim())) return toast('Format NIM harus 6-20 digit angka.','error'),false;
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($('email').value.trim())) return toast('Format email tidak valid.','error'),false;
+    if(!/^(\+?62|0)8[0-9]{7,13}$/.test($('whatsapp').value.replace(/[\s\-().]/g,''))) return toast('Format WhatsApp tidak valid.','error'),false;
+    const jenjang=String($('programStudi').value).startsWith('S1')?'S1':'S2';
+    if(TYPE_CONFIG[this.selectedType].jenjang.indexOf(jenjang)<0) return toast('Jenis surat ini tidak tersedia untuk '+jenjang+'.','error'),false;
+    for(const f of (this.fieldSets[this.selectedType]||[])){ if(f[3]&&!req(f[0],f[1]+' wajib diisi.')) return false; }
+    if(!$('agreement').checked) return toast('Anda harus menyetujui pernyataan.','warning'),false;
     return true;
   },
 
   collect(){
-    const fd = new FormData($("applicationForm"));
-    const data = {};
-    fd.forEach((v,k)=>{ data[k] = normalizeText(v); });
-    data.jenisSurat = this.selectedType;
-    data.clientTimestamp = new Date().toISOString();
-    data.clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Jakarta";
+    const fd=new FormData($('applicationForm')); const data={}; fd.forEach((v,k)=>{data[k]=normalizeText(v);});
+    data.jenisSurat=this.selectedType; data.clientTimestamp=new Date().toISOString(); data.clientTimezone=Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Jakarta';
     return data;
   },
 
   async submit(){
-    if (!this.validate()) return;
-    const btn = $("submitBtn");
-    if (btn.disabled) return;
-    btn.disabled = true;
-    showLoading("Mengirim pengajuan...");
-    try{
-      const data = this.collect();
-      const resp = unwrap(await API.submit(data), "Gagal mengirim pengajuan.");
-      hideLoading();
-
-      const ticket = {
-        requestId: resp.requestId,
-        trackingToken: resp.trackingToken,
-        jenisSurat: TYPE_CONFIG[this.selectedType].title,
-        nama: data.nama,
-        nim: data.nim
-      };
-      this.lastTicket = ticket;
-
-      // simpan ke localStorage utk tracking cepat
-      localStorage.setItem("fikom_lastTicket", JSON.stringify(ticket));
-
-      $("rId").textContent = ticket.requestId;
-      $("rToken").textContent = ticket.trackingToken;
-      $("rType").textContent = ticket.jenisSurat;
-      $("rName").textContent = ticket.nama;
-      $("rNim").textContent = ticket.nim;
-      $("rStatus").textContent = STATUS_LABEL[resp.status] || resp.status || "Diajukan";
-
-      Router.go("result");
-      toast("Pengajuan berhasil dikirim.","success");
-    }catch(e){
-      hideLoading();
-      toast(e.message,"error");
-    }finally{
-      btn.disabled = false;
-    }
+    if(!this.validate()) return; const btn=$('submitBtn'); if(btn.disabled)return; btn.disabled=true; showLoading('Mengirim pengajuan...');
+    try{const data=this.collect();const resp=unwrap(await API.submit(data),'Gagal mengirim pengajuan.');hideLoading();
+      const ticket={requestId:resp.requestId,trackingToken:resp.trackingToken,jenisSurat:TYPE_CONFIG[this.selectedType].title,nama:data.nama,nim:data.nim};this.lastTicket=ticket;localStorage.setItem('fikom_lastTicket',JSON.stringify(ticket));
+      $('rId').textContent=ticket.requestId;$('rToken').textContent=ticket.trackingToken;$('rType').textContent=ticket.jenisSurat;$('rName').textContent=ticket.nama;$('rNim').textContent=ticket.nim;$('rStatus').textContent=STATUS_LABEL[resp.status]||resp.status||'Diajukan';Router.go('result');toast('Pengajuan berhasil dikirim.','success');
+    }catch(e){hideLoading();toast(e.message,'error');}finally{btn.disabled=false;}
   }
 };
 
