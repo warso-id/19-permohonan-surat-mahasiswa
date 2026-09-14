@@ -1092,13 +1092,14 @@ const Form = {
   },
 
   async uploadFiles(requestId,files){
-    const CHUNK_BYTES=30000; // divisible by 3; base64 chunks can be concatenated server-side
+    const CHUNK_BYTES=2100; // aman untuk URL GET/JSONP (~5KB per request setelah encoding ganda); kelipatan 3 agar batas base64 antar-chunk tidak memakai padding
     for(const file of files){
       const raw=atob(file.base64); const total=Math.ceil(raw.length/CHUNK_BYTES);
       for(let i=0;i<total;i++){
         const chunk=raw.slice(i*CHUNK_BYTES,Math.min((i+1)*CHUNK_BYTES,raw.length));
         const chunkB64=btoa(chunk);
         const payload={name:file.name,mimeType:file.mimeType,size:file.size,base64:chunkB64};
+        showLoading('Mengunggah '+file.name+' ('+(i+1)+'/'+total+')...');
         unwrap(await API.uploadAttachment(requestId,this.lastTicket?.trackingToken||this.currentTrackingToken||'',payload,i,total),'Gagal mengunggah lampiran.');
       }
     }
@@ -1175,6 +1176,18 @@ const Tracking = {
 
   render(t){
     const badge = this.badge(t.status);
+    const steps = [
+      {label:'Diajukan', at:t.submittedAt},
+      {label:'Verifikasi Admin', at:t.adminAt},
+      {label:'Approval Kaprodi', at:t.kaprodiAt},
+      {label:'Approval Wadek', at:t.wadekAt},
+      {label:'Approval Dekan', at:t.dekanAt},
+      {label:'Selesai', at:t.completedAt}
+    ].filter(s => s.at || s.label==='Diajukan');
+    const timeline = t.status==='DITOLAK'||t.rejectionReason ? '' : `
+      <div class="timeline" style="margin-top:12px">
+        ${steps.map(s=>`<div class="ticket-row"><span class="ticket-label">${escapeHtml(s.label)}</span><span class="ticket-value">${s.at?escapeHtml(s.at):'<span style="opacity:.5">Menunggu</span>'}</span></div>`).join('')}
+      </div>`;
     return `
       <div class="ticket" style="margin-top:8px">
         <div class="ticket-row"><span class="ticket-label">ID</span><span class="ticket-value">${escapeHtml(t.requestId)}</span></div>
@@ -1185,6 +1198,7 @@ const Tracking = {
         ${t.nomorSurat?`<div class="ticket-row"><span class="ticket-label">Nomor Surat</span><span class="ticket-value">${escapeHtml(t.nomorSurat)}</span></div>`:''}
         ${t.rejectionReason?`<div class="ticket-row"><span class="ticket-label">Alasan Ditolak</span><span class="ticket-value" style="color:var(--danger)">${escapeHtml(t.rejectionReason)}</span></div>`:''}
         ${t.pdfUrl?`<div class="ticket-row"><span class="ticket-label">Unduh PDF</span><span class="ticket-value"><a href="${escapeHtml(t.pdfUrl)}" target="_blank">Buka PDF</a></span></div>`:''}
+        ${timeline}
       </div>
     `;
   },
