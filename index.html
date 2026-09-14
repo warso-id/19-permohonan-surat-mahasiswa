@@ -254,11 +254,24 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
   <section class="view active" id="view-home">
     <div class="card">
       <h1>📄 Pengajuan Surat Mahasiswa</h1>
-      <p class="lead">Ajukan surat administrasi akademik secara online. Pilih jenis surat, lengkapi data, lalu pantau statusnya melalui halaman Lacak.</p>
+      <p class="lead">Pilih modul Program Studi terlebih dahulu. Sistem hanya menampilkan jenis surat dan field yang relevan untuk S1 atau S2.</p>
+      <div class="section" style="margin-top:18px;margin-bottom:14px">
+        <div class="section-title"><span class="section-num">1</span>Modul Program Studi</div>
+        <div class="grid grid-3" id="programModules">
+          <button type="button" class="type-card" id="moduleS1" onclick="Form.selectProgram('S1')"><div class="type-icon">🎓</div><div class="type-title">S1 Ilmu Komunikasi</div><div class="type-desc">NIM: YYYY41NNN · modul surat S1</div></button>
+          <button type="button" class="type-card" id="moduleS2" onclick="Form.selectProgram('S2')"><div class="type-icon">🎓</div><div class="type-title">S2 Magister Ilmu Komunikasi</div><div class="type-desc">NIM: YYYY31NNN · modul surat S2</div></button>
+        </div>
+      </div>
+      <div id="letterModule" style="display:none">
+        <div class="section-title"><span class="section-num">2</span>Modul Jenis Surat</div>
+        <div class="field" style="margin:0 0 14px">
+          <label for="letterSearch">🔎 Cari jenis surat</label>
+          <input id="letterSearch" type="search" placeholder="Ketik nama surat, contoh: penelitian, beasiswa, legalisasi..." oninput="Form.searchTypes(this.value)">
+        </div>
+      </div>
       <div class="type-grid" id="typeGrid">
         <button class="type-card" data-type="AKTIF" onclick="Form.selectType('AKTIF')"><div class="type-icon">🎓</div><div class="type-title">Surat Keterangan Mahasiswa Aktif</div><div class="type-desc">Keterangan status mahasiswa aktif.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
         <button class="type-card" data-type="TERDAFTAR" onclick="Form.selectType('TERDAFTAR')"><div class="type-icon">📋</div><div class="type-title">Surat Keterangan Terdaftar sebagai Mahasiswa</div><div class="type-desc">Keterangan terdaftar sebagai mahasiswa.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
-        <button class="type-card" data-type="LULUS" onclick="Form.selectType('LULUS')"><div class="type-icon">🎓</div><div class="type-title">Surat Keterangan Lulus</div><div class="type-desc">Keterangan kelulusan.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
         <button class="type-card" data-type="SELESAI_STUDI" onclick="Form.selectType('SELESAI_STUDI')"><div class="type-icon">🎓</div><div class="type-title">Surat Keterangan Telah Menyelesaikan Studi</div><div class="type-desc">Keterangan telah menyelesaikan studi.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
         <button class="type-card" data-type="CUTI" onclick="Form.selectType('CUTI')"><div class="type-icon">⏸️</div><div class="type-title">Surat Keterangan Cuti Akademik</div><div class="type-desc">Keterangan cuti akademik.</div><div class="help">S1,S2 · KAPRODI>WADEK>DEKAN</div></button>
         <button class="type-card" data-type="TIDAK_CUTI" onclick="Form.selectType('TIDAK_CUTI')"><div class="type-icon">✅</div><div class="type-title">Surat Keterangan Tidak Cuti</div><div class="type-desc">Keterangan tidak sedang cuti.</div><div class="help">S1,S2 · ADMIN>DEKAN</div></button>
@@ -303,18 +316,15 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
       <form id="applicationForm" novalidate>
         <!-- SECTION 1 -->
         <div class="section">
-          <div class="section-title"><span class="section-num">1</span>Identitas Mahasiswa</div>
+          <div class="section-title"><span class="section-num">1</span>Identitas & Modul Mahasiswa</div>
           <div class="grid">
             <div class="field"><label>Nama Lengkap <span class="req">*</span></label>
               <input id="nama" name="nama" type="text" maxlength="150" placeholder="Nama lengkap" required></div>
             <div class="field"><label>NIM <span class="req">*</span></label>
-              <input id="nim" name="nim" type="text" inputmode="numeric" maxlength="30" placeholder="Contoh: 202241003" required></div>
+              <input id="nim" name="nim" type="text" inputmode="numeric" maxlength="9" pattern="\d{9}" placeholder="S1: 202241001 · S2: 202431001" required></div>
             <div class="field"><label>Program Studi <span class="req">*</span></label>
-              <select id="programStudi" name="programStudi" required>
-                <option value="">-- Pilih --</option>
-                <option value="S1 ILMU KOMUNIKASI">S1 Ilmu Komunikasi</option>
-                <option value="S2 MAGISTER ILMU KOMUNIKASI">S2 Magister Ilmu Komunikasi</option>
-              </select></div>
+              <input id="programStudi" name="programStudi" type="text" readonly required>
+              <div class="help" id="programHelp">Pilih modul Program Studi di atas.</div></div>
             <div class="field"><label>Semester <span class="req">*</span></label>
               <select id="semester" name="semester" required>
                 <option value="">-- Pilih --</option>
@@ -326,35 +336,25 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
             <div class="field"><label>Email <span class="req">*</span></label>
               <input id="email" name="email" type="email" maxlength="150" placeholder="nama@email.com" required></div>
             <div class="field"><label>No. WhatsApp <span class="req">*</span></label>
-              <input id="whatsapp" name="whatsapp" type="tel" maxlength="20" placeholder="08xxxxxxxxxx" required></div>
-            <div class="field full"><label>Alamat Mahasiswa</label>
-              <textarea id="alamat" name="alamat" maxlength="500" placeholder="Alamat lengkap"></textarea></div>
+              <input id="whatsapp" name="whatsapp" type="tel" maxlength="13" inputmode="numeric" placeholder="08xxxxxxxxxx · maksimal 13 angka" required></div>
           </div>
         </div>
 
-        <!-- SECTION 2: DINAMIS SESUAI JENIS SURAT -->
+        <!-- SECTION 2: ONLY TEMPLATE FIELDS -->
         <div class="section" id="dynamicFieldsSection">
-          <div class="section-title"><span class="section-num">2</span>Data Permohonan</div>
+          <div class="section-title"><span class="section-num">2</span>Field Template Surat</div>
+          <div class="help" style="margin:-6px 0 12px">Field di bawah dibuat otomatis dari placeholder template surat yang dipilih. Field yang tidak digunakan template tidak ditampilkan.</div>
           <div id="dynamicFields" class="grid"></div>
         </div>
 
-        <div class="section">
-          <div class="section-title"><span class="section-num">3</span>Waktu Pelaksanaan</div>
-          <div class="grid grid-3">
-            <div class="field"><label>Tanggal Mulai</label><input id="tanggalMulai" name="tanggalMulai" type="date"></div>
-            <div class="field"><label>Tanggal Selesai</label><input id="tanggalSelesai" name="tanggalSelesai" type="date"></div>
-            <div class="field"><label>Waktu / Jam</label><input id="waktu" name="waktu" maxlength="100" placeholder="08.00 - 16.00 WIB"></div>
-          </div>
+        <!-- SECTION 3: ATTACHMENTS WHEN REQUIRED -->
+        <div class="section" id="uploadSection" style="display:none">
+          <div class="section-title"><span class="section-num">3</span>Lampiran Template</div>
+          <div id="uploadFields" class="grid"></div>
         </div>
 
         <div class="section">
-          <div class="section-title"><span class="section-num">4</span>Keterangan Tambahan</div>
-          <div class="field"><textarea id="keterangan" name="keterangan" maxlength="1000" placeholder="Keterangan tambahan (opsional)"></textarea></div>
-        </div>
-
-        <!-- SECTION 6 -->
-        <div class="section">
-          <div class="section-title"><span class="section-num">6</span>Pernyataan</div>
+          <div class="section-title"><span class="section-num" id="statementNum">3</span>Pernyataan</div>
           <div class="agreement">
             Data yang saya masukkan adalah benar dan dapat dipertanggungjawabkan.
             <label class="check-row">
@@ -426,6 +426,9 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
             <input id="loginPass" type="password" autocomplete="current-password">
           </div>
           <button class="btn btn-primary" style="width:100%" id="loginBtn" onclick="Auth.login()">Masuk</button>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <button type="button" class="btn btn-secondary btn-sm" style="flex:1" onclick="Auth.openResetRequest()">🔑 Lupa / Reset Password</button>
+          </div>
         </div>
       </div>
     </div>
@@ -439,12 +442,16 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
           <h1 id="dashTitle">Dashboard</h1>
           <p class="lead" id="dashSub">Memuat data...</p>
         </div>
-        <button class="btn btn-secondary btn-sm" onclick="Dashboard.refresh()">🔄 Refresh</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" onclick="Dashboard.refresh()">🔄 Refresh</button>
+          <button class="btn btn-secondary btn-sm" onclick="Auth.openChangePassword()">🔐 Ganti Password</button>
+        </div>
       </div>
     </div>
     <div class="stats" id="statsBox"></div>
     <div class="card">
       <h2 id="listTitle">Daftar Menunggu Persetujuan</h2>
+      <div class="field" style="margin:12px 0"><label>🔎 Cari pengajuan</label><input id="dashSearch" type="search" placeholder="Cari ID, nama, NIM, jenis surat, atau prodi..." oninput="Dashboard.search(this.value)"></div>
       <div class="table-wrap" id="listBox"></div>
     </div>
   </section>
@@ -453,7 +460,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
 
 <footer>
   Fakultas Ilmu Komunikasi · Universitas Prof. Dr. Moestopo (Beragama)<br>
-  <span style="opacity:.7">Sistem Administrasi Mahasiswa v3.3.0</span>
+  <span style="opacity:.7">Sistem Administrasi Mahasiswa v4.0.0</span>
 </footer>
 
 <!-- ========== MODAL DETAIL ========== -->
@@ -472,6 +479,41 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
       <div class="tab-pane" id="tab-data"></div>
     </div>
     <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+
+<!-- ========== PASSWORD MODALS ========== -->
+<div class="modal" id="passwordModal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-head"><h3 id="passwordModalTitle">🔐 Keamanan Akun</h3><button class="btn btn-secondary btn-sm" onclick="Auth.closePasswordModal()">✕ Tutup</button></div>
+    <div class="modal-body">
+      <div id="passwordRequestPane">
+        <p class="lead">Masukkan username atau email yang terdaftar. Link reset akan dikirim ke email akun.</p>
+        <div class="field" style="margin-top:14px"><label>Username / Email</label><input id="resetIdentity" autocomplete="username"></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="Auth.requestReset()">📧 Kirim Link Reset</button>
+      </div>
+      <div id="passwordChangePane" style="display:none">
+        <div class="field"><label>Password Lama</label><input id="currentPassword" type="password" autocomplete="current-password"></div>
+        <div class="field" style="margin-top:12px"><label>Password Baru</label><input id="newPassword" type="password" autocomplete="new-password" minlength="10"></div>
+        <div class="field" style="margin-top:12px"><label>Ulangi Password Baru</label><input id="newPassword2" type="password" autocomplete="new-password" minlength="10"></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:14px" onclick="Auth.changePassword()">💾 Simpan Password Baru</button>
+      </div>
+      <div id="passwordResetPane" style="display:none">
+        <p class="lead">Buat password baru untuk akun Anda.</p>
+        <div class="field" style="margin-top:12px"><label>Password Baru</label><input id="resetPassword" type="password" autocomplete="new-password" minlength="10"></div>
+        <div class="field" style="margin-top:12px"><label>Ulangi Password Baru</label><input id="resetPassword2" type="password" autocomplete="new-password" minlength="10"></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:14px" onclick="Auth.resetPassword()">🔄 Reset Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== WHATSAPP NOTIFICATION MODAL ========== -->
+<div class="modal" id="whatsappModal">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-head"><h3>📲 Pemberitahuan WhatsApp</h3><button class="btn btn-secondary btn-sm" onclick="NotificationModal.close()">✕ Tutup</button></div>
+    <div class="modal-body" id="whatsappModalBody"></div>
+    <div class="modal-foot" id="whatsappModalFoot"></div>
   </div>
 </div>
 
@@ -501,7 +543,6 @@ const CONFIG = {
 const TYPE_CONFIG = {
   AKTIF: { icon:'🎓', title:'Surat Keterangan Mahasiswa Aktif', desc:'Keterangan status mahasiswa aktif.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
   TERDAFTAR: { icon:'📋', title:'Surat Keterangan Terdaftar sebagai Mahasiswa', desc:'Keterangan terdaftar sebagai mahasiswa.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
-  LULUS: { icon:'🎓', title:'Surat Keterangan Lulus', desc:'Keterangan kelulusan.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
   SELESAI_STUDI: { icon:'🎓', title:'Surat Keterangan Telah Menyelesaikan Studi', desc:'Keterangan telah menyelesaikan studi.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
   CUTI: { icon:'⏸️', title:'Surat Keterangan Cuti Akademik', desc:'Keterangan cuti akademik.', jenjang:'S1,S2', workflow:'KAPRODI>WADEK>DEKAN' },
   TIDAK_CUTI: { icon:'✅', title:'Surat Keterangan Tidak Cuti', desc:'Keterangan tidak sedang cuti.', jenjang:'S1,S2', workflow:'ADMIN>DEKAN' },
@@ -537,13 +578,12 @@ const TYPE_CONFIG = {
 };
 
 /* =========================================================
- * 35 TEMPLATE SURAT — disimpan di index.html sebagai master copy.
+ * 34 TEMPLATE SURAT — disimpan di index.html sebagai master copy.
  * Backend dapat memakai kode yang sama untuk Google Docs/PDF.
  * ========================================================= */
 const LETTER_TEMPLATES = {
   AKTIF: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**  \n{{ALAMAT_FAKULTAS}}  \n{{TELEPON}} · {{EMAIL}} · {{WEBSITE}}\n\n### SURAT KETERANGAN MAHASISWA AKTIF\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini:\n\n**Nama** : {{NAMA_DEKAN}}  \n**Jabatan** : Dekan Fakultas Ilmu Komunikasi  \n**Universitas** : Universitas Prof. Dr. Moestopo (Beragama)\n\ndengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}  \n**Semester** : {{SEMESTER}}\n\nadalah benar **mahasiswa aktif Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama)** pada Tahun Akademik {{TAHUN_AKADEMIK}}.\n\nSurat keterangan ini dibuat untuk dipergunakan sebagai **{{KEPERLUAN}}**.\n\nDemikian surat keterangan ini dibuat dengan sebenarnya untuk dapat dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan Fakultas Ilmu Komunikasi  \nUniversitas Prof. Dr. Moestopo (Beragama)\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
   TERDAFTAR: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TERDAFTAR SEBAGAI MAHASISWA\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini, Dekan Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama), menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}  \n**Tahun Masuk** : {{TAHUN_MASUK}}\n\nadalah benar terdaftar sebagai mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nSurat ini diberikan atas permohonan yang bersangkutan untuk keperluan **{{KEPERLUAN}}**.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
-  LULUS: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN LULUS\n**Nomor: {{NOMOR_SURAT}}**\n\nYang bertanda tangan di bawah ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nberdasarkan hasil evaluasi akademik dan ketentuan yang berlaku di Universitas Prof. Dr. Moestopo (Beragama), yang bersangkutan dinyatakan:\n\n**LULUS**\n\ndari Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama).\n\nSurat keterangan ini diberikan untuk keperluan **{{KEPERLUAN}}** dan berlaku sampai dengan diterbitkannya dokumen kelulusan resmi sesuai ketentuan universitas.\n\nDemikian surat keterangan ini dibuat dengan sebenarnya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
   SELESAI_STUDI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TELAH MENYELESAIKAN STUDI\n**Nomor: {{NOMOR_SURAT}}**\n\nDengan ini menerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ntelah menyelesaikan seluruh kewajiban akademik pada Program Studi {{PROGRAM_STUDI}}, Fakultas Ilmu Komunikasi, Universitas Prof. Dr. Moestopo (Beragama), sesuai dengan ketentuan akademik yang berlaku.\n\nSurat keterangan ini dibuat atas permohonan yang bersangkutan untuk keperluan **{{KEPERLUAN}}**.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
   CUTI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN CUTI AKADEMIK\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\ntelah memperoleh persetujuan untuk menjalani **Cuti Akademik** pada:\n\n**Semester** : {{SEMESTER_CUTI}}  \n**Tahun Akademik** : {{TAHUN_AKADEMIK}}\n\nberdasarkan ketentuan akademik yang berlaku di Universitas Prof. Dr. Moestopo (Beragama).\n\nSurat ini dibuat untuk keperluan **{{KEPERLUAN}}**.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
   TIDAK_CUTI: '**UNIVERSITAS PROF. DR. MOESTOPO (BERAGAMA)**  \n**FAKULTAS ILMU KOMUNIKASI**\n\n### SURAT KETERANGAN TIDAK CUTI\n**Nomor: {{NOMOR_SURAT}}**\n\nMenerangkan bahwa:\n\n**Nama** : {{NAMA_MAHASISWA}}  \n**NIM** : {{NIM}}  \n**Program Studi** : {{PROGRAM_STUDI}}  \n**Jenjang** : {{JENJANG}}\n\nadalah mahasiswa Fakultas Ilmu Komunikasi Universitas Prof. Dr. Moestopo (Beragama) yang **tidak sedang menjalani Cuti Akademik** pada Semester {{SEMESTER}}, Tahun Akademik {{TAHUN_AKADEMIK}}.\n\nSurat ini dibuat atas permohonan yang bersangkutan untuk keperluan **{{KEPERLUAN}}**.\n\n{{KOTA}}, {{TANGGAL_SURAT}}\n\nDekan,\n\n**{{NAMA_DEKAN}}**  \n{{NIP_DEKAN}}',
@@ -685,7 +725,12 @@ const API = {
   detail:    (token,id)                => jsonp({action:"detail", token:token, requestId:id}),
   stats:     token                     => jsonp({action:"stats", token:token}),
   approve:   (token,id,note)           => jsonp({action:"approve", token:token, requestId:id, note:note||""}),
-  reject:    (token,id,reason)         => jsonp({action:"reject", token:token, requestId:id, reason:reason})
+  reject:    (token,id,reason)         => jsonp({action:"reject", token:token, requestId:id, reason:reason}),
+  notifications: token                => jsonp({action:"notifications", token:token}),
+  changePassword: (token,currentPassword,newPassword) => jsonp({action:"changePassword", token:token, currentPassword:currentPassword, newPassword:newPassword}),
+  requestReset: (identity,redirectUrl) => jsonp({action:"requestReset", identity:identity, redirectUrl:redirectUrl}),
+  resetPassword: (token,newPassword)  => jsonp({action:"resetPassword", resetToken:token, newPassword:newPassword}),
+  uploadAttachment: (requestId,trackingToken,attachment,index,total) => jsonp({action:"uploadAttachment", requestId:requestId, trackingToken:trackingToken, attachment:utf8ToBase64(JSON.stringify({name:attachment.name,mimeType:attachment.mimeType,size:attachment.size,base64:attachment.base64,fileKey:attachment.fileKey||"file"})), chunkIndex:index, totalChunks:total})
 };
 
 function unwrap(resp, ctx){
@@ -765,6 +810,68 @@ const Auth = {
 };
 
 /* =========================================================
+ * PASSWORD + NOTIFICATION MODULES
+ * ========================================================= */
+const AuthSecurity = {};
+Object.assign(Auth, {
+  openResetRequest(){
+    $('passwordModalTitle').textContent='🔑 Reset Password';
+    $('passwordRequestPane').style.display='block'; $('passwordChangePane').style.display='none'; $('passwordResetPane').style.display='none';
+    $('passwordModal').classList.add('show'); document.body.style.overflow='hidden';
+  },
+  openChangePassword(){
+    if(!this.token) return toast('Silakan login terlebih dahulu.','warning');
+    $('passwordModalTitle').textContent='🔐 Ganti Password';
+    $('passwordRequestPane').style.display='none'; $('passwordChangePane').style.display='block'; $('passwordResetPane').style.display='none';
+    $('passwordModal').classList.add('show'); document.body.style.overflow='hidden';
+  },
+  closePasswordModal(){ $('passwordModal').classList.remove('show'); document.body.style.overflow=''; },
+  async requestReset(){
+    const identity=$('resetIdentity').value.trim(); if(!identity) return toast('Username atau email wajib diisi.','warning');
+    showLoading('Mengirim link reset password...');
+    try{const r=unwrap(await API.requestReset(identity,location.origin+location.pathname),'Permintaan reset gagal.');hideLoading();toast(r.message||'Link reset telah dikirim jika akun ditemukan.','success');this.closePasswordModal();}
+    catch(e){hideLoading();toast(e.message,'error');}
+  },
+  async changePassword(){
+    const a=$('currentPassword').value,b=$('newPassword').value,c=$('newPassword2').value;
+    if(!a||!b||!c) return toast('Semua password wajib diisi.','warning'); if(b!==c) return toast('Konfirmasi password baru tidak sama.','error'); if(b.length<10) return toast('Password baru minimal 10 karakter.','error');
+    showLoading('Mengubah password...'); try{unwrap(await API.changePassword(this.token,a,b),'Gagal mengubah password.');hideLoading();this.closePasswordModal();$('currentPassword').value='';$('newPassword').value='';$('newPassword2').value='';toast('Password berhasil diubah.','success');}catch(e){hideLoading();toast(e.message,'error');}
+  },
+  async resetPassword(){
+    const token=new URLSearchParams(location.search).get('reset'); const a=$('resetPassword').value,b=$('resetPassword2').value;
+    if(!token) return toast('Token reset tidak ditemukan.','error'); if(!a||a.length<10) return toast('Password minimal 10 karakter.','error'); if(a!==b) return toast('Konfirmasi password tidak sama.','error');
+    showLoading('Menyimpan password baru...'); try{unwrap(await API.resetPassword(token,a),'Reset password gagal.');hideLoading();this.closePasswordModal();history.replaceState({},document.title,location.pathname);toast('Password berhasil direset. Silakan login.','success');}catch(e){hideLoading();toast(e.message,'error');}
+  }
+});
+
+const NotificationModal={
+  close(){ $('whatsappModal').classList.remove('show'); document.body.style.overflow=''; },
+  handle(data){
+    const items=data&&data.items||[]; if(!items.length) return;
+    const seenKey='fikom_notif_seen_'+(Auth.user?.username||'guest'); const seen=JSON.parse(localStorage.getItem(seenKey)||'{}');
+    const fresh=items.filter(x=>!seen[x.requestId]); if(!fresh.length) return;
+    fresh.forEach(x=>seen[x.requestId]=x.submittedAt||Date.now()); localStorage.setItem(seenKey,JSON.stringify(seen));
+    const item=fresh[0];
+    $('whatsappModalBody').innerHTML=`<div class="ticket"><div class="ticket-row"><span class="ticket-label">Permohonan</span><span class="ticket-value">${escapeHtml(item.requestId)}</span></div><div class="ticket-row"><span class="ticket-label">Mahasiswa</span><span class="ticket-value">${escapeHtml(item.nama)} · ${escapeHtml(item.nim)}</span></div><div class="ticket-row"><span class="ticket-label">Surat</span><span class="ticket-value">${escapeHtml(item.jenisSurat)}</span></div><div class="ticket-row"><span class="ticket-label">Program</span><span class="ticket-value">${escapeHtml(item.programStudi)}</span></div></div><p class="lead">Kirim pemberitahuan melalui WhatsApp menggunakan link di bawah. Sistem tidak mengirim pesan otomatis tanpa tindakan Anda.</p>`;
+    $('whatsappModalFoot').innerHTML=`${item.waUrl?`<a class="btn btn-success" target="_blank" rel="noopener" href="${escapeHtml(item.waUrl)}">📲 Kirim WhatsApp</a>`:''}<button class="btn btn-secondary" onclick="NotificationModal.close()">Nanti</button>`;
+    $('whatsappModal').classList.add('show'); document.body.style.overflow='hidden';
+  },
+  showApproval(notification){
+    if(!notification||!notification.waUrl) return;
+    $('whatsappModalBody').innerHTML=`<p><b>${escapeHtml(notification.message||'Permohonan diteruskan ke tahap berikutnya.')}</b></p><div class="ticket"><div class="ticket-row"><span class="ticket-label">Penerima</span><span class="ticket-value">${escapeHtml(notification.recipientName||'-')}</span></div><div class="ticket-row"><span class="ticket-label">Role</span><span class="ticket-value">${escapeHtml(notification.recipientRole||'-')}</span></div></div>`;
+    $('whatsappModalFoot').innerHTML=`<a class="btn btn-success" target="_blank" rel="noopener" href="${escapeHtml(notification.waUrl)}">📲 Kirim WhatsApp</a><button class="btn btn-secondary" onclick="NotificationModal.close()">Tutup</button>`;
+    $('whatsappModal').classList.add('show'); document.body.style.overflow='hidden';
+  }
+};
+
+function fileToBase64(file,maxText){
+  const max=Number(maxText||0); if(max&&file.size>max) return Promise.reject(new Error(file.name+' melebihi batas '+formatBytes(max)+'.'));
+  const allowed=['application/pdf','image/jpeg','image/png']; if(allowed.indexOf(file.type)<0) return Promise.reject(new Error(file.name+' harus PDF, JPG, atau PNG.'));
+  return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve({name:file.name,mimeType:file.type,size:file.size,base64:String(r.result).split(',')[1]||''});r.onerror=()=>reject(new Error('Gagal membaca '+file.name+'.'));r.readAsDataURL(file);});
+}
+function formatBytes(n){const x=Number(n||0);if(x<1024)return x+' B';if(x<1048576)return (x/1024).toFixed(0)+' KB';return (x/1048576).toFixed(1)+' MB';}
+
+/* =========================================================
  * ROUTER
  * ========================================================= */
 const Router = {
@@ -794,116 +901,243 @@ const Router = {
 /* =========================================================
  * FORM (Student submission)
  * ========================================================= */
+const FIELD_CATALOG={
+  TAHUN_MASUK:{name:'tahunMasuk',label:'Tahun Masuk',type:'text',required:true,full:false},
+  TAHUN_AKADEMIK:{name:'tahunAkademik',label:'Tahun Akademik',type:'text',required:true,full:false},
+  KEPERLUAN:{name:'keperluan',label:'Keperluan',type:'textarea',required:true,full:true},
+  SEMESTER_CUTI:{name:'semesterCuti',label:'Semester Cuti',type:'select',required:true,full:false},
+  TUJUAN_REKOMENDASI:{name:'tujuanRekomendasi',label:'Tujuan Rekomendasi',type:'textarea',required:true,full:true},
+  NAMA_BEASISWA:{name:'namaBeasiswa',label:'Nama Beasiswa',type:'text',required:true,full:false},
+  TUJUAN_SURAT:{name:'tujuanSurat',label:'Tujuan Surat / Yth.',type:'text',required:true,full:false},
+  NAMA_INSTANSI:{name:'namaInstansi',label:'Nama Instansi',type:'text',required:true,full:false},
+  NAMA_PIMPINAN_INSTANSI:{name:'namaPimpinanInstansi',label:'Nama Pimpinan Instansi',type:'text',required:true,full:false},
+  JUDUL_PENELITIAN:{name:'judulPenelitian',label:'Judul Penelitian',type:'textarea',required:true,full:true},
+  PERIODE_PENELITIAN:{name:'periodePenelitian',label:'Periode Penelitian',type:'text',required:true,full:false},
+  TOPIK_OBSERVASI:{name:'topikObservasi',label:'Topik Observasi',type:'textarea',required:true,full:true},
+  KONSENTRASI:{name:'konsentrasi',label:'Konsentrasi',type:'text',required:true,full:false},
+  PERIODE_PKL:{name:'periodePKL',label:'Periode PKL',type:'text',required:true,full:false},
+  BIDANG_MAGANG:{name:'bidangMagang',label:'Bidang Magang',type:'text',required:true,full:false},
+  PERIODE_MAGANG:{name:'periodeMagang',label:'Periode Magang',type:'text',required:true,full:false},
+  BIDANG_KEGIATAN:{name:'bidangKegiatan',label:'Bidang Kegiatan',type:'text',required:true,full:false},
+  PERIODE_KEGIATAN:{name:'periodeKegiatan',label:'Periode Kegiatan',type:'text',required:true,full:false},
+  DATA_YANG_DIMOHON:{name:'dataYangDimohon',label:'Data yang Dimohon',type:'textarea',required:true,full:true},
+  NAMA_NARASUMBER:{name:'namaNarasumber',label:'Nama Narasumber',type:'text',required:true,full:false},
+  JABATAN_NARASUMBER:{name:'jabatanNarasumber',label:'Jabatan Narasumber',type:'text',required:true,full:false},
+  TANGGAL_WAWANCARA:{name:'tanggalWawancara',label:'Tanggal Wawancara',type:'date',required:true,full:false},
+  TEMPAT_WAWANCARA:{name:'tempatWawancara',label:'Tempat / Media Wawancara',type:'text',required:true,full:false},
+  JENIS_DATA:{name:'jenisData',label:'Jenis Data',type:'textarea',required:true,full:true},
+  PERIODE_PENGAMBILAN_DATA:{name:'periodePengambilanData',label:'Periode Pengambilan Data',type:'text',required:true,full:false},
+  NAMA_KEGIATAN:{name:'namaKegiatan',label:'Nama Kegiatan',type:'text',required:true,full:false},
+  PENYELENGGARA:{name:'penyelenggara',label:'Penyelenggara',type:'text',required:true,full:false},
+  TANGGAL_KEGIATAN:{name:'tanggalKegiatan',label:'Tanggal Kegiatan',type:'date',required:true,full:false},
+  TEMPAT_KEGIATAN:{name:'tempatKegiatan',label:'Tempat Kegiatan',type:'text',required:true,full:false},
+  NAMA_KOMPETISI:{name:'namaKompetisi',label:'Nama Kompetisi',type:'text',required:true,full:false},
+  NAMA_SEMINAR_KONFERENSI:{name:'namaSeminarKonferensi',label:'Nama Seminar / Konferensi',type:'text',required:true,full:true},
+  NAMA_PRESTASI:{name:'namaPrestasi',label:'Nama Prestasi',type:'text',required:true,full:false},
+  TINGKAT_PRESTASI:{name:'tingkatPrestasi',label:'Tingkat Prestasi',type:'text',required:true,full:false},
+  PERINGKAT:{name:'peringkat',label:'Peringkat',type:'text',required:false,full:false},
+  TANGGAL_PRESTASI:{name:'tanggalPrestasi',label:'Tanggal Prestasi',type:'date',required:true,full:false},
+  NAMA_PEJABAT:{name:'namaPejabat',label:'Nama Pejabat',type:'text',required:true,full:false},
+  JABATAN_PEJABAT:{name:'jabatanPejabat',label:'Jabatan Pejabat',type:'text',required:true,full:false},
+  NIP_PEJABAT:{name:'nipPejabat',label:'NIP Pejabat',type:'text',required:false,full:false},
+  NAMA_DOKUMEN:{name:'namaDokumen',label:'Nama Dokumen',type:'text',required:true,full:false},
+  JUMLAH_DOKUMEN:{name:'jumlahDokumen',label:'Jumlah Dokumen',type:'number',required:true,full:false},
+  KEPERLUAN_VISA_STUDI:{name:'keperluanVisaStudi',label:'Keperluan Visa / Studi',type:'text',required:true,full:true},
+  TUJUAN_STUDI:{name:'tujuanStudi',label:'Tujuan Studi',type:'text',required:true,full:false},
+  NAMA_PERGURUAN_TINGGI_TUJUAN:{name:'namaPerguruanTinggiTujuan',label:'Perguruan Tinggi Tujuan',type:'text',required:true,full:true},
+  PROGRAM_STUDI_TUJUAN:{name:'programStudiTujuan',label:'Program Studi Tujuan',type:'text',required:true,full:false},
+  JENJANG_TUJUAN:{name:'jenjangTujuan',label:'Jenjang Tujuan',type:'text',required:true,full:false}
+};
+function camelFromToken(t){return String(t||'').toLowerCase().replace(/_([a-z])/g,(_,c)=>c.toUpperCase());}
+function humanToken(t){return String(t||'').toLowerCase().replace(/_/g,' ').replace(/\b\w/g,m=>m.toUpperCase());}
+const UPLOAD_POLICY={
+  LEGALISASI:[{label:'Dokumen yang akan dilegalisasi',accept:'application/pdf,image/jpeg,image/png',required:true,maxBytes:5242880,help:'Unggah 1 file PDF/JPG/PNG, maksimal 5 MB.'}],
+  PRESTASI:[{label:'Bukti / Sertifikat Prestasi',accept:'application/pdf,image/jpeg,image/png',required:true,maxBytes:5242880,help:'Unggah bukti prestasi, maksimal 5 MB.'}],
+  TRANSKRIP:[],
+  KEHILANGAN_DOKUMEN:[{label:'Dokumen pendukung kehilangan (opsional)',accept:'application/pdf,image/jpeg,image/png',required:false,maxBytes:5242880,help:'Opsional. PDF/JPG/PNG maksimal 5 MB.'}]
+};
+
 const Form = {
   selectedType: "",
   lastTicket: null,
 
-  fieldSets: {
-    AKTIF:[['keperluan','Keperluan','text',true]],
-    TERDAFTAR:[['tahunMasuk','Tahun Masuk','text',true],['keperluan','Keperluan','text',true]],
-    LULUS:[['keperluan','Keperluan','text',true]],
-    SELESAI_STUDI:[['keperluan','Keperluan','text',true]],
-    CUTI:[['semesterCuti','Semester Cuti','text',true],['tahunAkademik','Tahun Akademik','text',true]],
-    TIDAK_CUTI:[['tahunAkademik','Tahun Akademik','text',true],['keperluan','Keperluan','text',true]],
-    TIDAK_BEASISWA:[['tahunAkademik','Tahun Akademik','text',true],['keperluan','Keperluan','text',true]],
-    REK_AKADEMIK:[['tujuanRekomendasi','Tujuan Rekomendasi','textarea',true]],
-    REK_BEASISWA:[['namaBeasiswa','Nama Beasiswa','text',true]],
-    PENGANTAR_PENELITIAN:[['judulPenelitian','Judul Penelitian','textarea',true],['periodePenelitian','Periode Penelitian','text',true]],
-    PENGANTAR_OBSERVASI:[['topikObservasi','Topik Observasi','text',false],['objekObservasi','Objek Observasi','text',true],['tujuanObservasi','Tujuan Observasi','textarea',true]],
-    PENGANTAR_PKL:[['konsentrasi','Konsentrasi','text',false],['posisiPKL','Posisi PKL','text',true]],
-    PENGANTAR_MAGANG:[['bidangMagang','Bidang Magang','text',false]],
-    PRAKTIK_KERJA:[['bidangKegiatan','Bidang Kegiatan','text',true]],
-    PERMOHONAN_DATA:[['judulPenelitian','Judul Penelitian','textarea',true],['dataYangDimohon','Data yang Dimohon','textarea',true]],
-    PERMOHONAN_WAWANCARA:[['judulPenelitian','Judul Penelitian','textarea',true],['namaNarasumber','Nama Narasumber','text',true],['jabatanNarasumber','Jabatan Narasumber','text',false],['tanggalWawancara','Tanggal Wawancara','date',false],['tempatWawancara','Tempat/Media Wawancara','text',false]],
-    PENGANTAR_KUESIONER:[['judulPenelitian','Judul Penelitian','textarea',true]],
-    PENGAMBILAN_DATA:[['judulPenelitian','Judul Penelitian','textarea',true],['jenisData','Jenis Data','textarea',true]],
-    TELAH_PENELITIAN:[['judulPenelitian','Judul Penelitian','textarea',true],['periodePenelitian','Periode Penelitian','text',true]],
-    TELAH_PKL:[['periodePKL','Periode PKL','text',true]],
-    TELAH_MAGANG:[['periodeMagang','Periode Magang','text',true],['bidangMagang','Bidang Magang','text',false]],
-    IZIN_KEGIATAN:[['namaKegiatan','Nama Kegiatan','text',true],['penyelenggara','Penyelenggara','text',true],['tanggalKegiatan','Tanggal Kegiatan','date',true],['tempatKegiatan','Tempat Kegiatan','text',true]],
-    ORGANISASI:[['namaKegiatan','Nama Kegiatan','text',true],['tanggalKegiatan','Tanggal Kegiatan','date',true],['tempatKegiatan','Tempat Kegiatan','text',true]],
-    REK_KEGIATAN:[['namaKegiatan','Nama Kegiatan','text',true],['penyelenggara','Penyelenggara','text',true],['tanggalKegiatan','Tanggal Kegiatan','date',false]],
-    LOMBA:[['namaKompetisi','Nama Kompetisi','text',true],['penyelenggara','Penyelenggara','text',true]],
-    SEMINAR:[['namaSeminarKonferensi','Nama Seminar/Konferensi','text',true],['penyelenggara','Penyelenggara','text',true],['tanggalKegiatan','Tanggal Kegiatan','date',false]],
-    PRESTASI:[['namaPrestasi','Nama Prestasi','text',true],['tingkatPrestasi','Tingkat','text',true],['peringkat','Peringkat','text',false],['penyelenggara','Penyelenggara','text',true],['tanggalPrestasi','Tanggal Prestasi','date',false]],
-    MENGIKUTI_KEGIATAN:[['namaKegiatan','Nama Kegiatan','text',true],['penyelenggara','Penyelenggara','text',false],['tanggalKegiatan','Tanggal Kegiatan','date',false],['tempatKegiatan','Tempat Kegiatan','text',false]],
-    PENGGANTI_KTM:[['alasanPengganti','Alasan Penggantian KTM','textarea',true]],
-    KEHILANGAN_DOKUMEN:[['namaDokumen','Nama Dokumen yang Hilang','text',true],['keteranganKehilangan','Keterangan Kehilangan','textarea',false]],
-    TRANSKRIP:[['keperluan','Keperluan','text',true]],
-    LEGALISASI:[['namaDokumen','Nama Dokumen','text',true],['jumlahDokumen','Jumlah Dokumen','number',true],['keperluan','Keperluan','text',true]],
-    VISA_STUDI:[['keperluanVisaStudi','Keperluan Visa/Studi','text',true],['tujuanStudi','Tujuan Studi','text',true]],
-    LANJUT_STUDI:[['namaPerguruanTinggiTujuan','Perguruan Tinggi Tujuan','text',true],['programStudiTujuan','Program Studi Tujuan','text',true],['jenjangTujuan','Jenjang Tujuan','text',true]],
-    ADMINISTRASI:[['keperluan','Keperluan Administrasi','textarea',true]]
+  fieldSets: {},
+
+  getFieldSet(type){
+    const template=LETTER_TEMPLATES[type]||'';
+    const seen=new Set();
+    const fields=[];
+    const skip=new Set([
+      'ALAMAT_FAKULTAS','TELEPON','EMAIL','WEBSITE','NOMOR_SURAT','NAMA_DEKAN','NIP_DEKAN',
+      'NAMA_MAHASISWA','NIM','PROGRAM_STUDI','JENJANG','SEMESTER','KOTA','TANGGAL_SURAT',
+      'NOMOR_PERMOHONAN','TANGGAL_PERMOHONAN'
+    ]);
+    const catalog=FIELD_CATALOG;
+    const re=/\{\{([A-Z0-9_]+)\}\}/g; let m;
+    while((m=re.exec(template))){
+      const token=m[1];
+      if(seen.has(token)||skip.has(token)) continue;
+      seen.add(token);
+      const f=catalog[token]||{name:camelFromToken(token),label:humanToken(token),type:'text',required:true,full:false};
+      fields.push([f.name,f.label,f.type,f.required,f.full]);
+    }
+    return fields;
   },
 
+  selectProgram(level){
+    const value=level==='S1'?'S1 ILMU KOMUNIKASI':level==='S2'?'S2 MAGISTER ILMU KOMUNIKASI':'';
+    if(!value) return;
+    this.selectedProgram=level;
+    $('programStudi').value=value;
+    $('programHelp').textContent=level==='S1'?'Modul S1 aktif · NIM harus YYYY41NNN.':'Modul S2 aktif · NIM harus YYYY31NNN.';
+    document.querySelectorAll('#programModules .type-card').forEach(c=>c.classList.remove('active'));
+    const active=$(level==='S1'?'moduleS1':'moduleS2'); if(active) active.classList.add('active');
+    $('letterModule').style.display='block';
+    $('formCard').style.display='none';
+    this.selectedType='';
+    this.filterTypeCards();
+    document.querySelectorAll('.type-card[data-type]').forEach(c=>c.classList.remove('active'));
+    $('letterModule').scrollIntoView({behavior:'smooth',block:'start'});
+  },
+
+  filterTypeCards(){
+    const level=this.selectedProgram; const q=String($('letterSearch')?.value||'').trim().toLowerCase();
+    let visible=0;
+    document.querySelectorAll('.type-card[data-type]').forEach(card=>{
+      const type=card.dataset.type; const cfg=TYPE_CONFIG[type];
+      const allowed=!!cfg && cfg.jenjang.split(',').indexOf(level)>=0;
+      const hay=(cfg?.title+' '+cfg?.desc).toLowerCase();
+      const show=allowed && (!q || hay.indexOf(q)>=0);
+      card.style.display=show?'block':'none'; if(show) visible++;
+    });
+    $('typeGrid').style.display=level?'grid':'none';
+    if(level && !visible) toast('Jenis surat tidak ditemukan pada modul '+level+'.','info');
+  },
+
+  searchTypes(q){ this.filterTypeCards(); },
+
   selectType(type){
-    if (!TYPE_CONFIG[type]) return toast("Jenis surat tidak dikenal.","error");
+    if(!this.selectedProgram) return toast('Pilih Modul Program Studi terlebih dahulu.','warning');
+    if(!TYPE_CONFIG[type]) return toast('Jenis surat tidak dikenal.','error');
+    if(TYPE_CONFIG[type].jenjang.split(',').indexOf(this.selectedProgram)<0) return toast('Jenis surat ini tidak tersedia untuk '+this.selectedProgram+'.','error');
     this.selectedType=type;
-    document.querySelectorAll('.type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===type));
+    document.querySelectorAll('.type-card[data-type]').forEach(c=>c.classList.toggle('active',c.dataset.type===type));
     $('formCard').style.display='block';
     $('formTitle').textContent=TYPE_CONFIG[type].title;
-    $('formDesc').textContent=TYPE_CONFIG[type].desc;
+    $('formDesc').textContent=TYPE_CONFIG[type].desc+' · Modul '+this.selectedProgram;
     this.renderFields(type);
     $('formCard').scrollIntoView({behavior:'smooth',block:'start'});
   },
 
   renderFields(type){
     const wrap=$('dynamicFields');
-    const fields=this.fieldSets[type]||[['keperluan','Keperluan','textarea',false]];
-    wrap.innerHTML=fields.map(([name,label,inputType,required])=>{
+    const fields=this.getFieldSet(type);
+    this.fieldSets[type]=fields;
+    wrap.innerHTML=fields.map(([name,label,inputType,required,full])=>{
       const req=required?' <span class="req">*</span>':'';
       const common=`id="${name}" name="${name}" ${required?'required':''}`;
-      if(inputType==='textarea') return `<div class="field full"><label>${escapeHtml(label)}${req}</label><textarea ${common} maxlength="2000"></textarea></div>`;
-      return `<div class="field"><label>${escapeHtml(label)}${req}</label><input ${common} type="${inputType}" maxlength="500"></div>`;
+      if(inputType==='textarea') return `<div class="field ${full?'full':''}"><label>${escapeHtml(label)}${req}</label><textarea ${common} maxlength="2000"></textarea></div>`;
+      if(inputType==='select') return `<div class="field ${full?'full':''}"><label>${escapeHtml(label)}${req}</label><select ${common}><option value="">-- Pilih --</option>${Array.from({length:14},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('')}</select></div>`;
+      const extra=inputType==='date'?'':inputType==='number'?' min="1" step="1"':'';
+      return `<div class="field ${full?'full':''}"><label>${escapeHtml(label)}${req}</label><input ${common} type="${inputType}" maxlength="500"${extra}></div>`;
+    }).join('') || '<div class="empty" style="padding:14px">Template ini tidak meminta field tambahan selain identitas sistem.</div>';
+    this.renderUploads(type);
+    this.updateStatementNumber();
+  },
+
+  renderUploads(type){
+    const policy=UPLOAD_POLICY[type]||[]; const section=$('uploadSection'); const wrap=$('uploadFields');
+    if(!policy.length){section.style.display='none';wrap.innerHTML='';return;}
+    section.style.display='block';
+    wrap.innerHTML=policy.map((u,i)=>{
+      const req=u.required?' <span class="req">*</span>':'';
+      return `<div class="field ${u.full?'full':''}"><label>${escapeHtml(u.label)}${req}</label><input id="attachment_${i}" name="attachment_${i}" type="file" accept="${escapeHtml(u.accept)}" data-required="${u.required?'1':'0'}" data-max="${u.maxBytes}"><div class="help">${escapeHtml(u.help)}</div></div>`;
     }).join('');
+  },
+
+  updateStatementNumber(){
+    const hasUpload=(UPLOAD_POLICY[this.selectedType]||[]).length>0; $('statementNum').textContent=hasUpload?'4':'3';
   },
 
   reset(){
     if(!confirm('Reset seluruh data formulir?')) return;
-    $('applicationForm').reset(); $('dynamicFields').innerHTML='';
+    $('applicationForm').reset(); $('dynamicFields').innerHTML=''; $('uploadFields').innerHTML=''; $('uploadSection').style.display='none';
     document.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
+    this.selectedType=''; this.selectedProgram=''; $('programStudi').value=''; $('programHelp').textContent='Pilih modul Program Studi di atas.'; $('letterModule').style.display='none'; $('typeGrid').style.display='none';
     toast('Formulir telah direset.','success');
   },
 
   newApplication(){
-    $('applicationForm').reset(); $('dynamicFields').innerHTML='';
+    $('applicationForm').reset(); $('dynamicFields').innerHTML=''; $('uploadFields').innerHTML=''; $('uploadSection').style.display='none';
     document.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
     document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('active'));
-    this.selectedType=''; $('formCard').style.display='none'; Router.go('home');
+    this.selectedType=''; this.selectedProgram=''; $('programStudi').value=''; $('letterModule').style.display='none'; $('typeGrid').style.display='none'; $('formCard').style.display='none'; Router.go('home');
+  },
+
+  async collect(){
+    const fd=new FormData($('applicationForm')); const data={}; fd.forEach((v,k)=>{if(typeof v==='string') data[k]=normalizeText(v);});
+    data.jenisSurat=this.selectedType; data.clientTimestamp=new Date().toISOString(); data.clientTimezone=Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Jakarta';
+    return data;
+  },
+
+  async collectFiles(){
+    const out=[]; const inputs=Array.from(document.querySelectorAll('#uploadFields input[type=file]'));
+    for(const input of inputs){
+      const file=input.files&&input.files[0]; if(!file) continue;
+      const max=Number(input.dataset.max||0); if(max&&file.size>max) throw new Error(file.name+' melebihi batas '+formatBytes(max)+'.');
+      const allowed=['application/pdf','image/jpeg','image/png']; if(allowed.indexOf(file.type)<0) throw new Error(file.name+' harus PDF, JPG, atau PNG.');
+      const b64=await fileToBase64(file,input.dataset.max||''); b64.fileKey='f'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8); out.push(b64);
+    }
+    return out;
+  },
+
+  async uploadFiles(requestId,files){
+    const CHUNK_BYTES=30000; // divisible by 3; base64 chunks can be concatenated server-side
+    for(const file of files){
+      const raw=atob(file.base64); const total=Math.ceil(raw.length/CHUNK_BYTES);
+      for(let i=0;i<total;i++){
+        const chunk=raw.slice(i*CHUNK_BYTES,Math.min((i+1)*CHUNK_BYTES,raw.length));
+        const chunkB64=btoa(chunk);
+        const payload={name:file.name,mimeType:file.mimeType,size:file.size,base64:chunkB64};
+        unwrap(await API.uploadAttachment(requestId,this.lastTicket?.trackingToken||this.currentTrackingToken||'',payload,i,total),'Gagal mengunggah lampiran.');
+      }
+    }
   },
 
   copyTicket(){
-    if(!this.lastTicket) return;
-    const t=this.lastTicket;
+    if(!this.lastTicket) return; const t=this.lastTicket;
     const text='ID Pengajuan: '+t.requestId+'\nToken Tracking: '+t.trackingToken+'\nJenis Surat: '+t.jenisSurat+'\nNama: '+t.nama+'\nNIM: '+t.nim;
     navigator.clipboard.writeText(text).then(()=>toast('Tiket disalin ke clipboard.','success'),()=>toast('Gagal menyalin.','error'));
   },
 
   validate(){
     const req=(id,msg)=>{const el=$(id); if(!el) return true; const v=normalizeText(el.value); if(!v){el.classList.add('invalid');el.focus();toast(msg,'error');return false;}el.classList.remove('invalid');return true;};
+    if(!this.selectedProgram) return toast('Pilih Modul Program Studi terlebih dahulu.','warning'),false;
     if(!this.selectedType) return toast('Pilih jenis surat terlebih dahulu.','warning'),false;
-    if(!req('nama','Nama lengkap wajib diisi.')||!req('nim','NIM wajib diisi.')||!req('programStudi','Program studi wajib dipilih.')||!req('semester','Semester wajib dipilih.')||!req('email','Email wajib diisi.')||!req('whatsapp','Nomor WhatsApp wajib diisi.')) return false;
-    if(!/^\d{6,20}$/.test($('nim').value.trim())) return toast('Format NIM harus 6-20 digit angka.','error'),false;
+    if(!req('nama','Nama lengkap wajib diisi.')||!req('nim','NIM wajib diisi.')||!req('programStudi','Program studi wajib diisi.')||!req('semester','Semester wajib dipilih.')||!req('email','Email wajib diisi.')||!req('whatsapp','Nomor WhatsApp wajib diisi.')) return false;
+    const nim=$('nim').value.trim();
+    const nimPattern=this.selectedProgram==='S1'?/^\d{4}41\d{3}$/:/^\d{4}31\d{3}$/;
+    if(!nimPattern.test(nim)) return toast('NIM '+this.selectedProgram+' harus tepat 9 angka: 4 angka tahun masuk + '+(this.selectedProgram==='S1'?'41':'31')+' + nomor urut 001-999.','error'),false;
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($('email').value.trim())) return toast('Format email tidak valid.','error'),false;
-    if(!/^(\+?62|0)8[0-9]{7,13}$/.test($('whatsapp').value.replace(/[\s\-().]/g,''))) return toast('Format WhatsApp tidak valid.','error'),false;
-    const jenjang=String($('programStudi').value).startsWith('S1')?'S1':'S2';
-    if(TYPE_CONFIG[this.selectedType].jenjang.indexOf(jenjang)<0) return toast('Jenis surat ini tidak tersedia untuk '+jenjang+'.','error'),false;
-    for(const f of (this.fieldSets[this.selectedType]||[])){ if(f[3]&&!req(f[0],f[1]+' wajib diisi.')) return false; }
+    const wa=$('whatsapp').value.replace(/[\s\-().+]/g,'');
+    if(!/^(?:08\d{8,11}|628\d{8,11})$/.test(wa)||wa.length>13) return toast('Nomor WhatsApp harus nomor seluler dan maksimal 13 angka.','error'),false;
+    if(TYPE_CONFIG[this.selectedType].jenjang.split(',').indexOf(this.selectedProgram)<0) return toast('Jenis surat ini tidak tersedia untuk '+this.selectedProgram+'.','error'),false;
+    for(const f of (this.fieldSets[this.selectedType]||this.getFieldSet(this.selectedType))){ if(f[3]&&!req(f[0],f[1]+' wajib diisi.')) return false; }
+    const uploads=UPLOAD_POLICY[this.selectedType]||[];
+    for(let i=0;i<uploads.length;i++){ const u=uploads[i]; const el=document.querySelectorAll('#uploadFields input[type=file]')[i]; if(u.required&&(!el||!el.files||!el.files[0])) return toast(u.label+' wajib diunggah.','error'),false; if(el&&el.files[0]&&el.files[0].size>u.maxBytes) return toast(u.label+' melebihi batas ukuran '+formatBytes(u.maxBytes)+'.','error'),false; }
     if(!$('agreement').checked) return toast('Anda harus menyetujui pernyataan.','warning'),false;
     return true;
   },
 
-  collect(){
-    const fd=new FormData($('applicationForm')); const data={}; fd.forEach((v,k)=>{data[k]=normalizeText(v);});
-    data.jenisSurat=this.selectedType; data.clientTimestamp=new Date().toISOString(); data.clientTimezone=Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Jakarta';
-    return data;
-  },
-
   async submit(){
     if(!this.validate()) return; const btn=$('submitBtn'); if(btn.disabled)return; btn.disabled=true; showLoading('Mengirim pengajuan...');
-    try{const data=this.collect();const resp=unwrap(await API.submit(data),'Gagal mengirim pengajuan.');hideLoading();
-      const ticket={requestId:resp.requestId,trackingToken:resp.trackingToken,jenisSurat:TYPE_CONFIG[this.selectedType].title,nama:data.nama,nim:data.nim};this.lastTicket=ticket;localStorage.setItem('fikom_lastTicket',JSON.stringify(ticket));
-      $('rId').textContent=ticket.requestId;$('rToken').textContent=ticket.trackingToken;$('rType').textContent=ticket.jenisSurat;$('rName').textContent=ticket.nama;$('rNim').textContent=ticket.nim;$('rStatus').textContent=STATUS_LABEL[resp.status]||resp.status||'Diajukan';Router.go('result');toast('Pengajuan berhasil dikirim.','success');
+    try{
+      const data=await this.collect(); const files=await this.collectFiles();
+      const resp=unwrap(await API.submit(data),'Gagal mengirim pengajuan.');
+      if(files.length){ showLoading('Mengunggah lampiran 0/'+files.length+'...'); await this.uploadFiles(resp.requestId,files); }
+      hideLoading();
+      this.currentTrackingToken=resp.trackingToken; const ticket={requestId:resp.requestId,trackingToken:resp.trackingToken,jenisSurat:TYPE_CONFIG[this.selectedType].title,nama:data.nama,nim:data.nim}; this.lastTicket=ticket; localStorage.setItem('fikom_lastTicket',JSON.stringify(ticket));
+      $('rId').textContent=ticket.requestId; $('rToken').textContent=ticket.trackingToken; $('rType').textContent=ticket.jenisSurat; $('rName').textContent=ticket.nama; $('rNim').textContent=ticket.nim; $('rStatus').textContent=STATUS_LABEL[resp.status]||resp.status||'Diajukan'; Router.go('result'); toast('Pengajuan berhasil dikirim.','success');
     }catch(e){hideLoading();toast(e.message,'error');}finally{btn.disabled=false;}
   }
 };
@@ -997,6 +1231,10 @@ const Dashboard = {
       this.renderStats(statsData.stats || {});
       this.data = listData.items || [];
       this.renderList();
+      try{
+        const n=unwrap(await API.notifications(Auth.token),'');
+        NotificationModal.handle(n);
+      }catch(_){ /* not blocking dashboard */ }
     }catch(e){
       hideLoading();
       if (/token|auth/i.test(e.message)) {
@@ -1008,6 +1246,13 @@ const Dashboard = {
   },
 
   async refresh(){ await this.load(); toast("Data diperbarui.","info"); },
+
+  search(q){
+    const term=String(q||'').trim().toLowerCase();
+    const original=this.data;
+    const filtered=!term?original:original.filter(it=>[it.requestId,it.nama,it.nim,it.jenisSurat,it.programStudi].join(' ').toLowerCase().indexOf(term)>=0);
+    this.renderList(filtered);
+  },
 
   renderStats(s){
     const items = [
@@ -1026,12 +1271,13 @@ const Dashboard = {
     `).join("");
   },
 
-  renderList(){
-    if (!this.data.length){
+  renderList(list){
+    const rowsData=list||this.data;
+    if (!rowsData.length){
       $("listBox").innerHTML = `<div class="empty"><div class="empty-icon">📭</div>Tidak ada pengajuan yang menunggu persetujuan Anda.</div>`;
       return;
     }
-    const rows = this.data.map((it,i)=>{
+    const rows = rowsData.map((it,i)=>{
       return `<tr>
         <td>${i+1}</td>
         <td><code style="font-size:11px">${escapeHtml(it.requestId)}</code></td>
@@ -1076,6 +1322,7 @@ const Dashboard = {
       hideLoading();
       Modal.close();
       toast("Berhasil disetujui. Status: " + (STATUS_LABEL[resp.status]||resp.status), "success");
+      if(resp.notification) setTimeout(()=>NotificationModal.showApproval(resp.notification),250);
       if (resp.letter && resp.letter.pdfUrl){
         setTimeout(()=>toast("Surat PDF telah diterbitkan.","success"), 700);
       }
@@ -1229,6 +1476,10 @@ document.addEventListener("keydown", e=>{
 document.addEventListener("DOMContentLoaded", ()=>{
   Auth.init();
   Tracking.init();
+  Form.filterTypeCards();
+  if(new URLSearchParams(location.search).get('reset')){
+    $('passwordModalTitle').textContent='🔄 Reset Password'; $('passwordRequestPane').style.display='none'; $('passwordChangePane').style.display='none'; $('passwordResetPane').style.display='block'; $('passwordModal').classList.add('show'); document.body.style.overflow='hidden';
+  }
 
   // constraint tanggal
   $("tanggalMulai").addEventListener("change", function(){
