@@ -593,11 +593,11 @@ const CONFIG = {
   GAS_API_URL: "https://script.google.com/macros/s/AKfycbyj_B8w7x4FysY-QEKEi6b9r6CYL504Fui5UiRLjyTaCDusv5FRyNKlqlvIIUd9QwU8KQ/exec",
   APP_NAME: "FIKOM UPDM (B) - Sistem Surat",
   TIMEOUT: 30000,
-  SYNC_INTERVAL: 30000,        // ping setiap 30 detik
+  SYNC_INTERVAL: 15000,        // sinkronisasi dashboard setiap 15 detik
   SYNC_FAST_INTERVAL: 8000,    // ping lebih sering saat baru buka
   TOKEN_KEY: "fikom_token",
   USER_KEY: "fikom_user",
-  VERSION: "5.0.0"
+  VERSION: "5.3.0"
 };
 
 /* =========================================================
@@ -826,8 +826,8 @@ const API = {
 };
 
 function unwrap(resp, ctx) {
-  if (!resp || typeof resp !== "object") throw new Error("Respons tidak valid.");
-  if (resp.success === true) return resp.data || {};
+  if (!resp || typeof resp !== "object") throw new Error("Respons tidak valid dari server.");
+  if (resp.success === true) return resp.data || resp;
   const err = resp.error || {};
   throw new Error(err.message || (ctx || "Terjadi kesalahan pada server."));
 }
@@ -930,7 +930,10 @@ const Sync = {
     // Fast polling awal (setiap 8 detik untuk 3 putaran pertama)
     let fast = 3;
     const tick = async () => {
-      await this.check(true);
+      const online = await this.check(true);
+      if (online && Auth.token && document.getElementById('view-dashboard')?.classList.contains('active') && !Dashboard.syncBusy) {
+        Dashboard.refreshSilent();
+      }
       fast--;
       const interval = fast > 0 ? CONFIG.SYNC_FAST_INTERVAL : CONFIG.SYNC_INTERVAL;
       this.timer = setTimeout(tick, interval);
@@ -1239,6 +1242,31 @@ function humanToken(t) {
   return String(t || '').toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, m => m.toUpperCase());
 }
 
+const LETTER_REQUIRED_FIELDS = {
+  AKTIF:['keperluan'], TERDAFTAR:['tahunMasuk','keperluan'], SELESAI_STUDI:['keperluan'],
+  CUTI:['semesterCuti','tahunAkademik','keperluan'], TIDAK_CUTI:['tahunAkademik','keperluan'], TIDAK_BEASISWA:['tahunAkademik','keperluan'],
+  REK_AKADEMIK:['tujuanRekomendasi'], REK_BEASISWA:['namaBeasiswa'],
+  PENGANTAR_PENELITIAN:['tujuanSurat','namaInstansi','judulPenelitian','periodePenelitian'],
+  PENGANTAR_OBSERVASI:['tujuanSurat','namaInstansi','topikObservasi'],
+  PENGANTAR_PKL:['namaInstansi','namaPimpinanInstansi','konsentrasi','periodePKL'],
+  PENGANTAR_MAGANG:['namaInstansi','namaPimpinanInstansi','periodeMagang','bidangMagang'],
+  PRAKTIK_KERJA:['namaInstansi','namaPimpinanInstansi','periodeKegiatan','bidangKegiatan'],
+  PERMOHONAN_DATA:['namaInstansi','namaPimpinanInstansi','judulPenelitian','dataYangDimohon'],
+  PERMOHONAN_WAWANCARA:['namaInstansi','namaNarasumber','jabatanNarasumber','judulPenelitian','tanggalWawancara','tempatWawancara'],
+  PENGANTAR_KUESIONER:['tujuanSurat','namaInstansi','judulPenelitian'],
+  PENGAMBILAN_DATA:['namaInstansi','namaPimpinanInstansi','judulPenelitian','jenisData','periodePengambilanData'],
+  TELAH_PENELITIAN:['namaInstansi','judulPenelitian','periodePenelitian'], TELAH_PKL:['namaInstansi','periodePKL'],
+  TELAH_MAGANG:['namaInstansi','periodeMagang','bidangMagang','keperluan'],
+  IZIN_KEGIATAN:['namaInstansi','namaPimpinanInstansi','namaKegiatan','penyelenggara','tanggalKegiatan','tempatKegiatan'],
+  ORGANISASI:['namaKegiatan','tanggalKegiatan','tempatKegiatan'], REK_KEGIATAN:['namaKegiatan','penyelenggara','tanggalKegiatan'],
+  LOMBA:['namaKompetisi','penyelenggara'], SEMINAR:['namaSeminarKonferensi','penyelenggara','tanggalKegiatan'],
+  PRESTASI:['namaPrestasi','tingkatPrestasi','penyelenggara','tanggalPrestasi'],
+  MENGIKUTI_KEGIATAN:['namaKegiatan','penyelenggara','tanggalKegiatan','tempatKegiatan','namaPejabat','jabatanPejabat'],
+  PENGGANTI_KTM:[], KEHILANGAN_DOKUMEN:['namaDokumen'], TRANSKRIP:['keperluan'],
+  LEGALISASI:['namaDokumen','jumlahDokumen','keperluan'], VISA_STUDI:['keperluanVisaStudi','tujuanStudi'],
+  LANJUT_STUDI:['namaPerguruanTinggiTujuan','programStudiTujuan','jenjangTujuan'], ADMINISTRASI:['keperluan']
+};
+
 const UPLOAD_POLICY = {
   LEGALISASI: [{
     label: 'Dokumen yang akan dilegalisasi',
@@ -1275,23 +1303,21 @@ const Form = {
     const seen = new Set();
     const fields = [];
     const skip = new Set([
-      'ALAMAT_FAKULTAS', 'TELEPON', 'EMAIL', 'WEBSITE',
-      'NOMOR_SURAT', 'NAMA_DEKAN', 'NIP_DEKAN',
-      'NAMA_MAHASISWA', 'NIM', 'PROGRAM_STUDI', 'JENJANG', 'SEMESTER',
-      'KOTA', 'TANGGAL_SURAT', 'NOMOR_PERMOHONAN', 'TANGGAL_PERMOHONAN'
+      'ALAMAT_FAKULTAS','TELEPON','EMAIL','WEBSITE','NOMOR_SURAT','NAMA_DEKAN','NIP_DEKAN',
+      'NAMA_MAHASISWA','NIM','PROGRAM_STUDI','JENJANG','SEMESTER','KOTA','TANGGAL_SURAT',
+      'NOMOR_PERMOHONAN','TANGGAL_PERMOHONAN'
     ]);
+    const required = new Set(LETTER_REQUIRED_FIELDS[type] || []);
     const re = /\{\{([A-Z0-9_]+)\}\}/g;
     let m;
     while ((m = re.exec(template))) {
       const token = m[1];
       if (seen.has(token) || skip.has(token)) continue;
       seen.add(token);
-      const f = FIELD_CATALOG[token] || {
-        name: camelFromToken(token),
-        label: humanToken(token),
-        type: 'text', required: true, full: false
-      };
-      fields.push([f.name, f.label, f.type, f.required, f.full]);
+      const f = FIELD_CATALOG[token] || {name: camelFromToken(token), label: humanToken(token), type:'text', full:false};
+      // Hanya field yang benar-benar dibutuhkan template. Required ditentukan server contract.
+      if (!required.has(f.name)) continue;
+      fields.push([f.name, f.label, f.type, true, f.full]);
     }
     return fields;
   },
@@ -1471,6 +1497,8 @@ const Form = {
     data.jenisSurat = this.selectedType;
     data.clientTimestamp = new Date().toISOString();
     data.clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Jakarta';
+    data.clientRequestKey = localStorage.getItem('fikom_submit_key') || ('CK-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10));
+    localStorage.setItem('fikom_submit_key', data.clientRequestKey);
     return data;
   },
 
@@ -1622,7 +1650,8 @@ const Form = {
       const resp = unwrap(await API.submit(data), 'Gagal mengirim pengajuan.');
 
       if (!resp || !resp.requestId) {
-        throw new Error('Server tidak mengembalikan requestId. Periksa Executions di Apps Script.');
+        console.error('SUBMIT RESPONSE TANPA REQUEST_ID', resp);
+        throw new Error('Server berhasil dipanggil tetapi requestId tidak ditemukan pada response. Cek Executions Apps Script dan pastikan Web App sudah New version.');
       }
 
       this.currentTrackingToken = resp.trackingToken;
@@ -1642,6 +1671,7 @@ const Form = {
       };
       this.lastTicket = ticket;
       localStorage.setItem('fikom_lastTicket', JSON.stringify(ticket));
+      localStorage.removeItem('fikom_submit_key');
 
       $('rId').textContent = ticket.requestId;
       $('rToken').textContent = ticket.trackingToken;
@@ -1763,6 +1793,7 @@ const Tracking = {
 const Dashboard = {
   data: [],
   currentItem: null,
+  syncBusy: false,
 
   async load() {
     if (!Auth.token) return Router.go("login");
@@ -1786,7 +1817,7 @@ const Dashboard = {
       ]);
       hideLoading();
       this.renderStats(statsData.stats || {});
-      this.data = listData.items || [];
+      this.data = (listData.items || []).filter(it => it && it.approvalRole === role);
       this.renderList();
       Sync.check(true);
 
@@ -1805,6 +1836,20 @@ const Dashboard = {
   async refresh() {
     await this.load();
     toast("Data diperbarui.", "info");
+  },
+
+  async refreshSilent() {
+    if (!Auth.token || this.syncBusy) return;
+    this.syncBusy = true;
+    try {
+      const data = unwrap(await API.list(Auth.token), "Sinkronisasi daftar gagal.");
+      this.data = (data.items || []).filter(it => it && it.approvalRole === Auth.user.role);
+      this.renderList();
+    } catch (e) {
+      if (/token|auth/i.test(e.message)) Auth.logout();
+    } finally {
+      this.syncBusy = false;
+    }
   },
 
   search(q) {
