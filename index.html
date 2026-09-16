@@ -156,7 +156,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
       <button data-nav="tracking" id="navTracking" onclick="Router.go('tracking')">🔍 Lacak</button>
       <button data-nav="login" id="navLogin" onclick="Router.go('login')">🔐 Login</button>
       <button data-nav="dashboard" id="navDash" style="display:none" onclick="Router.go('dashboard')">📋 Dashboard</button>
-      <div class="sync-indicator" id="syncIndicator" title="Status koneksi">
+      <div class="sync-indicator" id="syncIndicator">
         <span class="sync-dot" id="syncDot"></span><span id="syncText">Menghubungkan…</span>
       </div>
       <div class="user-chip" id="userChip" style="display:none">
@@ -174,6 +174,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
     <span class="sync-bar-time" id="syncBarTime"></span>
   </div>
 
+  <!-- ================= HOME ================= -->
   <section class="view active" id="view-home">
     <div class="card">
       <h1>📄 Pengajuan Surat Mahasiswa</h1>
@@ -206,20 +207,28 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
         <h2 id="formTitle">Pengajuan Surat</h2>
         <p class="lead" id="formDesc" style="margin-top:4px">Lengkapi data.</p>
       </div>
-      <form id="applicationForm" novalidate>
+      <form id="applicationForm" novalidate autocomplete="off">
         <div class="section">
           <div class="section-title"><span class="section-num">1</span>Identitas Mahasiswa</div>
           <div class="grid">
-            <div><label>Nama Lengkap <span class="req">*</span></label><input id="nama" maxlength="150" required></div>
-            <div><label>NIM <span class="req">*</span></label><input id="nim" inputmode="numeric" maxlength="9" placeholder="S1: 202241001 · S2: 202431001" required></div>
-            <div><label>Program Studi <span class="req">*</span></label><input id="programStudi" readonly required></div>
+            <div><label>Nama Lengkap <span class="req">*</span></label>
+              <input id="nama" name="nama" type="text" maxlength="150" placeholder="Nama lengkap" required></div>
+            <div><label>NIM <span class="req">*</span></label>
+              <input id="nim" name="nim" type="text" inputmode="numeric" maxlength="9" placeholder="S1: 202241001 · S2: 202431001" required></div>
+            <div><label>Program Studi <span class="req">*</span></label>
+              <input id="programStudi" name="programStudi" type="text" readonly required></div>
             <div><label>Semester <span class="req">*</span></label>
-              <select id="semester" required><option value="">-- Pilih --</option>
-                <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-                <option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
-                <option>13</option><option>14</option></select></div>
-            <div><label>Email <span class="req">*</span></label><input id="email" type="email" maxlength="150" required></div>
-            <div><label>No. WhatsApp <span class="req">*</span></label><input id="whatsapp" type="tel" maxlength="13" inputmode="numeric" placeholder="08xxxxxxxxxx" required></div>
+              <select id="semester" name="semester" required>
+                <option value="">-- Pilih --</option>
+                <option>1</option><option>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8</option>
+                <option>9</option><option>10</option><option>11</option><option>12</option>
+                <option>13</option><option>14</option>
+              </select></div>
+            <div><label>Email <span class="req">*</span></label>
+              <input id="email" name="email" type="email" maxlength="150" placeholder="nama@email.com" required></div>
+            <div><label>No. WhatsApp <span class="req">*</span></label>
+              <input id="whatsapp" name="whatsapp" type="tel" maxlength="13" inputmode="numeric" placeholder="08xxxxxxxxxx" required></div>
           </div>
         </div>
         <div class="section" id="dynamicFieldsSection">
@@ -235,7 +244,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
           <div style="background:#f5faf8;border:1px solid #d9ebe6;padding:12px;border-radius:12px;font-size:12px">
             Data yang saya masukkan adalah benar dan dapat dipertanggungjawabkan.
             <label style="display:flex;align-items:flex-start;gap:10px;margin-top:8px;font-weight:500">
-              <input type="checkbox" id="agreement" style="width:18px;height:18px;margin-top:2px;flex:0 0 auto">
+              <input type="checkbox" id="agreement" name="agreement" style="width:18px;height:18px;margin-top:2px;flex:0 0 auto">
               <span>Saya menyatakan data benar dan menyetujui proses pengajuan.</span>
             </label>
           </div>
@@ -248,6 +257,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
     </section>
   </section>
 
+  <!-- ================= RESULT ================= -->
   <section class="view" id="view-result">
     <div class="card" style="text-align:center">
       <div style="font-size:48px">✅</div>
@@ -268,6 +278,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
     </div>
   </section>
 
+  <!-- ================= TRACKING ================= -->
   <section class="view" id="view-tracking">
     <div class="card">
       <h2>🔍 Lacak Status Pengajuan</h2>
@@ -281,6 +292,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
     </div>
   </section>
 
+  <!-- ================= LOGIN ================= -->
   <section class="view" id="view-login">
     <div class="login-wrap">
       <div class="login-logo"><img src="https://i.imgur.com/JkxRYd6.png" onerror="this.style.display='none'"></div>
@@ -297,6 +309,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
     </div>
   </section>
 
+  <!-- ================= DASHBOARD ================= -->
   <section class="view" id="view-dashboard">
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
@@ -324,9 +337,10 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
 
 <footer>
   Fakultas Ilmu Komunikasi · Universitas Prof. Dr. Moestopo (Beragama)<br>
-  <span style="opacity:.7">Sistem Administrasi Mahasiswa v9.0.0</span>
+  <span style="opacity:.7">Sistem Administrasi Mahasiswa v9.1.0</span>
 </footer>
 
+<!-- MODAL DETAIL -->
 <div class="modal" id="modal">
   <div class="modal-box">
     <div class="modal-head"><h3 id="modalTitle">Detail</h3>
@@ -345,6 +359,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
   </div>
 </div>
 
+<!-- MODAL PASSWORD -->
 <div class="modal" id="passwordModal">
   <div class="modal-box" style="max-width:520px">
     <div class="modal-head"><h3 id="passwordModalTitle">🔐 Keamanan Akun</h3>
@@ -382,7 +397,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
 const CONFIG = {
   GAS_API_URL: "https://script.google.com/macros/s/AKfycbyj_B8w7x4FysY-QEKEi6b9r6CYL504Fui5UiRLjyTaCDusv5FRyNKlqlvIIUd9QwU8KQ/exec",
   APP_NAME: "FIKOM UPDM (B) - Sistem Surat",
-  VERSION: "9.0.0",
+  VERSION: "9.1.0",
   TIMEOUT_SMALL: 8000,
   TIMEOUT_LARGE: 60000,
   PING_INTERVAL_ACTIVE: 8000,
@@ -393,6 +408,9 @@ const CONFIG = {
   USER_KEY: "fikom_user"
 };
 
+/* =========================================================
+ * TYPE CONFIG (34 jenis surat)
+ * ========================================================= */
 const TYPE_CONFIG = {
   AKTIF:{icon:'🎓',title:'Surat Keterangan Mahasiswa Aktif',desc:'Status mahasiswa aktif.',jenjang:'S1,S2',workflow:'ADMIN>DEKAN'},
   TERDAFTAR:{icon:'📋',title:'Surat Keterangan Terdaftar',desc:'Terdaftar sebagai mahasiswa.',jenjang:'S1,S2',workflow:'ADMIN>DEKAN'},
@@ -430,8 +448,11 @@ const TYPE_CONFIG = {
   ADMINISTRASI:{icon:'📄',title:'Surat Keterangan Untuk Keperluan Administrasi',desc:'Keterangan administrasi.',jenjang:'S1,S2',workflow:'ADMIN>DEKAN'}
 };
 
+/* =========================================================
+ * LETTER TEMPLATES (placeholder map)
+ * ========================================================= */
 const LETTER_TEMPLATES = {
-  AKTIF:'{{ALAMAT_FAKULTAS}} {{TELEPON}} {{EMAIL}} {{WEBSITE}}\n{{NOMOR_SURAT}}\n{{NAMA_MAHASISWA}} {{NIM}} {{PROGRAM_STUDI}} {{JENJANG}} {{SEMESTER}}\n{{TAHUN_AKADEMIK}} {{KEPERLUAN}}\n{{KOTA}} {{TANGGAL_SURAT}} {{NAMA_DEKAN}} {{NIP_DEKAN}}',
+  AKTIF:'{{ALAMAT_FAKULTAS}} {{TELEPON}} {{EMAIL}} {{WEBSITE}} {{NOMOR_SURAT}} {{NAMA_MAHASISWA}} {{NIM}} {{PROGRAM_STUDI}} {{JENJANG}} {{SEMESTER}} {{TAHUN_AKADEMIK}} {{KEPERLUAN}} {{KOTA}} {{TANGGAL_SURAT}} {{NAMA_DEKAN}} {{NIP_DEKAN}}',
   TERDAFTAR:'{{NOMOR_SURAT}} {{NAMA_MAHASISWA}} {{NIM}} {{PROGRAM_STUDI}} {{JENJANG}} {{TAHUN_MASUK}} {{KEPERLUAN}} {{KOTA}} {{TANGGAL_SURAT}} {{NAMA_DEKAN}} {{NIP_DEKAN}}',
   SELESAI_STUDI:'{{NOMOR_SURAT}} {{NAMA_MAHASISWA}} {{NIM}} {{PROGRAM_STUDI}} {{JENJANG}} {{KEPERLUAN}} {{KOTA}} {{TANGGAL_SURAT}} {{NAMA_DEKAN}} {{NIP_DEKAN}}',
   CUTI:'{{NOMOR_SURAT}} {{NAMA_MAHASISWA}} {{NIM}} {{PROGRAM_STUDI}} {{JENJANG}} {{SEMESTER_CUTI}} {{TAHUN_AKADEMIK}} {{KEPERLUAN}} {{KOTA}} {{TANGGAL_SURAT}} {{NAMA_DEKAN}} {{NIP_DEKAN}}',
@@ -467,6 +488,9 @@ const LETTER_TEMPLATES = {
   ADMINISTRASI:'{{NOMOR_SURAT}} {{NAMA_MAHASISWA}} {{NIM}} {{PROGRAM_STUDI}} {{JENJANG}} {{KEPERLUAN}} {{KOTA}} {{TANGGAL_SURAT}} {{NAMA_DEKAN}} {{NIP_DEKAN}}'
 };
 
+/* =========================================================
+ * FIELD CATALOG (camelCase untuk dynamic field)
+ * ========================================================= */
 const FIELD_CATALOG = {
   TAHUN_MASUK:{name:'tahunMasuk',label:'Tahun Masuk',type:'text',full:false},
   TAHUN_AKADEMIK:{name:'tahunAkademik',label:'Tahun Akademik',type:'text',full:false},
@@ -515,11 +539,13 @@ const FIELD_CATALOG = {
   JENJANG_TUJUAN:{name:'jenjangTujuan',label:'Jenjang Tujuan',type:'text',full:false}
 };
 
+/* Field wajib per jenis surat (camelCase) */
 const LETTER_REQUIRED_FIELDS = {
   AKTIF:['keperluan'],TERDAFTAR:['tahunMasuk','keperluan'],SELESAI_STUDI:['keperluan'],
   CUTI:['semesterCuti','tahunAkademik','keperluan'],TIDAK_CUTI:['tahunAkademik','keperluan'],
   TIDAK_BEASISWA:['tahunAkademik','keperluan'],REK_AKADEMIK:['tujuanRekomendasi'],
-  REK_BEASISWA:['namaBeasiswa'],PENGANTAR_PENELITIAN:['tujuanSurat','namaInstansi','judulPenelitian','periodePenelitian'],
+  REK_BEASISWA:['namaBeasiswa'],
+  PENGANTAR_PENELITIAN:['tujuanSurat','namaInstansi','judulPenelitian','periodePenelitian'],
   PENGANTAR_OBSERVASI:['tujuanSurat','namaInstansi','topikObservasi'],
   PENGANTAR_PKL:['namaInstansi','namaPimpinanInstansi','konsentrasi','periodePKL'],
   PENGANTAR_MAGANG:['namaInstansi','namaPimpinanInstansi','periodeMagang','bidangMagang'],
@@ -528,12 +554,14 @@ const LETTER_REQUIRED_FIELDS = {
   PERMOHONAN_WAWANCARA:['namaInstansi','namaNarasumber','jabatanNarasumber','judulPenelitian','tanggalWawancara','tempatWawancara'],
   PENGANTAR_KUESIONER:['tujuanSurat','namaInstansi','judulPenelitian'],
   PENGAMBILAN_DATA:['namaInstansi','namaPimpinanInstansi','judulPenelitian','jenisData','periodePengambilanData'],
-  TELAH_PENELITIAN:['namaInstansi','judulPenelitian','periodePenelitian'],TELAH_PKL:['namaInstansi','periodePKL'],
+  TELAH_PENELITIAN:['namaInstansi','judulPenelitian','periodePenelitian'],
+  TELAH_PKL:['namaInstansi','periodePKL'],
   TELAH_MAGANG:['namaInstansi','periodeMagang','bidangMagang','keperluan'],
   IZIN_KEGIATAN:['namaInstansi','namaPimpinanInstansi','namaKegiatan','penyelenggara','tanggalKegiatan','tempatKegiatan'],
   ORGANISASI:['namaKegiatan','tanggalKegiatan','tempatKegiatan'],
   REK_KEGIATAN:['namaKegiatan','penyelenggara','tanggalKegiatan'],
-  LOMBA:['namaKompetisi','penyelenggara'],SEMINAR:['namaSeminarKonferensi','penyelenggara','tanggalKegiatan'],
+  LOMBA:['namaKompetisi','penyelenggara'],
+  SEMINAR:['namaSeminarKonferensi','penyelenggara','tanggalKegiatan'],
   PRESTASI:['namaPrestasi','tingkatPrestasi','penyelenggara','tanggalPrestasi'],
   MENGIKUTI_KEGIATAN:['namaKegiatan','penyelenggara','tanggalKegiatan','tempatKegiatan','namaPejabat','jabatanPejabat'],
   PENGGANTI_KTM:[],KEHILANGAN_DOKUMEN:['namaDokumen'],TRANSKRIP:['keperluan'],
@@ -556,39 +584,70 @@ const STATUS_LABEL = {
   DITOLAK:'Ditolak', SELESAI:'Selesai'
 };
 
+/* Static form field IDs (nama, nim, dsb.) yang wajib selalu terbaca */
+const STATIC_FIELDS = ['nama','nim','programStudi','semester','email','whatsapp'];
+
 /* =========================================================
  * UTIL
  * ========================================================= */
-const $ = id => document.getElementById(id);
-const escapeHtml = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const normalizeText = v => v==null?'':String(v).replace(/\s+/g,' ').trim();
-const formatBytes = n => {const x=Number(n||0); if(x<1024)return x+' B'; if(x<1048576)return (x/1024).toFixed(0)+' KB'; return (x/1048576).toFixed(1)+' MB';};
-const camelFromToken = t => String(t||'').toLowerCase().replace(/_([a-z])/g,(_,c)=>c.toUpperCase());
-const humanToken = t => String(t||'').toLowerCase().replace(/_/g,' ').replace(/\b\w/g,m=>m.toUpperCase());
+const $ = function(id){ return document.getElementById(id); };
+const escapeHtml = function(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+  });
+};
+const normalizeText = function(v){
+  return v==null ? '' : String(v).replace(/\s+/g,' ').trim();
+};
+const formatBytes = function(n){
+  const x = Number(n||0);
+  if (x < 1024) return x + ' B';
+  if (x < 1048576) return (x/1024).toFixed(0) + ' KB';
+  return (x/1048576).toFixed(1) + ' MB';
+};
+const camelFromToken = function(t){
+  return String(t||'').toLowerCase().replace(/_([a-z])/g, function(_,c){ return c.toUpperCase(); });
+};
+const humanToken = function(t){
+  return String(t||'').toLowerCase().replace(/_/g,' ').replace(/\b\w/g, function(m){ return m.toUpperCase(); });
+};
 
-function toast(msg,type){type=type||'success';const t=$('toast');if(!t)return;t.textContent=msg;t.className='toast show '+type;clearTimeout(t._tm);t._tm=setTimeout(()=>t.classList.remove('show'),4200);}
-function showLoading(text){$('loadingText').textContent=text||'Memproses…';$('loading').classList.add('show');}
-function hideLoading(){$('loading').classList.remove('show');}
+function toast(msg, type){
+  type = type || 'success';
+  const t = $('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(t._tm);
+  t._tm = setTimeout(function(){ t.classList.remove('show'); }, 4200);
+}
+function showLoading(text){
+  $('loadingText').textContent = text || 'Memproses…';
+  $('loading').classList.add('show');
+}
+function hideLoading(){ $('loading').classList.remove('show'); }
 
 function encodePayload(obj){
-  const json = JSON.stringify(obj||{});
+  const json = JSON.stringify(obj || {});
   const bytes = new TextEncoder().encode(json);
   let bin = '';
   const chunk = 0x8000;
-  for (let i=0;i<bytes.length;i+=chunk){
-    bin += String.fromCharCode.apply(null, bytes.subarray(i, Math.min(i+chunk, bytes.length)));
+  for (let i = 0; i < bytes.length; i += chunk){
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, Math.min(i + chunk, bytes.length)));
   }
   return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 
 function fileToBase64(file){
-  return new Promise((resolve,reject)=>{
+  return new Promise(function(resolve, reject){
     const r = new FileReader();
-    r.onload = () => resolve({
-      name: file.name, mimeType: file.type, size: file.size,
-      base64: String(r.result).split(',')[1] || ''
-    });
-    r.onerror = () => reject(new Error('Gagal membaca ' + file.name));
+    r.onload = function(){
+      resolve({
+        name: file.name, mimeType: file.type, size: file.size,
+        base64: String(r.result).split(',')[1] || ''
+      });
+    };
+    r.onerror = function(){ reject(new Error('Gagal membaca ' + file.name)); };
     r.readAsDataURL(file);
   });
 }
@@ -599,7 +658,7 @@ function fileToBase64(file){
 let jsonpCounter = 0;
 function jsonp(payload, timeoutMs){
   timeoutMs = timeoutMs || CONFIG.TIMEOUT_SMALL;
-  return new Promise((resolve,reject)=>{
+  return new Promise(function(resolve, reject){
     if (!CONFIG.GAS_API_URL || CONFIG.GAS_API_URL.indexOf('GANTI') >= 0){
       reject(new Error('URL Web App belum dikonfigurasi.'));
       return;
@@ -607,11 +666,9 @@ function jsonp(payload, timeoutMs){
     const cbName = '__fikom_' + Date.now() + '_' + (++jsonpCounter);
     const script = document.createElement('script');
     let done = false;
-    const timer = setTimeout(()=>{
+    const timer = setTimeout(function(){
       if (done) return;
-      done = true;
-      cleanup();
-      reject(new Error('Timeout koneksi ke server.'));
+      done = true; cleanup(); reject(new Error('Timeout koneksi ke server.'));
     }, timeoutMs);
     function cleanup(){
       clearTimeout(timer);
@@ -620,15 +677,11 @@ function jsonp(payload, timeoutMs){
     }
     window[cbName] = function(resp){
       if (done) return;
-      done = true;
-      cleanup();
-      resolve(resp);
+      done = true; cleanup(); resolve(resp);
     };
     script.onerror = function(){
       if (done) return;
-      done = true;
-      cleanup();
-      reject(new Error('Gagal menghubungi server.'));
+      done = true; cleanup(); reject(new Error('Gagal menghubungi server.'));
     };
     const q = new URLSearchParams();
     q.set('data', encodePayload(payload));
@@ -642,15 +695,13 @@ function jsonp(payload, timeoutMs){
 async function postPayload(payload, timeoutMs){
   timeoutMs = timeoutMs || CONFIG.TIMEOUT_LARGE;
   const ctrl = new AbortController();
-  const timer = setTimeout(()=>ctrl.abort(), timeoutMs);
+  const timer = setTimeout(function(){ ctrl.abort(); }, timeoutMs);
   try {
     const body = JSON.stringify({ data: encodePayload(payload) });
     const resp = await fetch(CONFIG.GAS_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: body,
-      redirect: 'follow',
-      signal: ctrl.signal
+      body: body, redirect: 'follow', signal: ctrl.signal
     });
     clearTimeout(timer);
     const text = await resp.text();
@@ -667,22 +718,22 @@ async function postPayload(payload, timeoutMs){
  * API LAYER
  * ========================================================= */
 const API = {
-  ping:            () => jsonp({ action: 'ping' }, 8000),
-  config:          () => jsonp({ action: 'config' }, 10000),
-  changes:         since => jsonp({ action: 'changes', since: since || '' }, 8000),
-  login:           (u,p) => jsonp({ action: 'login', username: u, password: p }, 15000),
-  submit:          data => jsonp({ action: 'submit', data: JSON.stringify(data) }, 30000),
-  tracking:        (id,token) => jsonp({ action: 'tracking', requestId: id, trackingToken: token }, 15000),
-  list:            token => jsonp({ action: 'list', token }, 20000),
-  listapproved:    token => jsonp({ action: 'listapproved', token }, 20000),
-  detail:          (token,id) => jsonp({ action: 'detail', token, requestId: id }, 20000),
-  stats:           token => jsonp({ action: 'stats', token }, 20000),
-  approve:         (token,id,note) => jsonp({ action: 'approve', token, requestId: id, note: note || '' }, 30000),
-  reject:          (token,id,reason) => jsonp({ action: 'reject', token, requestId: id, reason }, 20000),
-  notifications:   token => jsonp({ action: 'notifications', token }, 20000),
-  changePassword:  (token,cur,next) => jsonp({ action: 'changepassword', token, currentPassword: cur, newPassword: next }, 20000),
-  requestReset:    (identity,redirectUrl) => jsonp({ action: 'requestreset', identity, redirectUrl }, 30000),
-  resetPassword:   (token,next) => jsonp({ action: 'resetpassword', resetToken: token, newPassword: next }, 20000)
+  ping:           function(){ return jsonp({ action: 'ping' }, 8000); },
+  config:         function(){ return jsonp({ action: 'config' }, 10000); },
+  changes:        function(since){ return jsonp({ action: 'changes', since: since || '' }, 8000); },
+  login:          function(u,p){ return jsonp({ action: 'login', username: u, password: p }, 15000); },
+  submit:         function(data){ return jsonp({ action: 'submit', data: JSON.stringify(data) }, 30000); },
+  tracking:       function(id,token){ return jsonp({ action: 'tracking', requestId: id, trackingToken: token }, 15000); },
+  list:           function(token){ return jsonp({ action: 'list', token: token }, 20000); },
+  listapproved:   function(token){ return jsonp({ action: 'listapproved', token: token }, 20000); },
+  detail:         function(token,id){ return jsonp({ action: 'detail', token: token, requestId: id }, 20000); },
+  stats:          function(token){ return jsonp({ action: 'stats', token: token }, 20000); },
+  approve:        function(token,id,note){ return jsonp({ action: 'approve', token: token, requestId: id, note: note || '' }, 30000); },
+  reject:         function(token,id,reason){ return jsonp({ action: 'reject', token: token, requestId: id, reason: reason }, 20000); },
+  notifications:  function(token){ return jsonp({ action: 'notifications', token: token }, 20000); },
+  changePassword: function(token,cur,next){ return jsonp({ action: 'changepassword', token: token, currentPassword: cur, newPassword: next }, 20000); },
+  requestReset:   function(identity,redirectUrl){ return jsonp({ action: 'requestreset', identity: identity, redirectUrl: redirectUrl }, 30000); },
+  resetPassword:  function(token,next){ return jsonp({ action: 'resetpassword', resetToken: token, newPassword: next }, 20000); }
 };
 
 async function uploadAttachmentSingle(requestId, trackingToken, file){
@@ -712,40 +763,26 @@ function unwrap(resp, ctx){
 }
 
 /* =========================================================
- * SYNC — per-detik visual, adaptive poll
+ * SYNC
  * ========================================================= */
 const Sync = {
-  state: 'unknown',
-  lastCheck: null,
-  lastSuccess: null,
-  latency: null,
-  info: {},
-  timer: null,
-  tickTimer: null,
-  consecutiveFailures: 0,
-  pending: false,
-  lastServerTs: '',
+  state: 'unknown', lastCheck: null, lastSuccess: null, latency: null,
+  info: {}, timer: null, tickTimer: null,
+  consecutiveFailures: 0, pending: false, lastServerTs: '',
 
-  async check(silent){
+  check: async function(silent){
     if (this.pending) return this.state === 'online';
     this.pending = true;
-
     if (typeof navigator !== 'undefined' && navigator.onLine === false){
-      this.pending = false;
-      this.setState('offline', 'Browser offline');
-      return false;
+      this.pending = false; this.setState('offline', 'Browser offline'); return false;
     }
-
     const t0 = Date.now();
     try {
       const resp = await API.ping();
       const elapsed = Date.now() - t0;
       if (!resp || resp.success !== true) throw new Error('Respons tidak valid');
       const d = resp.data || {};
-      this.info = {
-        app: d.app || '-', database: d.database || '-',
-        version: d.version || '-', timezone: d.timezone || '-'
-      };
+      this.info = { app: d.app || '-', database: d.database || '-', version: d.version || '-', timezone: d.timezone || '-' };
       this.latency = elapsed;
       this.lastCheck = new Date();
       this.lastSuccess = new Date();
@@ -770,7 +807,7 @@ const Sync = {
     }
   },
 
-  setState(state, text){
+  setState: function(state, text){
     this.state = state;
     const dot = $('syncDot'), label = $('syncText');
     const bar = $('syncBar'), barText = $('syncBarText'), barTime = $('syncBarTime');
@@ -778,8 +815,7 @@ const Sync = {
     if (dot) dot.className = 'sync-dot ' + state;
     if (bar) bar.className = 'sync-bar ' + state;
     if (barText) barText.textContent = text || '';
-    if (barTime) barTime.textContent = this.lastCheck
-      ? 'Diperiksa ' + this.lastCheck.toLocaleTimeString('id-ID') : '';
+    if (barTime) barTime.textContent = this.lastCheck ? 'Diperiksa ' + this.lastCheck.toLocaleTimeString('id-ID') : '';
     if (ind){
       ind.classList.toggle('online-state', state === 'online');
       ind.classList.toggle('offline-state', state === 'offline');
@@ -792,26 +828,27 @@ const Sync = {
     }
   },
 
-  startTicker(){
+  startTicker: function(){
+    const self = this;
     if (this.tickTimer) clearInterval(this.tickTimer);
-    this.tickTimer = setInterval(()=>{
-      if (!this.lastSuccess || this.state !== 'online') return;
-      const secs = Math.round((Date.now() - this.lastSuccess.getTime()) / 1000);
+    this.tickTimer = setInterval(function(){
+      if (!self.lastSuccess || self.state !== 'online') return;
+      const secs = Math.round((Date.now() - self.lastSuccess.getTime()) / 1000);
       const label = $('syncText');
-      if (label){
-        label.textContent = secs <= 1 ? 'Online' : 'Online · ' + secs + 's lalu';
-      }
+      if (label) label.textContent = secs <= 1 ? 'Online' : 'Online · ' + secs + 's lalu';
     }, 1000);
   },
 
-  start(){
-    this.check(false).then(()=>{
-      this.startTicker();
-      this._scheduleNext();
+  start: function(){
+    const self = this;
+    this.check(false).then(function(){
+      self.startTicker();
+      self._scheduleNext();
     });
   },
 
-  _scheduleNext(){
+  _scheduleNext: function(){
+    const self = this;
     if (this.timer) clearTimeout(this.timer);
     const hidden = typeof document !== 'undefined' && document.hidden;
     let interval;
@@ -819,22 +856,22 @@ const Sync = {
     else if (hidden) interval = CONFIG.PING_INTERVAL_IDLE;
     else interval = CONFIG.PING_INTERVAL_ACTIVE;
 
-    this.timer = setTimeout(async ()=>{
-      await this.check(true);
-      if (this.state === 'online' && Auth.token && Router.current === 'dashboard'){
+    this.timer = setTimeout(async function(){
+      await self.check(true);
+      if (self.state === 'online' && Auth.token && Router.current === 'dashboard'){
         try {
-          const c = await API.changes(this.lastServerTs);
+          const c = await API.changes(self.lastServerTs);
           if (c && c.success === true && c.data){
-            if (c.data.latestTimestamp) this.lastServerTs = c.data.latestTimestamp;
+            if (c.data.latestTimestamp) self.lastServerTs = c.data.latestTimestamp;
             if (c.data.hasChanges) Dashboard.refreshSilent();
           }
         } catch(_){}
       }
-      this._scheduleNext();
+      self._scheduleNext();
     }, interval);
   },
 
-  stop(){
+  stop: function(){
     if (this.timer){ clearTimeout(this.timer); this.timer = null; }
     if (this.tickTimer){ clearInterval(this.tickTimer); this.tickTimer = null; }
   }
@@ -845,22 +882,21 @@ const Sync = {
  * ========================================================= */
 const Auth = {
   token: null, user: null,
-  init(){
+  init: function(){
     try {
       this.token = localStorage.getItem(CONFIG.TOKEN_KEY) || null;
       const u = localStorage.getItem(CONFIG.USER_KEY);
       this.user = u ? JSON.parse(u) : null;
     } catch(_){ this.token = null; this.user = null; }
-    this.renderChip();
-    Router.applyRoleUI();
+    this.renderChip(); Router.applyRoleUI();
   },
-  save(token, user){
+  save: function(token, user){
     this.token = token; this.user = user;
     localStorage.setItem(CONFIG.TOKEN_KEY, token);
     localStorage.setItem(CONFIG.USER_KEY, JSON.stringify(user));
     this.renderChip(); Router.applyRoleUI();
   },
-  logout(){
+  logout: function(){
     this.token = null; this.user = null;
     localStorage.removeItem(CONFIG.TOKEN_KEY);
     localStorage.removeItem(CONFIG.USER_KEY);
@@ -868,7 +904,7 @@ const Auth = {
     toast('Anda telah keluar.', 'info');
     Router.go('home');
   },
-  renderChip(){
+  renderChip: function(){
     const chip = $('userChip'), name = $('userChipName');
     const navLogin = $('navLogin'), navDash = $('navDash');
     if (this.token && this.user){
@@ -882,7 +918,7 @@ const Auth = {
       navDash.style.display = 'none';
     }
   },
-  async login(){
+  login: async function(){
     const u = $('loginUser').value.trim();
     const p = $('loginPass').value;
     if (!u || !p) return toast('Username dan password wajib diisi.', 'warning');
@@ -899,7 +935,7 @@ const Auth = {
       hideLoading(); toast(e.message, 'error');
     } finally { btn.disabled = false; }
   },
-  openResetRequest(){
+  openResetRequest: function(){
     $('passwordModalTitle').textContent = '🔑 Reset Password';
     $('passwordRequestPane').style.display = 'block';
     $('passwordChangePane').style.display = 'none';
@@ -907,7 +943,7 @@ const Auth = {
     $('passwordModal').classList.add('show');
     document.body.style.overflow = 'hidden';
   },
-  openChangePassword(){
+  openChangePassword: function(){
     if (!this.token) return toast('Login dulu.', 'warning');
     $('passwordModalTitle').textContent = '🔐 Ganti Password';
     $('passwordRequestPane').style.display = 'none';
@@ -916,11 +952,11 @@ const Auth = {
     $('passwordModal').classList.add('show');
     document.body.style.overflow = 'hidden';
   },
-  closePasswordModal(){
+  closePasswordModal: function(){
     $('passwordModal').classList.remove('show');
     document.body.style.overflow = '';
   },
-  async requestReset(){
+  requestReset: async function(){
     const identity = $('resetIdentity').value.trim();
     if (!identity) return toast('Username/email wajib.', 'warning');
     showLoading('Mengirim…');
@@ -930,7 +966,7 @@ const Auth = {
       this.closePasswordModal();
     } catch(e){ hideLoading(); toast(e.message, 'error'); }
   },
-  async changePassword(){
+  changePassword: async function(){
     const a = $('currentPassword').value, b = $('newPassword').value, c = $('newPassword2').value;
     if (!a || !b || !c) return toast('Semua password wajib diisi.', 'warning');
     if (b !== c) return toast('Konfirmasi tidak sama.', 'error');
@@ -943,7 +979,7 @@ const Auth = {
       toast('Password berubah.', 'success');
     } catch(e){ hideLoading(); toast(e.message, 'error'); }
   },
-  async resetPassword(){
+  resetPassword: async function(){
     const token = new URLSearchParams(location.search).get('reset');
     const a = $('resetPassword').value, b = $('resetPassword2').value;
     if (!token) return toast('Token tidak ditemukan.', 'error');
@@ -965,8 +1001,8 @@ const Auth = {
 const Router = {
   current: 'home',
   STAFF_ROLES: ['ADMIN','KAPRODI','WADEK','DEKAN'],
-  isStaff(){ return !!(Auth.user && this.STAFF_ROLES.indexOf(Auth.user.role) >= 0); },
-  applyRoleUI(){
+  isStaff: function(){ return !!(Auth.user && this.STAFF_ROLES.indexOf(Auth.user.role) >= 0); },
+  applyRoleUI: function(){
     const navHome = $('navHome'), navTracking = $('navTracking');
     const navDash = $('navDash'), navLogin = $('navLogin');
     if (this.isStaff()){
@@ -981,8 +1017,8 @@ const Router = {
       else { navDash.style.display = 'none'; navLogin.style.display = ''; }
     }
   },
-  go(view){
-    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  go: function(view){
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
     let target = $('view-' + view);
     if (!target) return;
     if (view === 'dashboard' && !Auth.token){
@@ -993,7 +1029,7 @@ const Router = {
     }
     target.classList.add('active');
     this.current = view;
-    document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active', b.dataset.nav === view));
+    document.querySelectorAll('.nav button').forEach(function(b){ b.classList.toggle('active', b.dataset.nav === view); });
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (view === 'dashboard') Dashboard.load();
   }
@@ -1005,12 +1041,13 @@ const Router = {
 const Form = {
   selectedType: '', selectedProgram: '', lastTicket: null, currentTrackingToken: '', fieldSets: {},
 
-  getFieldSet(type){
+  getFieldSet: function(type){
     const template = LETTER_TEMPLATES[type] || '';
     const seen = new Set(); const fields = [];
     const skip = new Set(['ALAMAT_FAKULTAS','TELEPON','EMAIL','WEBSITE','NOMOR_SURAT','NAMA_DEKAN','NIP_DEKAN','NAMA_MAHASISWA','NIM','PROGRAM_STUDI','JENJANG','SEMESTER','KOTA','TANGGAL_SURAT','NOMOR_PERMOHONAN','TANGGAL_PERMOHONAN']);
     const required = new Set(LETTER_REQUIRED_FIELDS[type] || []);
-    const re = /\{\{([A-Z0-9_]+)\}\}/g; let m;
+    const re = /\{\{([A-Z0-9_]+)\}\}/g;
+    let m;
     while ((m = re.exec(template))){
       const token = m[1];
       if (seen.has(token) || skip.has(token)) continue;
@@ -1022,13 +1059,13 @@ const Form = {
     return fields;
   },
 
-  selectProgram(level){
+  selectProgram: function(level){
     const value = level === 'S1' ? 'S1 ILMU KOMUNIKASI'
                 : level === 'S2' ? 'S2 MAGISTER ILMU KOMUNIKASI' : '';
     if (!value) return;
     this.selectedProgram = level;
     $('programStudi').value = value;
-    document.querySelectorAll('#programModules .type-card').forEach(c=>c.classList.remove('active'));
+    document.querySelectorAll('#programModules .type-card').forEach(function(c){ c.classList.remove('active'); });
     const active = $(level === 'S1' ? 'moduleS1' : 'moduleS2');
     if (active) active.classList.add('active');
     $('letterModule').style.display = 'block';
@@ -1038,11 +1075,11 @@ const Form = {
     $('letterModule').scrollIntoView({ behavior: 'smooth' });
   },
 
-  renderTypeCards(){
+  renderTypeCards: function(){
     const grid = $('typeGrid'), level = this.selectedProgram;
     const q = String($('letterSearch') ? $('letterSearch').value : '').trim().toLowerCase();
     if (!level){ grid.innerHTML = ''; grid.style.display = 'none'; return; }
-    const filtered = Object.keys(TYPE_CONFIG).filter(type=>{
+    const filtered = Object.keys(TYPE_CONFIG).filter(function(type){
       const cfg = TYPE_CONFIG[type];
       const allowed = cfg.jenjang.split(',').indexOf(level) >= 0;
       const hay = (cfg.title + ' ' + cfg.desc).toLowerCase();
@@ -1053,7 +1090,7 @@ const Form = {
       grid.style.display = 'grid';
       return;
     }
-    grid.innerHTML = filtered.map(type=>{
+    grid.innerHTML = filtered.map(function(type){
       const cfg = TYPE_CONFIG[type];
       return '<button type="button" class="type-card" data-type="'+type+'" onclick="Form.selectType(\''+type+'\')">'
         +'<div class="type-icon">'+cfg.icon+'</div>'
@@ -1064,16 +1101,18 @@ const Form = {
     grid.style.display = 'grid';
   },
 
-  searchTypes(){ this.renderTypeCards(); },
+  searchTypes: function(){ this.renderTypeCards(); },
 
-  selectType(type){
+  selectType: function(type){
     if (!this.selectedProgram) return toast('Pilih Modul Prodi.', 'warning');
     if (!TYPE_CONFIG[type]) return;
     if (TYPE_CONFIG[type].jenjang.split(',').indexOf(this.selectedProgram) < 0){
       return toast('Jenis tidak tersedia untuk ' + this.selectedProgram + '.', 'error');
     }
     this.selectedType = type;
-    document.querySelectorAll('.type-card[data-type]').forEach(c=>c.classList.toggle('active', c.dataset.type === type));
+    document.querySelectorAll('.type-card[data-type]').forEach(function(c){
+      c.classList.toggle('active', c.dataset.type === type);
+    });
     $('formCard').style.display = 'block';
     $('formTitle').textContent = TYPE_CONFIG[type].title;
     $('formDesc').textContent = TYPE_CONFIG[type].desc + ' · Modul ' + this.selectedProgram;
@@ -1081,7 +1120,7 @@ const Form = {
     $('formCard').scrollIntoView({ behavior: 'smooth' });
   },
 
-  renderFields(type){
+  renderFields: function(type){
     const wrap = $('dynamicFields');
     const fields = this.getFieldSet(type);
     this.fieldSets[type] = fields;
@@ -1094,17 +1133,20 @@ const Form = {
         return '<div class="field'+fclass+'"><label>'+escapeHtml(label)+req+'</label><textarea '+common+' maxlength="2000"></textarea></div>';
       }
       if (inputType === 'select'){
-        return '<div class="field'+fclass+'"><label>'+escapeHtml(label)+req+'</label><select '+common+'><option value="">-- Pilih --</option>'
-          +Array.from({length:14},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'</option>').join('')+'</select></div>';
+        return '<div class="field'+fclass+'"><label>'+escapeHtml(label)+req+'</label><select '+common+'>'
+          +'<option value="">-- Pilih --</option>'
+          +Array.from({length:14},function(_,i){ return '<option value="'+(i+1)+'">'+(i+1)+'</option>'; }).join('')
+          +'</select></div>';
       }
       const extra = inputType === 'date' ? '' : (inputType === 'number' ? ' min="1" step="1"' : '');
-      return '<div class="field'+fclass+'"><label>'+escapeHtml(label)+req+'</label><input '+common+' type="'+inputType+'" maxlength="500"'+extra+'></div>';
+      return '<div class="field'+fclass+'"><label>'+escapeHtml(label)+req+'</label>'
+        +'<input '+common+' type="'+inputType+'" maxlength="500"'+extra+'></div>';
     }).join('') || '<div class="empty" style="padding:14px">Template ini tidak meminta field tambahan.</div>';
     this.renderUploads(type);
     this.updateStatementNumber();
   },
 
-  renderUploads(type){
+  renderUploads: function(type){
     const policy = UPLOAD_POLICY[type] || [];
     const section = $('uploadSection'), wrap = $('uploadFields');
     if (!policy.length){ section.style.display = 'none'; wrap.innerHTML = ''; return; }
@@ -1112,38 +1154,39 @@ const Form = {
     wrap.innerHTML = policy.map(function(u, i){
       const req = u.required ? ' <span class="req">*</span>' : '';
       return '<div class="field"><label>'+escapeHtml(u.label)+req+'</label>'
-        +'<input id="attachment_'+i+'" type="file" accept="'+escapeHtml(u.accept)+'" data-required="'+(u.required?'1':'0')+'" data-max="'+u.maxBytes+'">'
+        +'<input id="attachment_'+i+'" name="attachment_'+i+'" type="file" accept="'+escapeHtml(u.accept)
+        +'" data-required="'+(u.required?'1':'0')+'" data-max="'+u.maxBytes+'">'
         +'<div class="help">'+escapeHtml(u.help)+'</div></div>';
     }).join('');
   },
 
-  updateStatementNumber(){
+  updateStatementNumber: function(){
     const hasUpload = (UPLOAD_POLICY[this.selectedType] || []).length > 0;
     $('statementNum').textContent = hasUpload ? '4' : '3';
   },
 
-  reset(){
+  reset: function(){
     if (!confirm('Reset seluruh formulir?')) return;
     $('applicationForm').reset();
     $('dynamicFields').innerHTML = '';
     $('uploadFields').innerHTML = '';
     $('uploadSection').style.display = 'none';
-    document.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
+    document.querySelectorAll('.invalid').forEach(function(el){ el.classList.remove('invalid'); });
     this.selectedType = ''; this.selectedProgram = '';
     $('programStudi').value = '';
     $('letterModule').style.display = 'none';
     $('typeGrid').innerHTML = ''; $('typeGrid').style.display = 'none';
-    document.querySelectorAll('#programModules .type-card').forEach(c=>c.classList.remove('active'));
+    document.querySelectorAll('#programModules .type-card').forEach(function(c){ c.classList.remove('active'); });
     toast('Formulir direset.', 'success');
   },
 
-  newApplication(){
+  newApplication: function(){
     $('applicationForm').reset();
     $('dynamicFields').innerHTML = '';
     $('uploadFields').innerHTML = '';
     $('uploadSection').style.display = 'none';
-    document.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
-    document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('active'));
+    document.querySelectorAll('.invalid').forEach(function(el){ el.classList.remove('invalid'); });
+    document.querySelectorAll('.type-card').forEach(function(c){ c.classList.remove('active'); });
     this.selectedType = ''; this.selectedProgram = '';
     $('programStudi').value = '';
     $('letterModule').style.display = 'none';
@@ -1152,23 +1195,43 @@ const Form = {
     Router.go('home');
   },
 
-  async collect(){
-    const fd = new FormData($('applicationForm'));
+  /**
+   * collect() — v9.1.0 FIX:
+   *  - FormData memuat semua field (static + dynamic) karena semua <input> punya name="".
+   *  - Defensive read untuk STATIC_FIELDS: paksa baca via getElementById bila FormData
+   *    kosong (misal field readonly atau browser aneh).
+   */
+  collect: async function(){
+    const form = $('applicationForm');
+    const fd = new FormData(form);
     const data = {};
-    fd.forEach((v, k)=>{ if (typeof v === 'string') data[k] = normalizeText(v); });
+    fd.forEach(function(v, k){
+      if (typeof v === 'string') data[k] = normalizeText(v);
+    });
+
+    // Defensive — pastikan field statis selalu terbaca
+    STATIC_FIELDS.forEach(function(id){
+      const el = $(id);
+      if (!el) return;
+      const val = normalizeText(el.value);
+      if (val) data[id] = val;
+    });
+
     data.jenisSurat = this.selectedType;
     data.clientTimestamp = new Date().toISOString();
     data.clientTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Jakarta';
     data.clientRequestKey = localStorage.getItem('fikom_submit_key')
       || ('CK-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10));
     localStorage.setItem('fikom_submit_key', data.clientRequestKey);
+
     return data;
   },
 
-  async collectFiles(){
+  collectFiles: async function(){
     const out = [];
     const inputs = Array.from(document.querySelectorAll('#uploadFields input[type=file]'));
-    for (const input of inputs){
+    for (let i = 0; i < inputs.length; i++){
+      const input = inputs[i];
       const file = input.files && input.files[0];
       if (!file) continue;
       const max = Number(input.dataset.max || 0);
@@ -1180,29 +1243,29 @@ const Form = {
     return out;
   },
 
-  copyTicket(){
+  copyTicket: function(){
     if (!this.lastTicket) return;
     const t = this.lastTicket;
     const text = 'ID: ' + t.requestId + '\nToken: ' + t.trackingToken
       + '\nSurat: ' + t.jenisSurat + '\nNama: ' + t.nama + '\nNIM: ' + t.nim;
     navigator.clipboard.writeText(text).then(
-      ()=>toast('Disalin.', 'success'),
-      ()=>toast('Gagal menyalin.', 'error')
+      function(){ toast('Disalin.', 'success'); },
+      function(){ toast('Gagal menyalin.', 'error'); }
     );
   },
 
-  validate(){
+  validate: function(){
     const req = function(id, msg){
       const el = $(id);
       if (!el) return true;
       const v = normalizeText(el.value);
-      if (!v){ el.classList.add('invalid'); el.focus(); toast(msg, 'error'); return false; }
+      if (!v){ el.classList.add('invalid'); try { el.focus(); } catch(_){} toast(msg, 'error'); return false; }
       el.classList.remove('invalid'); return true;
     };
     if (!this.selectedProgram) { toast('Pilih Modul Prodi.', 'warning'); return false; }
     if (!this.selectedType) { toast('Pilih jenis surat.', 'warning'); return false; }
-    if (!req('nama','Nama wajib.')) return false;
-    if (!req('nim','NIM wajib.')) return false;
+    if (!req('nama','Nama wajib diisi.')) return false;
+    if (!req('nim','NIM wajib diisi.')) return false;
     if (!req('programStudi','Prodi wajib.')) return false;
     if (!req('semester','Semester wajib.')) return false;
     if (!req('email','Email wajib.')) return false;
@@ -1224,7 +1287,7 @@ const Form = {
     const fields = this.fieldSets[this.selectedType] || this.getFieldSet(this.selectedType);
     for (let i = 0; i < fields.length; i++){
       const f = fields[i];
-      if (f[3] && !req(f[0], f[1] + ' wajib.')) return false;
+      if (f[3] && !req(f[0], f[1] + ' wajib diisi.')) return false;
     }
     const uploads = UPLOAD_POLICY[this.selectedType] || [];
     const fileInputs = document.querySelectorAll('#uploadFields input[type=file]');
@@ -1237,13 +1300,11 @@ const Form = {
         toast(u.label + ' melebihi batas.', 'error'); return false;
       }
     }
-    if (!$('agreement').checked){
-      toast('Setujui pernyataan.', 'warning'); return false;
-    }
+    if (!$('agreement').checked){ toast('Setujui pernyataan.', 'warning'); return false; }
     return true;
   },
 
-  async submit(){
+  submit: async function(){
     if (!this.validate()) return;
     const btn = $('submitBtn');
     if (btn.disabled) return;
@@ -1251,13 +1312,17 @@ const Form = {
     try {
       showLoading('Menyiapkan data…');
       const data = await this.collect();
+
+      // Sanity check sebelum kirim
+      if (!data.nama || !data.nim || !data.email || !data.whatsapp){
+        throw new Error('Data identitas tidak lengkap. Periksa Nama, NIM, Email, WhatsApp.');
+      }
+
       const files = await this.collectFiles();
 
       showLoading('Mengirim pengajuan…');
       const resp = unwrap(await API.submit(data), 'Gagal mengirim pengajuan.');
-      if (!resp || !resp.requestId){
-        throw new Error('Server tidak mengembalikan requestId.');
-      }
+      if (!resp || !resp.requestId) throw new Error('Server tidak mengembalikan requestId.');
       this.currentTrackingToken = resp.trackingToken;
 
       for (let i = 0; i < files.length; i++){
@@ -1267,8 +1332,7 @@ const Form = {
       hideLoading();
 
       const ticket = {
-        requestId: resp.requestId,
-        trackingToken: resp.trackingToken,
+        requestId: resp.requestId, trackingToken: resp.trackingToken,
         jenisSurat: TYPE_CONFIG[this.selectedType].title,
         nama: data.nama, nim: data.nim
       };
@@ -1298,13 +1362,13 @@ const Form = {
  * TRACKING
  * ========================================================= */
 const Tracking = {
-  init(){
+  init: function(){
     try {
       const t = JSON.parse(localStorage.getItem('fikom_lastTicket') || 'null');
       if (t){ $('trId').value = t.requestId || ''; $('trToken').value = t.trackingToken || ''; }
     } catch(_){}
   },
-  async lookup(){
+  lookup: async function(){
     const id = $('trId').value.trim();
     const token = $('trToken').value.trim();
     if (!id || !token) return toast('ID dan Token wajib.', 'warning');
@@ -1318,7 +1382,7 @@ const Tracking = {
       toast(e.message, 'error');
     }
   },
-  render(t){
+  render: function(t){
     const steps = [
       { label: 'Diajukan', at: t.submittedAt },
       { label: 'Verifikasi Admin', at: t.adminAt },
@@ -1326,12 +1390,12 @@ const Tracking = {
       { label: 'Approval Wadek', at: t.wadekAt },
       { label: 'Approval Dekan', at: t.dekanAt },
       { label: 'Selesai', at: t.completedAt }
-    ].filter(s => s.at || s.label === 'Diajukan');
+    ].filter(function(s){ return s.at || s.label === 'Diajukan'; });
     const timeline = (t.status === 'DITOLAK' || t.rejectionReason) ? ''
-      : '<div style="margin-top:12px">' + steps.map(s =>
-          '<div class="ticket-row"><span class="ticket-label">'+escapeHtml(s.label)+'</span><span class="ticket-value">'
-          +(s.at ? escapeHtml(s.at) : '<span style="opacity:.5">Menunggu</span>')+'</span></div>'
-        ).join('') + '</div>';
+      : '<div style="margin-top:12px">' + steps.map(function(s){
+          return '<div class="ticket-row"><span class="ticket-label">'+escapeHtml(s.label)+'</span><span class="ticket-value">'
+            +(s.at ? escapeHtml(s.at) : '<span style="opacity:.5">Menunggu</span>')+'</span></div>';
+        }).join('') + '</div>';
     return '<div class="ticket" style="margin-top:8px">'
       +'<div class="ticket-row"><span class="ticket-label">ID</span><span class="ticket-value">'+escapeHtml(t.requestId)+'</span></div>'
       +'<div class="ticket-row"><span class="ticket-label">Jenis</span><span class="ticket-value">'+escapeHtml(t.jenisSurat)+'</span></div>'
@@ -1343,7 +1407,7 @@ const Tracking = {
       +(t.pdfUrl ? '<div class="ticket-row"><span class="ticket-label">PDF</span><span class="ticket-value"><a href="'+escapeHtml(t.pdfUrl)+'" target="_blank" rel="noopener">Buka PDF</a></span></div>' : '')
       + timeline + '</div>';
   },
-  badge(status){
+  badge: function(status){
     const s = String(status || '');
     const map = {
       VERIFIKASI_ADMIN: 'badge-admin', APPROVAL_KAPRODI: 'badge-kaprodi',
@@ -1361,7 +1425,7 @@ const Dashboard = {
   data: [], approvedData: [], currentItem: null, syncBusy: false,
   activeTab: 'pending', searchTerm: '',
 
-  async load(){
+  load: async function(){
     if (!Auth.token) return Router.go('login');
     const role = Auth.user.role;
     $('dashTitle').textContent = 'Dashboard ' + role;
@@ -1382,7 +1446,7 @@ const Dashboard = {
       ]);
       hideLoading();
       this.renderStats(results[0].stats || {});
-      this.data = (results[1].items || []).filter(it => it && it.approvalRole === role);
+      this.data = (results[1].items || []).filter(function(it){ return it && it.approvalRole === role; });
       this.approvedData = results[2].items || [];
       this.renderActiveTab();
       Sync.check(true);
@@ -1394,9 +1458,9 @@ const Dashboard = {
     }
   },
 
-  async refresh(){ await this.load(); toast('Data diperbarui.', 'info'); },
+  refresh: async function(){ await this.load(); toast('Data diperbarui.', 'info'); },
 
-  async refreshSilent(){
+  refreshSilent: async function(){
     if (!Auth.token || this.syncBusy) return;
     this.syncBusy = true;
     try {
@@ -1404,7 +1468,7 @@ const Dashboard = {
         API.list(Auth.token).then(unwrap),
         API.listapproved(Auth.token).then(unwrap)
       ]);
-      this.data = (results[0].items || []).filter(it => it && it.approvalRole === Auth.user.role);
+      this.data = (results[0].items || []).filter(function(it){ return it && it.approvalRole === Auth.user.role; });
       this.approvedData = results[1].items || [];
       this.renderActiveTab();
     } catch(e){
@@ -1412,18 +1476,18 @@ const Dashboard = {
     } finally { this.syncBusy = false; }
   },
 
-  switchTab(tab){
+  switchTab: function(tab){
     this.activeTab = tab;
-    document.querySelectorAll('#dashTabs .tab').forEach(t => t.classList.toggle('active', t.dataset.dtab === tab));
+    document.querySelectorAll('#dashTabs .tab').forEach(function(t){ t.classList.toggle('active', t.dataset.dtab === tab); });
     this.renderActiveTab();
   },
 
-  search(q){
+  search: function(q){
     this.searchTerm = String(q || '').trim().toLowerCase();
     this.renderActiveTab();
   },
 
-  renderStats(s){
+  renderStats: function(s){
     const items = [
       { label: 'Verifikasi Admin', val: s.pendingAdmin || 0 },
       { label: 'Approval Kaprodi', val: s.pendingKaprodi || 0 },
@@ -1433,19 +1497,21 @@ const Dashboard = {
       { label: 'Selesai', val: s.completed || 0 },
       { label: 'Ditolak', val: s.rejected || 0 }
     ];
-    $('statsBox').innerHTML = items.map(it =>
-      '<div class="stat"><div class="stat-num">'+it.val+'</div><div class="stat-label">'+escapeHtml(it.label)+'</div></div>'
-    ).join('');
+    $('statsBox').innerHTML = items.map(function(it){
+      return '<div class="stat"><div class="stat-num">'+it.val+'</div><div class="stat-label">'+escapeHtml(it.label)+'</div></div>';
+    }).join('');
   },
 
-  filterBySearch(arr){
+  filterBySearch: function(arr){
+    const self = this;
     if (!this.searchTerm) return arr;
-    return arr.filter(it =>
-      [it.requestId, it.nama, it.nim, it.jenisSurat, it.programStudi].join(' ').toLowerCase().indexOf(this.searchTerm) >= 0
-    );
+    return arr.filter(function(it){
+      return [it.requestId, it.nama, it.nim, it.jenisSurat, it.programStudi]
+        .join(' ').toLowerCase().indexOf(self.searchTerm) >= 0;
+    });
   },
 
-  renderActiveTab(){
+  renderActiveTab: function(){
     const src = this.activeTab === 'approved' ? this.approvedData : this.data;
     const filtered = this.filterBySearch(src);
     if (!filtered.length){
@@ -1456,9 +1522,9 @@ const Dashboard = {
     }
     // STRICT grouping S1 / S2
     const s1 = [], s2 = [];
-    filtered.forEach(it=>{
+    filtered.forEach(function(it){
       const p = String(it.programStudi || '').toUpperCase();
-      if (p.indexOf('S1') === 0 || p.indexOf('ILMU KOMUNIKASI') >= 0 && p.indexOf('MAGISTER') < 0) s1.push(it);
+      if (p.indexOf('S1') === 0 || (p.indexOf('ILMU KOMUNIKASI') >= 0 && p.indexOf('MAGISTER') < 0)) s1.push(it);
       else if (p.indexOf('S2') === 0 || p.indexOf('MAGISTER') >= 0) s2.push(it);
     });
     let html = '';
@@ -1467,24 +1533,26 @@ const Dashboard = {
     $('listBox').innerHTML = html;
   },
 
-  renderProdiGroup(label, items, isS2){
+  renderProdiGroup: function(label, items, isS2){
     if (!items.length) return '';
-    const rows = items.map((it, i)=>'<tr>'
-      +'<td>'+(i + 1)+'</td>'
-      +'<td><code style="font-size:11px">'+escapeHtml(it.requestId)+'</code></td>'
-      +'<td>'+escapeHtml(it.nama)+'<br><small style="color:var(--muted)">'+escapeHtml(it.nim)+'</small></td>'
-      +'<td>'+escapeHtml(it.jenisSurat)+'</td>'
-      +'<td>'+Tracking.badge(it.status)+'</td>'
-      +(it.nomorSurat ? '<td>'+escapeHtml(it.nomorSurat)+'</td>' : '<td>-</td>')
-      +'<td><button class="btn btn-info btn-sm" onclick="Dashboard.openDetail(\''+escapeHtml(it.requestId)+'\')">Detail</button>'
-      +(it.pdfUrl ? ' <a class="btn btn-success btn-sm" href="'+escapeHtml(it.pdfUrl)+'" target="_blank" rel="noopener">PDF</a>' : '')
-      +'</td></tr>').join('');
+    const rows = items.map(function(it, i){
+      return '<tr>'
+        +'<td>'+(i + 1)+'</td>'
+        +'<td><code style="font-size:11px">'+escapeHtml(it.requestId)+'</code></td>'
+        +'<td>'+escapeHtml(it.nama)+'<br><small style="color:var(--muted)">'+escapeHtml(it.nim)+'</small></td>'
+        +'<td>'+escapeHtml(it.jenisSurat)+'</td>'
+        +'<td>'+Tracking.badge(it.status)+'</td>'
+        +(it.nomorSurat ? '<td>'+escapeHtml(it.nomorSurat)+'</td>' : '<td>-</td>')
+        +'<td><button class="btn btn-info btn-sm" onclick="Dashboard.openDetail(\''+escapeHtml(it.requestId)+'\')">Detail</button>'
+        +(it.pdfUrl ? ' <a class="btn btn-success btn-sm" href="'+escapeHtml(it.pdfUrl)+'" target="_blank" rel="noopener">PDF</a>' : '')
+        +'</td></tr>';
+    }).join('');
     return '<div class="prodi-section">'
       +'<div class="prodi-header'+(isS2 ? ' s2' : '')+'"><span>🎓 Program Studi '+label+'</span><span class="prodi-count">'+items.length+' berkas</span></div>'
       +'<div class="table-wrap"><table><thead><tr><th>#</th><th>ID</th><th>Mahasiswa</th><th>Jenis</th><th>Status</th><th>Nomor</th><th>Aksi</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
   },
 
-  async openDetail(requestId){
+  openDetail: async function(requestId){
     showLoading('Memuat detail…');
     try {
       const data = unwrap(await API.detail(Auth.token, requestId), 'Gagal.');
@@ -1494,7 +1562,7 @@ const Dashboard = {
     } catch(e){ hideLoading(); toast(e.message, 'error'); }
   },
 
-  async approve(){
+  approve: async function(){
     if (!this.currentItem) return;
     const id = this.currentItem.REQUEST_ID;
     if (!confirm('Setujui pengajuan ' + id + '?')) return;
@@ -1503,12 +1571,12 @@ const Dashboard = {
       const resp = unwrap(await API.approve(Auth.token, id, ''), 'Gagal.');
       hideLoading(); Modal.close();
       toast('Disetujui. Status: ' + (STATUS_LABEL[resp.status] || resp.status), 'success');
-      if (resp.letter && resp.letter.pdfUrl) setTimeout(()=>toast('Surat PDF diterbitkan.', 'success'), 600);
+      if (resp.letter && resp.letter.pdfUrl) setTimeout(function(){ toast('Surat PDF diterbitkan.', 'success'); }, 600);
       this.refresh();
     } catch(e){ hideLoading(); toast(e.message, 'error'); }
   },
 
-  async reject(){
+  reject: async function(){
     if (!this.currentItem) return;
     const id = this.currentItem.REQUEST_ID;
     const reason = prompt('Alasan penolakan (wajib):');
@@ -1527,24 +1595,24 @@ const Dashboard = {
  * MODAL
  * ========================================================= */
 const Modal = {
-  open(item){
+  open: function(item){
     $('modalTitle').textContent = 'Pengajuan ' + (item.REQUEST_ID || '');
     $('tab-detail').innerHTML = this.renderDetail(item);
     $('tab-data').innerHTML = this.renderData(item);
     $('tab-files').innerHTML = this.renderFiles(item);
     $('modalFoot').innerHTML = this.renderFooter(item);
-    document.querySelectorAll('.modal-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === 'detail'));
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.modal-tab').forEach(function(b){ b.classList.toggle('active', b.dataset.tab === 'detail'); });
+    document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
     $('tab-detail').classList.add('active');
     $('modal').classList.add('show');
     document.body.style.overflow = 'hidden';
   },
-  close(){
+  close: function(){
     $('modal').classList.remove('show');
     document.body.style.overflow = '';
     Dashboard.currentItem = null;
   },
-  renderDetail(r){
+  renderDetail: function(r){
     return '<dl class="kv">'
       +'<dt>ID</dt><dd><code>'+escapeHtml(r.REQUEST_ID)+'</code></dd>'
       +'<dt>Status</dt><dd>'+Tracking.badge(r.STATUS)+'</dd>'
@@ -1558,12 +1626,12 @@ const Modal = {
       +'<dt>WhatsApp</dt><dd>'+escapeHtml(r.WHATSAPP || '-')+'</dd>'
       +'<dt>Diajukan</dt><dd>'+escapeHtml(r.TIMESTAMP || '-')+'</dd></dl>';
   },
-  renderData(r){
+  renderData: function(r){
     let formData = {};
     try { formData = JSON.parse(String(r.FORM_DATA_JSON || '{}') || '{}'); } catch(e){ formData = {}; }
     const rows = [];
-    const skip = ['jenisSurat','clientTimestamp','clientTimezone','appName','status','namaJenisSurat'];
-    Object.keys(formData).forEach(k=>{
+    const skip = ['jenisSurat','clientTimestamp','clientTimezone','appName','status','namaJenisSurat','nama','nim','programStudi','semester','email','whatsapp','agreement'];
+    Object.keys(formData).forEach(function(k){
       if (skip.indexOf(k) >= 0) return;
       const v = formData[k];
       if (v === '' || v == null) return;
@@ -1574,18 +1642,20 @@ const Modal = {
       return '<dt>'+escapeHtml(row[0])+'</dt><dd>'+escapeHtml(row[1])+'</dd>';
     }).join('') + '</dl>';
   },
-  renderFiles(r){
+  renderFiles: function(r){
     let files = [];
     try { files = JSON.parse(String(r.ATTACHMENTS_JSON || '[]') || '[]'); } catch(e){ files = []; }
     if (!files.length) return '<div class="empty"><div class="empty-icon">📎</div>Tidak ada lampiran.</div>';
-    return files.map(f=>'<div class="ticket" style="margin-bottom:10px">'
-      +'<div class="ticket-row"><span class="ticket-label">Nama</span><span class="ticket-value">'+escapeHtml(f.name || '-')+'</span></div>'
-      +'<div class="ticket-row"><span class="ticket-label">Tipe</span><span class="ticket-value">'+escapeHtml(f.mimeType || '-')+'</span></div>'
-      +'<div class="ticket-row"><span class="ticket-label">Ukuran</span><span class="ticket-value">'+formatBytes(f.size || 0)+'</span></div>'
-      +'<div class="ticket-row"><span class="ticket-label">Aksi</span><span class="ticket-value">'
-      +(f.url ? '<a href="'+escapeHtml(f.url)+'" target="_blank" rel="noopener">Buka</a>' : '-')+'</span></div></div>').join('');
+    return files.map(function(f){
+      return '<div class="ticket" style="margin-bottom:10px">'
+        +'<div class="ticket-row"><span class="ticket-label">Nama</span><span class="ticket-value">'+escapeHtml(f.name || '-')+'</span></div>'
+        +'<div class="ticket-row"><span class="ticket-label">Tipe</span><span class="ticket-value">'+escapeHtml(f.mimeType || '-')+'</span></div>'
+        +'<div class="ticket-row"><span class="ticket-label">Ukuran</span><span class="ticket-value">'+formatBytes(f.size || 0)+'</span></div>'
+        +'<div class="ticket-row"><span class="ticket-label">Aksi</span><span class="ticket-value">'
+        +(f.url ? '<a href="'+escapeHtml(f.url)+'" target="_blank" rel="noopener">Buka</a>' : '-')+'</span></div></div>';
+    }).join('');
   },
-  renderFooter(r){
+  renderFooter: function(r){
     if (!Auth.token) return '';
     const role = Auth.user.role, status = String(r.STATUS || '');
     const canAct = (role === 'ADMIN' && (status === 'VERIFIKASI_ADMIN' || status === 'DIAJUKAN'))
@@ -1603,20 +1673,20 @@ const Modal = {
 };
 
 /* Modal tabs */
-document.addEventListener('click', e=>{
+document.addEventListener('click', function(e){
   const t = e.target.closest('.modal-tab');
   if (!t) return;
   const parent = t.closest('.modal-box');
   if (!parent) return;
-  parent.querySelectorAll('.modal-tab').forEach(b=>b.classList.remove('active'));
-  parent.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  parent.querySelectorAll('.modal-tab').forEach(function(b){ b.classList.remove('active'); });
+  parent.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
   t.classList.add('active');
   const target = parent.querySelector('#tab-' + t.dataset.tab);
   if (target) target.classList.add('active');
 });
-$('modal').addEventListener('click', e=>{ if (e.target.id === 'modal') Modal.close(); });
-$('passwordModal').addEventListener('click', e=>{ if (e.target.id === 'passwordModal') Auth.closePasswordModal(); });
-document.addEventListener('keydown', e=>{
+$('modal').addEventListener('click', function(e){ if (e.target.id === 'modal') Modal.close(); });
+$('passwordModal').addEventListener('click', function(e){ if (e.target.id === 'passwordModal') Auth.closePasswordModal(); });
+document.addEventListener('keydown', function(e){
   if (e.key === 'Escape'){
     if ($('modal').classList.contains('show')) Modal.close();
     if ($('passwordModal').classList.contains('show')) Auth.closePasswordModal();
@@ -1626,7 +1696,7 @@ document.addEventListener('keydown', e=>{
 /* =========================================================
  * INIT
  * ========================================================= */
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', function(){
   Auth.init();
   Tracking.init();
   Form.renderTypeCards();
@@ -1641,23 +1711,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.body.style.overflow = 'hidden';
   }
 
-  document.addEventListener('input', e=>{
+  document.addEventListener('input', function(e){
     if (e.target.matches('input,select,textarea')) e.target.classList.remove('invalid');
   });
-  $('loginPass').addEventListener('keydown', e=>{ if (e.key === 'Enter') Auth.login(); });
+  $('loginPass').addEventListener('keydown', function(e){ if (e.key === 'Enter') Auth.login(); });
 
   console.log(CONFIG.APP_NAME + ' v' + CONFIG.VERSION + ' siap.');
   Sync.start();
 
-  document.addEventListener('visibilitychange', ()=>{
+  document.addEventListener('visibilitychange', function(){
     if (!document.hidden) Sync.check(true);
   });
-  window.addEventListener('online', ()=>{
+  window.addEventListener('online', function(){
     Sync.consecutiveFailures = 0;
     Sync.setState('syncing', 'Menyambungkan kembali…');
     Sync.check(false);
   });
-  window.addEventListener('offline', ()=>{
+  window.addEventListener('offline', function(){
     Sync.setState('offline', 'Koneksi internet terputus');
   });
 });
