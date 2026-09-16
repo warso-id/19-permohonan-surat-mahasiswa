@@ -337,7 +337,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
 
 <footer>
   Fakultas Ilmu Komunikasi · Universitas Prof. Dr. Moestopo (Beragama)<br>
-  <span style="opacity:.7">Sistem Administrasi Mahasiswa v9.1.0</span>
+  <span style="opacity:.7">Sistem Administrasi Mahasiswa v9.1.1</span>
 </footer>
 
 <!-- MODAL DETAIL -->
@@ -397,11 +397,11 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 15px 40p
 const CONFIG = {
   GAS_API_URL: "https://script.google.com/macros/s/AKfycbyj_B8w7x4FysY-QEKEi6b9r6CYL504Fui5UiRLjyTaCDusv5FRyNKlqlvIIUd9QwU8KQ/exec",
   APP_NAME: "FIKOM UPDM (B) - Sistem Surat",
-  VERSION: "9.1.0",
+  VERSION: "9.1.1",
   TIMEOUT_SMALL: 8000,
   TIMEOUT_LARGE: 60000,
-  PING_INTERVAL_ACTIVE: 8000,
-  PING_INTERVAL_IDLE: 30000,
+  PING_INTERVAL_ACTIVE: 5000,
+  PING_INTERVAL_IDLE: 15000,
   PING_INTERVAL_BACKOFF: 60000,
   OFFLINE_AFTER: 3,
   TOKEN_KEY: "fikom_token",
@@ -722,7 +722,11 @@ const API = {
   config:         function(){ return jsonp({ action: 'config' }, 10000); },
   changes:        function(since){ return jsonp({ action: 'changes', since: since || '' }, 8000); },
   login:          function(u,p){ return jsonp({ action: 'login', username: u, password: p }, 15000); },
-  submit:         function(data){ return jsonp({ action: 'submit', data: JSON.stringify(data) }, 30000); },
+  /* v9.1.1 FIX: submit dikirim via POST + base64 penuh (bukan GET/JSONP dengan
+     data yang di-JSON.stringify dua kali). Ini menghilangkan risiko payload
+     melebihi batas panjang URL untuk surat dengan banyak field teks panjang,
+     dan menyamakan transport submit dengan uploadAttachment (full base64). */
+  submit:         function(data){ return postPayload({ action: 'submit', data: data }, CONFIG.TIMEOUT_LARGE); },
   tracking:       function(id,token){ return jsonp({ action: 'tracking', requestId: id, trackingToken: token }, 15000); },
   list:           function(token){ return jsonp({ action: 'list', token: token }, 20000); },
   listapproved:   function(token){ return jsonp({ action: 'listapproved', token: token }, 20000); },
@@ -1460,16 +1464,24 @@ const Dashboard = {
 
   refresh: async function(){ await this.load(); toast('Data diperbarui.', 'info'); },
 
+  /**
+   * refreshSilent() — v9.1.1 FIX: sekarang juga menarik ulang stats() dan
+   * merender ulang kotak angka di atas dashboard. Sebelumnya hanya
+   * memperbarui tabel antrean, sehingga counter (Verifikasi Admin, dsb.)
+   * bisa tampak basi walau data di baliknya sudah realtime.
+   */
   refreshSilent: async function(){
     if (!Auth.token || this.syncBusy) return;
     this.syncBusy = true;
     try {
       const results = await Promise.all([
+        API.stats(Auth.token).then(unwrap),
         API.list(Auth.token).then(unwrap),
         API.listapproved(Auth.token).then(unwrap)
       ]);
-      this.data = (results[0].items || []).filter(function(it){ return it && it.approvalRole === Auth.user.role; });
-      this.approvedData = results[1].items || [];
+      this.renderStats(results[0].stats || {});
+      this.data = (results[1].items || []).filter(function(it){ return it && it.approvalRole === Auth.user.role; });
+      this.approvedData = results[2].items || [];
       this.renderActiveTab();
     } catch(e){
       if (/token|auth/i.test(e.message)) Auth.logout();
